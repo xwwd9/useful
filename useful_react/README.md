@@ -1,0 +1,38 @@
+
+
+* 占位符  
+    import {Fragment} from 'react';  
+    Fragment 站位符号，可以让最外层标签隐藏
+
+
+
+* jsx中转义   
+    dangerouslySetInnerHTML={{__html:item }}  
+    在标签中假如如上值即可
+
+* setState  
+    异步函数，可以将几次set合并成一次。
+
+* 生命周期函数  
+    
+    ![avatar](../docs/react_life_time.png)  
+    componentWillReceiveProps: 从父组件中接收props,只有在父组件从新render的时候才会执行,也就是说子组件第一回渲染的时候不会执行。  
+    
+    shouldComponentUpdate : 组件被更新之前自动执行,需要返回一个bool类型变量,决定是否更新。  
+
+    当state或者props发生改变的时候render函数会重新渲染。父组件render函数被执行，子组件render也会被执行(这里会造成性能损耗，子组件可以使用shouldComponentUpdate进行优化)  
+    ```js
+    shouldComponentUpdate(nextProps, nextState){
+        if(nextProps.content !== this.props.content){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    ```  
+
+    ajax请求建议放在componentDidMount中进行。  
+
+
+
