@@ -1,4 +1,5 @@
 
+# react总结
 
 * 占位符  
     import {Fragment} from 'react';  
@@ -33,6 +34,14 @@
     ```  
 
     ajax请求建议放在componentDidMount中进行。  
+    
+
+
+
+# 小tips
+    
+* fiddler 接口测试测试  
+    ![avatar](../docs/fiddler_auto_response.png)  
 
 
 
