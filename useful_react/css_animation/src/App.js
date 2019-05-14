@@ -22,7 +22,7 @@ class App extends Component {
         return (
             <Fragment>
                 <div className={isShow ? "show" : "hide"}>hello</div>
-                <button onClick={this.changeShow}>点击</button>
+                <button onClick={this.changeShow}>{isShow? "show":"hide"}</button>
             </Fragment>
         )
     }

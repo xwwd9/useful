@@ -38,6 +38,22 @@
 
 
 
+
+# css总结  
+
+* animation-fill-mode属性值  
+    none: 默认值，播放完动画后，画面停在起始位置。
+    forwards: 播放完动画，停在animation定义的最后一帧。
+    backwards: 如果设置了animation-delay，在开始到delay这段时间，画面停在第一帧。如果没有设置delay，画面是元素设置的初始值。  
+    ```
+    .hide{
+        animation: hide-item 2s ease-in  forwards;
+    }
+    ```
+
+
+
+
 # 小tips
     
 * fiddler 接口测试测试  
