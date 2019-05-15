@@ -17,7 +17,7 @@ def execte_hive_select(sql, out_file, err_file):
     while err_cnt < 3:
 
         try:
-            ret = run('echo \"{sql}\" | hive'.format(sql=sql), shell=True,
+            ret = run('echo \"{sql}\" | hive'.format(sql=sql) , shell=True,
                       stdout=open(out_file, "w"),
                       stderr=open(err_file, "w"))
             if ret.returncode != 0:
