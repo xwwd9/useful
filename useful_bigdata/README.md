@@ -27,3 +27,8 @@
     
 * 删除分区  
     alert table tablename drop if exists partition (dayid='0000')
+
+
+
+* where 语句判断null  
+    is null  或者  is not null 

@@ -52,7 +52,10 @@
         animation: hide-item 2s ease-in  forwards;
     }
     ```
+* @keyframes创建动画  
 
+* react-transition-group  
+    文档地址：http://reactcommunity.org/react-transition-group/css-transition
 
 
 
