@@ -3,7 +3,7 @@
 [返回主目录](../README.md)
 
 
-#scrapy笔记
+# scrapy笔记
 
 * 获取scrapy的配置文件  
     ```python
