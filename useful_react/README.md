@@ -44,17 +44,35 @@
 # css总结  
 
 * animation-fill-mode属性值  
-    none: 默认值，播放完动画后，画面停在起始位置。
-    forwards: 播放完动画，停在animation定义的最后一帧。
-    backwards: 如果设置了animation-delay，在开始到delay这段时间，画面停在第一帧。如果没有设置delay，画面是元素设置的初始值。  
+    none: 默认值，播放完动画后，画面停在起始位置。  
+    forwards: 播放完动画，停在animation定义的最后一帧。  
+    backwards: 如果设置了animation-delay，在开始到delay这段时间，画面停在第一帧。如果没有设置delay，画面是元素设置的初始值。    
     ```
     .hide{
         animation: hide-item 2s ease-in  forwards;
     }
     ```
-* @keyframes创建动画  
+* @keyframes创建动画(然后可以在animation上使用)   
+    ```css
+    @keyframes hide-item{
+        0% {
+            opacity: 1;
+            color: red;
+        }
+        50% {
+            opacity: 0.5;
+            color: green
+        }
+        100% {
+            opacity: 0;
+            color: blue 
+        }
+    }
+
+    ```
 
 * react-transition-group  
+    key：CSSTransition  
     文档地址：http://reactcommunity.org/react-transition-group/css-transition
 
 
