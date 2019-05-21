@@ -8,8 +8,27 @@ class TodoList extends Component {
         super(props)
         this.state = store.getState()
         console.log(store.getState())
+        store.subscribe(this.handleStoreChange)
     }
 
+    handleStoreChange = (e) => {
+        this.setState(store.getState())
+    }
+
+    handleInputChange = (e) => {
+        const action = {
+            type:'change_input_value',
+            value:e.target.value
+        }
+        store.dispatch(action)
+    }
+
+    handleClick = () => {
+        const action = {
+            type:'add list',
+            value:this.state
+        }
+    }
 
     render() {
         const { list } = this.state;
@@ -19,12 +38,14 @@ class TodoList extends Component {
                     style={{ width: 300 }}
                     placeholder="Basic usage"
                     value={this.state.inputValue}
+                    onChange={this.handleInputChange}
                 />
                 <Button
                     style={{ marginLeft: 10 }}
                     type="primary"
+                    onClick={this.handleClick}
                 >
-                    Primary
+                    点击
                 </Button>
             </div>
 
