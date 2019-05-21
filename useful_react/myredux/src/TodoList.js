@@ -25,9 +25,9 @@ class TodoList extends Component {
 
     handleClick = () => {
         const action = {
-            type:'add list',
-            value:this.state
+            type:'add_list',
         }
+        store.dispatch(action)
     }
 
     render() {
