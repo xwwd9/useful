@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Input, Button, List, Typography } from 'antd';
+import { Input, Button, List } from 'antd';
 
 import store from "./store"
 
@@ -16,16 +16,21 @@ class TodoList extends Component {
     }
 
     handleInputChange = (e) => {
+        console.log(e, "askdjfaskljdf")
         const action = {
-            type:'change_input_value',
-            value:e.target.value
+            type: 'change_input_value',
+            value: e.target.value
         }
         store.dispatch(action)
     }
 
+    handleDel = (index, a) => {
+        console.log(index, a, "index")
+    }
+
     handleClick = () => {
         const action = {
-            type:'add_list',
+            type: 'add_list',
         }
         store.dispatch(action)
     }
@@ -50,11 +55,16 @@ class TodoList extends Component {
             </div>
 
             <List
-                style={{ marginTop: 20 ,width:500}}
+                style={{ marginTop: 20, width: 500 }}
                 bordered
                 dataSource={list}
-                renderItem={item => (
-                    <List.Item>
+                renderItem={(item, index) => (
+                    <List.Item
+                        onClick={(index) => this.handleDel(index, index)}
+                    >
+                        <a
+                            onClick={() => this.handleDel("asdf")}
+                        >askdjf</a>
                         {item}
                     </List.Item>
                 )}
