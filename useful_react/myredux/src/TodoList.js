@@ -9,6 +9,7 @@ class TodoList extends Component {
         this.state = store.getState()
         console.log(store.getState())
         store.subscribe(this.handleStoreChange)
+        // this.handleDel.bind(this)
     }
 
     handleStoreChange = (e) => {
@@ -24,9 +25,18 @@ class TodoList extends Component {
         store.dispatch(action)
     }
 
-    handleDel = (index, a) => {
-        console.log(index, a, "index")
+    handleDel = (index, a, b) => {
+        console.log(index, a, typeof a, "index")
+        const action = {
+            type: "del_item",
+            value: index
+        }
+        store.dispatch(action)
     }
+
+    // handleDel(index, a, b) {
+    //     console.log(index, a, b, "index")
+    // }
 
     handleClick = () => {
         const action = {
@@ -60,11 +70,10 @@ class TodoList extends Component {
                 dataSource={list}
                 renderItem={(item, index) => (
                     <List.Item
-                        onClick={(index) => this.handleDel(index, index)}
+                        // onClick={(index) => this.handleDel(index)}
+                        // onClick={this.handleDel.bind(this, index)}
+                        onClick={() => this.handleDel(index)}
                     >
-                        <a
-                            onClick={() => this.handleDel("asdf")}
-                        >askdjf</a>
                         {item}
                     </List.Item>
                 )}

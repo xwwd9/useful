@@ -20,5 +20,10 @@ export default (state=defalutState, action) => {
         newState.inputValue = ""
         return newState
     }
+    else if(action.type === "del_item"){
+        const newState = JSON.parse(JSON.stringify(state))
+        newState.list.splice(action.value,1)
+        return newState
+    }
     return state
 }
