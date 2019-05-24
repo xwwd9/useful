@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Input, Button, List } from 'antd';
-
+import { ADD_LIST, DEL_ITEM, CHANGE_INPUT_VALUE } from "./store/actionTypes"
 import store from "./store"
+import { getInputChangeAction, addTodoItem, delTodItem } from './store/actionCreator';
 
 class TodoList extends Component {
     constructor(props) {
@@ -18,19 +19,13 @@ class TodoList extends Component {
 
     handleInputChange = (e) => {
         console.log(e, "askdjfaskljdf")
-        const action = {
-            type: 'change_input_value',
-            value: e.target.value
-        }
+        const action = getInputChangeAction(e.target.value)
         store.dispatch(action)
     }
 
     handleDel = (index, a, b) => {
         console.log(index, a, typeof a, "index")
-        const action = {
-            type: "del_item",
-            value: index
-        }
+        const action = delTodItem(index)
         store.dispatch(action)
     }
 
@@ -39,9 +34,7 @@ class TodoList extends Component {
     // }
 
     handleClick = () => {
-        const action = {
-            type: 'add_list',
-        }
+        const action = addTodoItem()
         store.dispatch(action)
     }
 
