@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react';
-import { Input, Button, List } from 'antd';
-import { ADD_LIST, DEL_ITEM, CHANGE_INPUT_VALUE } from "./store/actionTypes"
+import React, { Component } from 'react';
+
 import store from "./store"
-import { getInputChangeAction, addTodoItem, delTodItem } from './store/actionCreator';
+import { getInputChangeAction, addTodoItem, delTodItem, addListItem } from './store/actionCreator';
+import axios from 'axios'
+import TodoListUi from './TodoListUi';
 
 class TodoList extends Component {
     constructor(props) {
@@ -38,40 +39,24 @@ class TodoList extends Component {
         store.dispatch(action)
     }
 
+    componentDidMount(){
+        axios.get("http://localhost:3000/json.json").then((ret) => {
+            const data = ret.data
+            const action = addListItem(data)
+            store.dispatch(action)
+        })
+    }
+
     render() {
         const { list } = this.state;
-        return <Fragment>
-            <div>
-                <Input
-                    style={{ width: 300 }}
-                    placeholder="Basic usage"
-                    value={this.state.inputValue}
-                    onChange={this.handleInputChange}
-                />
-                <Button
-                    style={{ marginLeft: 10 }}
-                    type="primary"
-                    onClick={this.handleClick}
-                >
-                    点击
-                </Button>
-            </div>
-
-            <List
-                style={{ marginTop: 20, width: 500 }}
-                bordered
-                dataSource={list}
-                renderItem={(item, index) => (
-                    <List.Item
-                        // onClick={(index) => this.handleDel(index)}
-                        // onClick={this.handleDel.bind(this, index)}
-                        onClick={() => this.handleDel(index)}
-                    >
-                        {item}
-                    </List.Item>
-                )}
-            />
-        </Fragment>
+        return <TodoListUi
+            inputValue={this.state.inputValue}
+            handleInputChange={this.handleInputChange}
+            handleDel={this.handleDel}
+            handleClick={this.handleClick}
+            list={list}
+        >
+        </TodoListUi>
     }
 }
 

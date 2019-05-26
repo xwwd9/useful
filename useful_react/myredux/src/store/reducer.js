@@ -1,3 +1,4 @@
+import { ADD_LISTS } from "./actionTypes";
 
 
 
@@ -23,6 +24,11 @@ export default (state=defalutState, action) => {
     else if(action.type === "del_item"){
         const newState = JSON.parse(JSON.stringify(state))
         newState.list.splice(action.value,1)
+        return newState
+    }
+    else if(action.type === ADD_LISTS){
+        const newState = JSON.parse(JSON.stringify(state))
+        newState.list = [...newState.list, ...action.values]
         return newState
     }
     return state
