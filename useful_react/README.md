@@ -76,6 +76,102 @@
     文档地址：http://reactcommunity.org/react-transition-group/css-transition
 
 
+* 如果其父元素中有使用 transform, fixed 的效果会降级为 absolute,即当使用 fixed 的直接父元素的高度和屏幕的高度相同时 fixed 和 absolute 的表现效果会是一样的。如果这个直接父级内的元素存在滚动的情况,那就加上 overflow-y: auto。  
+
+
+* 文字两端对齐：  
+    ```css
+    // html
+    <div>姓名</div>
+    <div>手机号码</div>
+    <div>账号</div>
+    <div>密码</div>
+
+    // css
+    div {
+        margin: 10px 0; 
+        width: 100px;
+        border: 1px solid red;
+        text-align: justify;
+        text-align-last:justify
+    }
+    div:after{
+        content: '';
+        display: inline-block;
+        width: 100%;
+    }
+    ```
+    ![avatar](../docs/css_text_align.png)  
+
+
+
+
+
+# JS总结
+
+* js对象拷贝  
+    浅拷贝： 
+    ```js
+    <!-- Object.assign -->
+    var obj = { foo: "foo", bar: "bar" };
+    var copy = Object.assign({}, obj);
+    <!-- ... -->
+    var obj = { foo: "foo", bar: "bar" };
+    var copy = { ...obj };
+    ```
+    深拷贝：
+    ```js
+    <!-- 这个方法只在对象包含可序列化值，并且没有循环引用的时候有用。其中一个不可序列化的类型的就是日期对象 - 尽管它显示出来是字符串化的ISO格式,JSON.parse只会把它解析成为一个字符串,而不是日期类型 -->
+    var obj = { a: 0, b: { c: 0 } };
+    var copy = JSON.parse(JSON.stringify(obj));
+
+
+    <!-- 自定义深度拷贝 -->
+    function deepClone(obj) {
+        var copy;
+        // Handle the 3 simple types, and null or undefined
+        if (null == obj || "object" != typeof obj) return obj;
+        // Handle Date
+        if (obj instanceof Date) {
+            copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+
+        // Handle Array
+        if (obj instanceof Array) {
+            copy = [];
+            for (var i = 0, len = obj.length;
+                i < len;
+                i++) {
+                copy[i] = deepClone(obj[i]);
+            }
+            return copy;
+        }
+
+        // Handle Function
+        if (obj instanceof Function) {
+            copy = function () {
+                return obj.apply(this, arguments);
+            }
+            return copy;
+        }
+
+        // Handle Object
+        if (obj instanceof Object) {
+            copy = {};
+            for (var attr in obj) {
+                if (obj.hasOwnProperty(attr)) copy[attr] = deepClone(obj[attr]);
+            }
+            return copy;
+        }
+
+        throw new Error("Unable to copy obj as type isn't supported " + obj.constructor.name);
+    }
+
+    ```
+
+
 
 # 小tips
     
