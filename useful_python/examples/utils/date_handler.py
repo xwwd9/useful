@@ -25,6 +25,15 @@ def date_add(interval):
     # print(cur_data)
     return cur_data
 
+def get_cur_week_day():
+    """
+    获取当前是星期几
+    isoweekday() 返回 1 2 3 4 5 6 7
+    :return:
+    """
+    import datetime
+    return  datetime.datetime.now().isoweekday()
+
 
 if __name__ == "__main__":
     print(get_current_date())
