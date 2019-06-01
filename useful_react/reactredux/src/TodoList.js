@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react'
 
 import {connect} from "react-redux"
-import { Input, Button, List } from "antd";
+import {Input, Button, List} from "antd";
 import {
     addTodoItem,
     delTodItem,
@@ -12,22 +12,6 @@ import store from "./store";
 
 class TodoList extends Component {
 
-    handleInputChange = (e) => {
-        console.log(e, "askdjfaskljdf")
-        const action = getInputChangeAction(e.target.value)
-        store.dispatch(action)
-    }
-
-    handleDel = (index, a, b) => {
-        console.log(index, a, typeof a, "index")
-        const action = delTodItem(index)
-        store.dispatch(action)
-    }
-
-    handleClick = () => {
-        const action = addTodoItem()
-        store.dispatch(action)
-    }
 
     render() {
         return <Fragment>
@@ -36,12 +20,12 @@ class TodoList extends Component {
                     style={{width: 300}}
                     placeholder="Basic usage"
                     value={this.props.inputValue}
-                    onChange={this.handleInputChange}
+                    onChange={this.props.handleInputChange}
                 />
                 <Button
                     style={{marginLeft: 10}}
                     type="primary"
-                    onClick={this.handleClick}
+                    onClick={this.props.handleClick}
                 >
                     点击
                 </Button>
@@ -70,10 +54,31 @@ class TodoList extends Component {
 const mapStateToProps = (state) => {
     // 接收一个state 返回一个对象
     return {
-        inputValue: state.inputValue
+        inputValue: state.inputValue,
+        list: state.list,
     }
-}
+};
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleInputChange(e) {
+            console.log(e, "askdjfaskljdf");
+            const action = getInputChangeAction(e.target.value);
+            dispatch(action)
+        },
+        handleClick() {
+            const action = addTodoItem();
+            dispatch(action)
+        },
+        handleDel(index) {
+            // console.log(index, a, typeof a, "index");
+            const action = delTodItem(index);
+            store.dispatch(action)
+        }
+    }
+};
 
 
 // export default TodoList;
-export default connect(mapStateToProps, null)(TodoList);
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

@@ -4,7 +4,7 @@ export const getInputChangeAction = (value) => ({
     type: CHANGE_INPUT_VALUE,
     value
 })
-export const addTodoItem = (value) => ({
+export const addTodoItem = () => ({
     type: ADD_LIST,
 })
 export const delTodItem = (value) => ({

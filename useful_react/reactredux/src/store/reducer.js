@@ -19,6 +19,7 @@ export default (state = defalutState, action) => {
         const newState = JSON.parse(JSON.stringify(state))
         newState.list.push(newState.inputValue)
         newState.inputValue = ""
+        console.log("****")
         return newState
     }
     else if (action.type === "del_item") {
