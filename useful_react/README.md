@@ -37,7 +37,10 @@
 
     ajax请求建议放在componentDidMount中进行。  
     
-
+* ref的使用：  
+    https://mp.weixin.qq.com/s/rWoTA9JABu_kQ8-fOM-EOw  
+    
+ 
 
 
 
@@ -115,6 +118,12 @@
      ![avatar](../docs/position_absolute.png)
 
 
+
+* styled-components使用总结  
+    .  所有的子class  
+    &. 同级的class  
+    &::placeholder  同级下的某个属性  
+    
 
 # JS总结
 
