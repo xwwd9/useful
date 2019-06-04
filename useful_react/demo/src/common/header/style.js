@@ -68,6 +68,43 @@ export const SearchWrapper = styled.div`
     }
 `;
 
+export const SearchInfo = styled.div`
+    position: absolute;
+    left:0;
+    top:56px;
+    width:240px;
+    padding:0 20px;
+    box-shadow: 0 0 8px rgba(0,0,0,.2);
+`;
+
+
+export const SearchInfoTitle = styled.div`
+    margin-top:20px;
+    margin-bottom:15px;
+    color:#969696;
+    line-height:20px;
+    font-size:14px;
+`;
+
+export const SearchInfoSwitch = styled.span`
+    float:right;
+    font-size:13px;
+`;
+
+
+export const SearchInfoItem = styled.a`
+    display:block;
+    float:left; 
+    line-height:20px;
+    padding:0 5px;
+    font-size:12px;
+    border: 1px solid #ddd;
+    color:#969696;
+    border-radius:2px;
+    margin-right:10px;
+    margin-bottom:10px;
+`;
+
 export const NavSearch = styled.input.attrs({
     placeholder: 'search'
 })`

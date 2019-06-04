@@ -6,7 +6,12 @@ import {
     Logo,
     Nav,
     NavItem,
-    NavSearch, SearchWrapper
+    NavSearch,
+    SearchInfo,
+    SearchInfoItem,
+    SearchInfoSwitch,
+    SearchInfoTitle,
+    SearchWrapper
 } from "./style";
 import {IconGlobal} from "../../statics/iconfont/iconfont";
 import {CSSTransition} from 'react-transition-group';
@@ -52,6 +57,25 @@ class Header extends Component {
                                 </NavSearch>
                             </CSSTransition>
                             <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe6cf;</i>
+                            {
+                                <SearchInfo>
+                                    <SearchInfoTitle>
+                                        热门搜索
+                                        <SearchInfoSwitch>
+                                            换一换
+                                        </SearchInfoSwitch>
+                                    </SearchInfoTitle>
+                                    <div>
+                                        <SearchInfoItem>教育</SearchInfoItem>
+                                        <SearchInfoItem>教育</SearchInfoItem>
+                                        <SearchInfoItem>教育</SearchInfoItem>
+                                        <SearchInfoItem>教育</SearchInfoItem>
+                                        <SearchInfoItem>教育</SearchInfoItem>
+                                        <SearchInfoItem>教育</SearchInfoItem>
+                                        <SearchInfoItem>教育</SearchInfoItem>
+                                    </div>
+                                </SearchInfo>
+                            }
 
                         </SearchWrapper>
                     </Nav>
@@ -73,7 +97,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        focused: state.header.focused,
+        focused: state.get("header").get("focused"),
     }
 };
 
@@ -92,7 +116,6 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 };
-
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

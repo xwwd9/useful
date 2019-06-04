@@ -114,7 +114,7 @@
 * position:  (https://blog.csdn.net/zzz365zz/article/details/79104063)
     relative:定位为relative的元素脱离正常的文本流中，但其在文本流中的位置依然存在。定位的层总是相对于其最近的父元素，无论其父元素是何种定位方式。  
     ![avatar](../docs/position_relative.png)
-    absolute:定位为absolute的层脱离正常文本流，但与relative的区别是其在正常流中的位置不在存在。定位的层总是相对于其最近的定义为absolute或relative的父层,如果其父层中都未定义absolute或relative，则其将相对body进行定位  
+    absolute:定位为absolute的层脱离正常文本流，但与relative的区别是其在正常流中的位置不在存在。定位的层总是相对于其最近的定义为absolute或relative的父层,如果其父层中都未定义absolute或relative，则其将相对body进行定位。如果有子项，那么absolute的宽高会自动适应(具体查看demo下SearchInfo组件)。  
      ![avatar](../docs/position_absolute.png)
 
 
@@ -123,6 +123,11 @@
     .  所有的子class  
     &. 同级的class  
     &::placeholder  同级下的某个属性  
+    
+* span是行内元素，没有宽高的，margin-top和margin-bottom无效。可以给span加一个display:inline-block或者直接display:block或者设置float属性。    
+
+
+
     
 
 # JS总结
