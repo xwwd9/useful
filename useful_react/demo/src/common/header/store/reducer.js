@@ -9,7 +9,7 @@ const defaultState = fromJS({
 
 
 export default (state = defaultState, action) => {
-    console.log("as666666666dfdd", action.data);
+    // console.log("as666666666dfdd", action.data);
 
 
     switch (action.type) {
@@ -19,9 +19,9 @@ export default (state = defaultState, action) => {
         }
 
         case SET_SEARCH_LIST: {
-            console.log("as666666666dfdd", action.data, typeof state.data);
+            // console.log("as666666666dfdd", action.data, typeof state.data);
             const newState = state.set("list", action.data);
-            console.log(typeof newState.data)
+            // console.log(typeof newState.data)
             return newState
         }
 

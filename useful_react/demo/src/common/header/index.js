@@ -30,6 +30,7 @@ class Header extends Component {
 
 
     render() {
+        console.log(this.props.focused, this.props.mouseIn)
         return (
             <Fragment>
                 <IconGlobal/>
@@ -49,21 +50,23 @@ class Header extends Component {
                                 classNames="slide"
                             >
                                 <NavSearch
-                                    className={this.props.focused? 'focused' : ''}
+                                    className={this.props.focused ? 'focused' : ''}
                                     onFocus={this.props.handleInputFocus}
                                     onBlur={this.props.handleInputBlur}
                                 >
 
                                 </NavSearch>
                             </CSSTransition>
-                            <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe6cf;</i>
+                            <i className={this.props.focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe6cf;</i>
                             {
-                                this.props.focused || this.props.mouseIn?
+                                this.props.focused || this.props.mouseIn ?
                                     <SearchInfo onMouseEnter={this.props.handleMouseIn}
                                                 onMouseLeave={this.props.handleMouseLeave}>
                                         <SearchInfoTitle>
                                             热门搜索
-                                            <SearchInfoSwitch onClick={this.props.handleSwitch}>
+                                            <SearchInfoSwitch onClick={() => this.props.handleSwitch(this.spin)}>
+                                                <i ref={(ref) => this.spin = ref}
+                                                   className="iconfont spin">&#xe7eb;</i>
                                                 换一换
                                             </SearchInfoSwitch>
                                         </SearchInfoTitle>
@@ -119,20 +122,31 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(action)
         },
 
-        handleSwitch() {
-            console.log("handle switch");
+        handleSwitch(spin) {
+
+            const angle = spin.style.transform.replace(/[^0-9]/ig,'');
+            if (angle === "360"){
+                spin.style.transform = 'rotate(0deg)'
+            }
+            else{
+                spin.style.transform = 'rotate(360deg)'
+            }
+
+            console.log(spin, angle, spin.style.transform);
+            // this.spin
+            // console.log("handle switch");
             const action = getList(true);
             dispatch(action)
         },
 
         handleMouseIn() {
-            console.log("**************************")
+            // console.log("**************************")
             const action = mouseEnter(true);
             dispatch(action)
         },
 
         handleMouseLeave() {
-            console.log("**************************")
+            // console.log("**************************")
             const action = mouseEnter(false);
             dispatch(action)
         }

@@ -125,9 +125,32 @@
 * styled-components使用总结  
     .  所有的子class  
     &. 同级的class  
-    &::placeholder  同级下的某个属性  
+    &::placeholder  同级下的某个属性 
     
-* span是行内元素，没有宽高的，margin-top和margin-bottom无效。可以给span加一个display:inline-block或者直接display:block或者设置float属性。    
+    * example
+    ```
+    <i className={this.props.focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe6cf;</i>
+  
+    // 对于样式可以设定为如下，当被聚焦时css的focused被激活
+    .zoom{
+        position:absolute;
+        right:5px;
+        bottom:5px;
+        width:30px;
+        line-height:30px;
+        border-radius : 15px;
+        text-align:center;
+        &.focused{
+            background:#777;
+            color:#fff;
+        }
+    }
+    ``` 
+    
+* span是行内元素，没有宽高的，margin-top和margin-bottom无效。可以给span加一个display:inline-block或者直接display:block或者设置float属性。  
+
+* transform属性需要设置display:block或者float  
+    transfrom-origin:center center; 设置旋转中心
 
 
 
