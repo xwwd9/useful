@@ -16,7 +16,7 @@ import {
 import {IconGlobal} from "../../statics/iconfont/iconfont";
 import {CSSTransition} from 'react-transition-group';
 import {connect} from "react-redux"
-import {search_focus} from "./store/actionCreators";
+import {getList, mouseEnter, search_focus} from "./store/actionCreators";
 
 
 class Header extends Component {
@@ -49,7 +49,7 @@ class Header extends Component {
                                 classNames="slide"
                             >
                                 <NavSearch
-                                    className={this.props.focused ? 'focused' : ''}
+                                    className={this.props.focused? 'focused' : ''}
                                     onFocus={this.props.handleInputFocus}
                                     onBlur={this.props.handleInputBlur}
                                 >
@@ -58,23 +58,23 @@ class Header extends Component {
                             </CSSTransition>
                             <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe6cf;</i>
                             {
-                                <SearchInfo>
-                                    <SearchInfoTitle>
-                                        热门搜索
-                                        <SearchInfoSwitch>
-                                            换一换
-                                        </SearchInfoSwitch>
-                                    </SearchInfoTitle>
-                                    <div>
-                                        <SearchInfoItem>教育</SearchInfoItem>
-                                        <SearchInfoItem>教育</SearchInfoItem>
-                                        <SearchInfoItem>教育</SearchInfoItem>
-                                        <SearchInfoItem>教育</SearchInfoItem>
-                                        <SearchInfoItem>教育</SearchInfoItem>
-                                        <SearchInfoItem>教育</SearchInfoItem>
-                                        <SearchInfoItem>教育</SearchInfoItem>
-                                    </div>
-                                </SearchInfo>
+                                this.props.focused || this.props.mouseIn?
+                                    <SearchInfo onMouseEnter={this.props.handleMouseIn}
+                                                onMouseLeave={this.props.handleMouseLeave}>
+                                        <SearchInfoTitle>
+                                            热门搜索
+                                            <SearchInfoSwitch onClick={this.props.handleSwitch}>
+                                                换一换
+                                            </SearchInfoSwitch>
+                                        </SearchInfoTitle>
+                                        <div>
+                                            {
+                                                this.props.list.map((item, index) => {
+                                                    return <SearchInfoItem key={item}>{item}</SearchInfoItem>
+                                                })
+                                            }
+                                        </div>
+                                    </SearchInfo> : null
                             }
 
                         </SearchWrapper>
@@ -98,6 +98,8 @@ class Header extends Component {
 const mapStateToProps = (state) => {
     return {
         focused: state.get("header").get("focused"),
+        list: state.get("header").get("list"),
+        mouseIn: state.get("header").get("mouseIn")
     }
 };
 
@@ -105,13 +107,33 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         handleInputFocus() {
-            const action = search_focus(true)
+            const action = search_focus(true);
+            const ac = getList();
+            dispatch(ac);
             dispatch(action)
         },
 
 
         handleInputBlur() {
             const action = search_focus(false);
+            dispatch(action)
+        },
+
+        handleSwitch() {
+            console.log("handle switch");
+            const action = getList(true);
+            dispatch(action)
+        },
+
+        handleMouseIn() {
+            console.log("**************************")
+            const action = mouseEnter(true);
+            dispatch(action)
+        },
+
+        handleMouseLeave() {
+            console.log("**************************")
+            const action = mouseEnter(false);
             dispatch(action)
         }
     }

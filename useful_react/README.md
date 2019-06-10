@@ -39,6 +39,9 @@
     
 * ref的使用：  
     https://mp.weixin.qq.com/s/rWoTA9JABu_kQ8-fOM-EOw  
+
+
+* public文件下的东西是可以直接访问的，所以可以将假数据放到这个目录下。  
     
  
 
@@ -193,7 +196,15 @@
     }
 
     ```
-
+*  数组遍历：  
+    ```javascript
+    a = [1,2,3,4];
+    b = a.map((item, index) => {
+     return item+1
+    });
+  
+    //结果 b = [2,3,4,5]
+    ```
 
 
 # 小tips
