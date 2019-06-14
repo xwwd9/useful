@@ -47,3 +47,5 @@
     select regexp_replace(regexp_extract(get_json_object(data_requ, '$.data'),'^\\[(.+)\\]$',1),'\\}\\,\\{', '\\}\\|\\|\\{') as data from data_mining.guess_api_logs limit 1
     )t1 lateral view explode(split(data, '\\|\\|')) idcols as split_data
     ```
+    
+* collect explode posexplode 的使用 https://my.oschina.net/puwenchao/blog/1863087
