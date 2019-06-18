@@ -9,8 +9,8 @@ class Topic extends Component {
         return <TopicWraper>
             {
                 this.props.topics.map((value, index) => {
-                    return <TopicItem index={index}>
-                        <img className="topic-pic" src={value.get("url")} />
+                    return <TopicItem key={value.get("id")}>
+                        <img alt="" className="topic-pic" src={value.get("url")} />
                         {value.get("title")}
                     </TopicItem>
                 })

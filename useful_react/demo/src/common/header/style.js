@@ -19,6 +19,7 @@ export const Logo = styled.a.attrs({
     top:0;
     left:0;
     background:url(${logoPic});
+    // background:url(${(props) => props.imaUrl}); 直接从主键传过来的参数
     background-size:contain
 `;
 
@@ -75,6 +76,7 @@ export const SearchInfo = styled.div`
     width:240px;
     padding:0 20px;
     box-shadow: 0 0 8px rgba(0,0,0,.2);
+    background:#fff;
 `;
 
 
