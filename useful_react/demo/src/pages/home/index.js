@@ -1,13 +1,32 @@
 import React, {Component}from "react"
-import {HomeLeft, HomeRight, HomeWraper} from "./style";
+import {BackTop, HomeLeft, HomeRight, HomeWraper} from "./style";
 import Topic from "./components/Topic";
 import List from "./components/List";
 import Recomm from "./components/Recomm";
 import Writer from "./components/Writer";
 
-
+import {connect} from "react-redux";
+import {changeToTop, getHomeInfo} from "./store/actionCreators";
 
 class Home extends Component{
+
+
+    componentDidMount(){
+        this.props.changeHomeData()
+        this.bindEvents();
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.props.changeToTop);
+    }
+
+    bindEvents = () => {
+        window.addEventListener('scroll', this.props.changeToTop);
+    }
+    handleToTop = () => {
+        window.scrollTo(0, 0)
+    }
+
     render(){
         return <HomeWraper>
             <HomeLeft>
@@ -19,9 +38,37 @@ class Home extends Component{
                 <Recomm/>
                 <Writer/>
             </HomeRight>
+            {
+                this.props.showToTop?<BackTop onClick={this.handleToTop}>顶部</BackTop>:null
+            }
         </HomeWraper>
     }
 }
 
 
-export default Home
+
+const mapState = (state) => ({
+    showToTop: state.getIn(["home", "showToTop"])
+});
+
+const mapDisPatch = (dispatch) => ({
+    changeHomeData(){
+        const action = getHomeInfo();
+        dispatch(action)
+    },
+    changeToTop() {
+        // const action = ''
+        console.log(document.documentElement.scrollTop);
+        if(document.documentElement.scrollTop>600){
+            const action = changeToTop(true);
+            dispatch(action)
+        }
+        else{
+            const action = changeToTop(false);
+            dispatch(action)
+        }
+        // dispatch(action)
+    }
+});
+
+export default connect(mapState, mapDisPatch)(Home)

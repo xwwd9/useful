@@ -20,13 +20,26 @@ export const HomeLeft = styled.div`
         width:625px;
         height:270px; 
     }
-`
+`;
 
 
 export const HomeRight = styled.div`
     width:240px;
     float:right;
     // background:black;
+`;
+
+
+export const BackTop = styled.div`
+    position:fixed;
+    right:100px;
+    bottom:100px;
+    width:60px;
+    height:60px;
+    line-height:60px;
+    text-align:center;
+    border:1px solid #ccc;
+    curcor
 `
 
 

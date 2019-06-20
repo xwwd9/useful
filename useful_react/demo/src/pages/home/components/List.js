@@ -1,8 +1,9 @@
 import React, {Component} from "react"
-import {ListInfo, ListItem} from "./style";
+import {ListInfo, ListItem, LoadMore} from "./style";
 
 
 import {connect} from "react-redux"
+import {getMoreList} from "../store/actionCreators";
 
 class List extends Component {
 
@@ -23,6 +24,7 @@ class List extends Component {
                         </ListItem>
                     })
                 }
+                <LoadMore onClick={this.props.getMoreList}>更多文字</LoadMore>
             </div>
         )
     }
@@ -32,4 +34,11 @@ const mapStateToProps = (state) => ({
     artists: state.get("home").get("artists")
 });
 
-export default connect(mapStateToProps, null)(List)
+const mapDispatch = (dispatch) => ({
+    getMoreList(){
+        const action = getMoreList()
+        dispatch(action)
+    }
+})
+
+export default connect(mapStateToProps, mapDispatch)(List)

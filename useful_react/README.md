@@ -152,7 +152,7 @@
 * transform属性需要设置display:block或者float  
     transfrom-origin:center center; 设置旋转中心
 
-
+ar
 * float元素会脱离正常的文档流，使父元素的正常文档流中空无一物，在没有设置父元素高度的情况下造成父元素的高度塌陷。
 
 
