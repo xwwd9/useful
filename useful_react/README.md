@@ -122,7 +122,8 @@
 
 
 
-* styled-components使用总结  
+* styled-components使用总结 
+    空 直接是标签名表示当前下的标签 
     .  所有的子class  
     &. 同级的class  
     &::placeholder  同级下的某个属性 
