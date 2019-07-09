@@ -1,4 +1,3 @@
 
 
 
-tdetailcontent = 'getdetailcontent';

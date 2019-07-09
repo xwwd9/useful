@@ -8,10 +8,9 @@ class Login extends PureComponent {
     render() {
         return <LoginWrapper>
             <LoginBox>
-                login
-                <LoginInput placeholder="user"></LoginInput>
-                <LoginInput placeholder="password"></LoginInput>
-                <LoginButton>登录</LoginButton>
+                <LoginInput placeholder="user" ref = {(input) => {this.account = input}}></LoginInput>
+                <LoginInput placeholder="password" type="password"  ref = {(input) => {this.password = input}}></LoginInput>
+                <LoginButton onClick={() => this.props.login(this.account, this.password)}>登录</LoginButton>
             </LoginBox>
         </LoginWrapper>
     }
@@ -26,7 +25,13 @@ const mapState = (state) => {
 };
 
 
-const mapDispatch = (dispatch) => ({})
+const mapDispatch = (dispatch) => ({
+
+    login(account, password){
+        console.log(account, password)
+    }
+
+})
 
 
 export default connect(mapState, mapDispatch)(Login)

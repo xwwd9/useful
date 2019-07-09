@@ -16,8 +16,9 @@ function App() {
         <Provider store={store}>
             <div className="App">
                 <Globalstyle/>
-                <Header/>
+
                 <BrowserRouter>
+                    <Header/>
                     <Route path='/'  exact component={Home}></Route>
                     <Route path='/detail' exact component={Detail}></Route>
                     <Route path='/login' exact component={Login}></Route>

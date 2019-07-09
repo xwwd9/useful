@@ -15,6 +15,7 @@ z-index:0;
 
 
 export const LoginBox = styled.div`
+    padding-top:25px;
     width:400px;
     height:220px;
     margin:80px auto;
@@ -25,6 +26,7 @@ export const LoginBox = styled.div`
 
 
 export const LoginInput = styled.input`
+
 display:block;
     width:200px;
     height:30px;
