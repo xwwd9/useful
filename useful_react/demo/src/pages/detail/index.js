@@ -1,18 +1,46 @@
 import React, {Component}from "react"
 import {Content, DetailHeader, DetailWrapper} from "./style";
 
-
+import {connect} from "react-redux";
+import {getDetailContent} from "./store/actionCreators";
 
 class Detail extends Component{
+
+
+
     render(){
+        console.log(this.props.content);
         return <DetailWrapper>
-            <DetailHeader>老板丢给我60万行的Excel数据，幸亏我会Python，不然就惨了</DetailHeader>
-            <Content>
-                <img src="//upload-images.jianshu.io/upload_images/16980865-09b408a36a19a0cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/592/format/webp" />
+            <DetailHeader>
+                {
+                    this.props.title
+                }
+            </DetailHeader>
+            <Content dangerouslySetInnerHTML={{__html:this.props.content }}  >
             </Content>
         </DetailWrapper>
+    }
+
+    componentWillMount() {
+        this.props.getDetialContent()
     }
 }
 
 
-export default Detail
+const mapState = (state) => {
+    return {
+        title:state.getIn(["detail", "title"]),
+        content:state.getIn(["detail", "content"]),
+    }
+};
+
+
+const mapDispatch = (dispatch) => ({
+    getDetialContent(){
+        const action = getDetailContent();
+        dispatch(action)
+    }
+})
+
+
+export default connect(mapState, mapDispatch)(Detail)

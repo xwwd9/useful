@@ -30,7 +30,7 @@ class Header extends Component {
 
 
     render() {
-        console.log(this.props.focused, this.props.mouseIn)
+        console.log("updata")
         return (
             <Fragment>
                 <IconGlobal/>

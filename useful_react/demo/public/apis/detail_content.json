@@ -1,0 +1,10 @@
+
+
+
+{
+  "status": 0,
+  "data": {
+    "title":"老板丢给我60万行的Excel数据，幸亏我会Python，不然就惨了",
+    "content":"<img src='//upload-images.jianshu.io/upload_images/16980865-09b408a36a19a0cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/592/format/webp' /><p>Python一直被称为“内置电池”的编程语言，这一直被作为Python的一个优势在宣传。但是经过多年的发展，Python内置的很多“电池”已经不好用了，或者因为外部工具或平台的变化导致已经无用武之地了。这些“废旧电池”的存在，不仅增加了Python每次升级版本时维护标准库的工作量，而且会误导新手使用一些不那么优秀的方法。不管怎么看，“废旧电池”都是丢弃掉更加划算。</p>"
+  }
+}

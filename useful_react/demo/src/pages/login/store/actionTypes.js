@@ -1,0 +1,4 @@
+
+
+
+tdetailcontent = 'getdetailcontent';

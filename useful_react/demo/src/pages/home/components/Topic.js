@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 
 class Topic extends Component {
     render() {
+        console.log("updata Topic");
         return <TopicWraper>
             {
                 this.props.topics.map((value, index) => {

@@ -41,7 +41,11 @@
     https://mp.weixin.qq.com/s/rWoTA9JABu_kQ8-fOM-EOw  
 
 
-* public文件下的东西是可以直接访问的，所以可以将假数据放到这个目录下。  
+* public文件下的东西是可以直接访问的，所以可以将假数据放到这个目录下。
+
+
+* component 和 PureComponent：  
+      PureComponent：组件内部帮你实现了shouldComponentUpdata函数，判断组件是否需要跟新。
     
  
 
