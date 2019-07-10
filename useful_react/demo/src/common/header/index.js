@@ -18,6 +18,7 @@ import {CSSTransition} from 'react-transition-group';
 import {connect} from "react-redux"
 import {getList, mouseEnter, search_focus} from "./store/actionCreators";
 import {Link} from "react-router-dom";
+import {setLogin} from "../../pages/login/store/actionCreators";
 
 
 class Header extends Component {
@@ -41,7 +42,9 @@ class Header extends Component {
                         <NavItem className='left active'>首页</NavItem>
                         <NavItem className='left'>下载App</NavItem>
                         {
-                            this.props.login?<NavItem className='right'>退出</NavItem>:
+                            this.props.login ?
+                                <NavItem onClick={this.props.logout}
+                                         className='right'>退出</NavItem> :
                                 <Link to="/login"><NavItem className='right'>登录</NavItem></Link>
                         }
                         <NavItem className='right'>
@@ -87,11 +90,12 @@ class Header extends Component {
                         </SearchWrapper>
                     </Nav>
                     <Addition>
-
-                        <Button className='writting'>
-                            <i className="iconfont">&#xe61b;</i>
-                            写文章
-                        </Button>
+                        <Link to="/write">
+                            <Button className='writting'>
+                                <i className="iconfont">&#xe61b;</i>
+                                写文章
+                            </Button>
+                        </Link>
                         <Button className='reg'>注册</Button>
                     </Addition>
                 </HeaderWrapper>
@@ -129,11 +133,10 @@ const mapDispatchToProps = (dispatch) => {
 
         handleSwitch(spin) {
 
-            const angle = spin.style.transform.replace(/[^0-9]/ig,'');
-            if (angle === "360"){
+            const angle = spin.style.transform.replace(/[^0-9]/ig, '');
+            if (angle === "360") {
                 spin.style.transform = 'rotate(0deg)'
-            }
-            else{
+            } else {
                 spin.style.transform = 'rotate(360deg)'
             }
 
@@ -153,6 +156,11 @@ const mapDispatchToProps = (dispatch) => {
         handleMouseLeave() {
             // console.log("**************************")
             const action = mouseEnter(false);
+            dispatch(action)
+        },
+
+        logout() {
+            const action = setLogin(false)
             dispatch(action)
         }
     }
