@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react"
 import {connect} from "react-redux";
 import {LoginBox, LoginButton, LoginInput, LoginWrapper} from "./style";
+import {login} from "./store/actionCreators";
 
 class Login extends PureComponent {
 
@@ -28,7 +29,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => ({
 
     login(account, password){
-        console.log(account, password)
+        login(account.value, password.value);
+        console.log(account.value, password.value)
     }
 
 })
