@@ -18,6 +18,9 @@ yarn.lock
 # Distribution / packaging
 .Python
 
+private_setting.cfg
+
+venv/
 env/
 build/
 develop-eggs/
