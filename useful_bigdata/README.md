@@ -49,3 +49,9 @@
     ```
     
 * collect explode posexplode 的使用 https://my.oschina.net/puwenchao/blog/1863087
+
+
+
+* 将数据保存到本地文件  
+    insert overwrite local directory '/data'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
