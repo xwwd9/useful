@@ -35,6 +35,16 @@ def get_cur_week_day():
     return  datetime.datetime.now().isoweekday()
 
 
+#
+# def get_cur_time_millisecond():
+#     """
+#     返回当前时间戳，毫秒
+#     :return:
+#     """
+
+
+
+
 if __name__ == "__main__":
     print(get_current_date())
     print(date_add(10))
