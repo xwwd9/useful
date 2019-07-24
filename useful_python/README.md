@@ -7,11 +7,24 @@
 
 
 
+# 常用库总结和技巧总结(如需实列，请跳转到具体页面查看)
+* [re正则模块总结](./examples_jupyter/re.ipynb)
+    * match     ：从开头匹配
+    * search    ：在字符串中返回匹配的第一个结果
+    * findall   ：匹配字符串的所用内容
+    * sub       ：替换匹配的字符串
 
 
+* [mongo模块](./examples_jupyter/mongo.ipynb)
 
-# 坑
-*  读取.ini或者cfg这些配置文件都是字符串，所以在配置文件中不必写引号，或者读取的时候记得转换为数字
+* [selenium模块](./examples_jupyter/selenium.ipynb)
+
+* [excel模块](./examples_jupyter/excel.ipynb)
+
+* [一些偏门技巧总结](./examples_jupyter/tips.ipynb)
+    * 下载文件，获取文件名，并保存。以下载百度文库举例
+
+
 
 
 
@@ -56,4 +69,9 @@
     ```
     
     
+    
+
+# 坑
+*  读取.ini或者cfg这些配置文件都是字符串，所以在配置文件中不必写引号，或者读取的时候记得转换为数字
+
     

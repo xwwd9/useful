@@ -55,3 +55,30 @@
 * 将数据保存到本地文件  
     insert overwrite local directory '/data'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+
+
+
+* 2级排序 不同分类下挑选出不同节目的推荐，一个节目的推荐按得分降序取前5
+一个节目有若干推荐，一个节目有一个分类。数据表如下：  
+    节目id | 推荐节目id | 推荐分数 |节目分类 | 推荐节目分类
+    111   |  222 |  1.2|  搞笑 |   搞笑
+    321   |  2345 |  1.2|  搞笑 |   欧美
+    111   |  343 |  1.9|  搞笑 |   日韩
+    343   |  444 |  0.5|  搞笑 |   亚洲
+    ```sql
+    select * from (
+    select *, row_number() over (partition by 分类) as index2 from (
+    select t.* from (
+    select t1.*, row_number() over (partition by 节目id order by 得分 desc) as index1 from table_name
+    ) t where index1<6 
+    ) s1 
+    ) s2 where index2<400
+    ```
+    
+* count 统计的时候带有条件：
+
+
+```sql
+统计共有多少有效id，name不为空的时候id才有效
+count(distinct if(name IS NULL, 0, id))
+```    
