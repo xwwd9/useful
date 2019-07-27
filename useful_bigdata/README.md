@@ -1,6 +1,10 @@
 
 
-
+* 查看分区  
+    show partitions table_name
+    
+* 查看表结构
+    desc table_name
 
 
 * like查询  
