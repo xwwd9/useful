@@ -3,6 +3,11 @@
 
 # react总结
 
+
+* 创建项目  
+    npm install -g create-react-app
+    create-react-app project_name
+
 * 占位符  
     import {Fragment} from 'react';  
     Fragment 站位符号，可以让最外层标签隐藏
