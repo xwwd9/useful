@@ -52,6 +52,9 @@
 * component 和 PureComponent：  
       PureComponent：组件内部帮你实现了shouldComponentUpdata函数，判断组件是否需要跟新。
     
+    
+* 重定向：  
+    this.props.history.push("/path") 或者 <Redirect to"/path" />
  
 
 
@@ -247,6 +250,20 @@ ar
     
 * fiddler 接口测试测试  
     ![avatar](../docs/fiddler_auto_response.png)  
+
+
+
+
+
+
+
+* yarn超时可用：yarn add <yourPackage> --network-timeout 100000
+
+
+
+
+
+
 
 
 

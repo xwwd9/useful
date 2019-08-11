@@ -75,6 +75,29 @@
 
 
 
+* xpath  
+    * 同时满足2种属性：
+    ```
+    //div[@class='para-title level-2' and @label-module='para-title']
+    ```
+    * 获取文本(有个括号)：
+    ```
+    /text()
+    ```
+    * 获取兄弟节点
+    ```
+    /following-sibling::div[1]    
+    /preceding-sibling::div[1]
+    ```
+    * 获取当前节点的所有文本内容
+    ```angular2html
+    string(./)
+    ```
+    
+    
+    
+
+
 # redis笔记
 
 * 查看zset集合个数
