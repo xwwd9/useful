@@ -58,7 +58,7 @@
 
 * 将数据保存到本地文件  
     insert overwrite local directory '/data'
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 
 
 
@@ -86,3 +86,8 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 统计共有多少有效id，name不为空的时候id才有效
 count(distinct if(name IS NULL, 0, id))
 ```    
+
+* 删除分区
+```sql
+alter table table_name drop partition (dayid=99999999);
+```

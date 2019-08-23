@@ -1,6 +1,7 @@
 import {fromJS} from "immutable"
 import {change_home_data, change_to_top, get_list_more} from "./actionTypes";
 
+
 const defaultState = fromJS({
         topics: [],
         artists: [],
