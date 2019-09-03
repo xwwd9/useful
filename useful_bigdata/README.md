@@ -91,3 +91,8 @@ count(distinct if(name IS NULL, 0, id))
 ```sql
 alter table table_name drop partition (dayid=99999999);
 ```
+
+* 查看分区创建时间
+```sql
+desc extended table_name partition(partition_name=partition_value);
+```
