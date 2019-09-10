@@ -170,6 +170,20 @@ ar
 
 
 
+
+* 元素居中
+    ```
+    定位为absolute元素的居中
+    {
+        position:absolute;
+        top:50%; 
+        left:50%;
+        width:480px;
+        margin-top:-100px;(元素高度的一半)
+        margin-left:-240px;(元素宽度的一半)
+    }
+    ```
+
     
 
 # JS总结
