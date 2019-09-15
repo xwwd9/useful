@@ -56,7 +56,44 @@
 * 重定向：  
     this.props.history.push("/path") 或者 <Redirect to"/path" />
  
+* withRouter:
+    高阶组件中的withRouter, 作用是将一个组件包裹进Route里面, 然后react-router的三个对象history, location, match就会被放进这个组件的props属性中.
+    所以withRouter的作用就是, 如果我们某个东西不是一个Router, 但是我们要依靠它去跳转一个页面, 比如点击页面的logo, 返回首页, 这时候就可以使用withRouter来做.
 
+
+* router传参:
+    ```
+    1.params方式
+        优势 ： 刷新地址栏，参数依然存在
+        缺点:只能传字符串，并且，如果传的值太多的话，url会变得长而丑陋。
+    <Route path='/path/:name' component={Path}/>
+    <link to="/path/2">xxx</Link>
+    this.props.history.push({pathname:"/path/" + name});
+    读取参数用:this.props.match.params.name
+    
+    2.query方式
+        优势：传参优雅，传递参数可传对象；
+        缺点：刷新地址栏，参数丢失
+    <Route path='/query' component={Query}/>
+    <Link to={{ path : ' /query' , query : { name : 'sunny' }}}>
+    this.props.history.push({pathname:"/query",query: { name : 'sunny' }});
+    读取参数用: this.props.location.query.name
+    
+    3.state方式
+        优缺点同query
+    <Route path='/sort ' component={Sort}/>
+    <Link to={{ path : ' /sort ' , state : { name : 'sunny' }}}> 
+    this.props.history.push({pathname:"/sort ",state : { name : 'sunny' }});
+    读取参数用: this.props.location.query.state 
+    
+    4.search方式
+        优缺点同params
+    <Route path='/web/departManange ' component={DepartManange}/>
+    <link to="web/departManange?tenantId=12121212">xxx</Link>
+    this.props.history.push({pathname:"/web/departManange?tenantId" + row.tenantId});
+    读取参数用: this.props.location.search
+    
+    ```
 
 
 # css总结  
