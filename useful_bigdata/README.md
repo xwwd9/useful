@@ -96,3 +96,9 @@ alter table table_name drop partition (dayid=99999999);
 ```sql
 desc extended table_name partition(partition_name=partition_value);
 ```
+
+
+* 向表中添加字段
+```sql
+ alter table students add columns(age string);
+```

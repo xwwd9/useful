@@ -160,7 +160,7 @@ const mapDispatchToProps = (dispatch) => {
         },
 
         logout() {
-            const action = setLogin(false)
+            const action = setLogin(false);
             dispatch(action)
         }
     }

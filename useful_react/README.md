@@ -210,18 +210,34 @@ ar
 
 * 元素居中
     ```
+    一般元素
+    text-align: center;
+    
+    
     定位为absolute元素的居中
     {
         position:absolute;
         top:50%; 
         left:50%;
         width:480px;
+        height:480px;
         margin-top:-100px;(元素高度的一半)
         margin-left:-240px;(元素宽度的一半)
     }
     ```
 
+* 文字垂直居中
+    ```
+    1.高度为具体的数值的情况，line-height 只需要设置具体的高度即可。
     
+    2.利用表格和单元格的特性，让文字垂直居中。
+    {
+        display: table-cell;
+        height: 100px;
+        vertical-align: middle;
+    }
+    ```
+
 
 # JS总结
 
