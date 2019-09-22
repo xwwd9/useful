@@ -1,5 +1,7 @@
 # scrapy笔记
 
+[返回上一级](../README.md)
+
 * 获取scrapy的配置文件  
     ```python
     get_project_settings()
