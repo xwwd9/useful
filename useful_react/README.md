@@ -311,12 +311,61 @@ ar
   
     //结果 b = [2,3,4,5]
     ```
+    
+*  Array:  
+
+    *  Array.from(arrayLike[, mapFunction[, thisArg]])  
+        * arrayLike：必传参数，想要转换成数组的伪数组对象或可迭代对象。  
+        * mapFunction：可选参数，mapFunction(item，index){…} 是在集合中的每个项目上调用的函数。返回的值将插入到新集合中。  
+        * thisArg：可选参数，执行回调函数 mapFunction 时 this 对象。这个参数很少使用  
+        
+        
+    ``` javascript
+    
+    
+    //浅拷贝一个数组
+    const numbers = [3, 6, 9];
+    const numbersCopy = Array.from(numbers);
+    
+    numbers === numbersCopy; // => false
+    
+    
+    //使用值填充数组
+    const length = 3;
+    const init   = 0;
+    const result = Array.from({ length }, () => init);
+    
+    result; // => [0, 0, 0]
+
+    const length = 3;
+    
+    // 使用对象填充数组(fill() 方法创建的 resultB 使用相同的空对象实例进行初始化。不会跳过空项。)
+    const resultA = Array.from({ length }, () => ({}));
+    const resultB = Array(length).fill({});
+    
+    resultA; // => [{}, {}, {}]
+    resultB; // => [{}, {}, {}]
+    
+    resultA[0] === resultA[1]; // => false
+    resultB[0] === resultB[1]; // => true
+
+
+    //map() 方法会跳过空项
+    const length = 3;
+    const init   = 0;
+    const result = Array(length).map(() => init);
+    result; // => [undefined, undefined, undefined]
+    ```
 
 
 # 小tips
+
+* [在线模拟接口平台](https://www.fastmock.site/)
     
 * fiddler 接口测试测试  
     ![avatar](../docs/fiddler_auto_response.png)  
+
+
 
 
 

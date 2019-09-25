@@ -13,9 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
+# from myApp import apis
+import sys
+sys.path.append('../')
+from myApp import apis
+from django.conf.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^api/users/$', apis.UserList.as_view()),
+    url(r'^api/users/(?P<pk>[0-9]+)/$', apis.UserDetail.as_view()),
+    url(r'^api/books/$', apis.BookList.as_view()),
+]
+
+
+urlpatterns += [
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

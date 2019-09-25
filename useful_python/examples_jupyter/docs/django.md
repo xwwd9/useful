@@ -26,7 +26,7 @@
 * 主表查询子表  
     django 默认每个主表的对象都有一个是外键的属性，可以通过它来查询到所有属于主表的子表的信息。这个属性的名称默认是以子表的名称小写加上_set()来表示，也可以在创建外键的时候用related_name这个参数指定。
     ```python
-    class Person(models.Model);
+    class Person(models.Model)
         name = models.CharField(verbose_name='作者姓名', max_length=10)
         age = models.IntegerField(verbose_name='作者年龄')
 
@@ -68,6 +68,33 @@
     ```
 
 
+*  创建一个外键  
+    ```
+    owner = models.ForeignKey('auth.User', related_name='books' ,on_delete=models.CASCADE)
+    ```
+    
+*  有外键时候的序列化 
+```
+# 查出这本书属于哪个用户
+owner = serializers.ReadOnlyField(source='ownere.username')
+
+# 查出这个用户都有哪些书
+books = serializers.PrimaryKeyRelatedField(many=True, queryset=Book.objects.all())
+```
+
+
+*  通过接口创建有外键的表的时候需要额外对这个外键进行操作  
+    ```python
+    #比如创建book的时候需要关联到创建的用户
+    class BookList(generics.ListCreateAPIView):
+        queryset = Book.objects.all()
+        serializer_class = BookSerializer
+        #添加访问权限
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    
+        def perform_create(self, serializer):
+            serializer.save(owner=self.request.user)
+    ```
 
 
 
