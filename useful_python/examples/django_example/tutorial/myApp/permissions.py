@@ -18,7 +18,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         # 只有该 book 的所有者才允许写权限。
-        return obj.owner == request.user
+        return obj.ownere == request.user
 
 
 

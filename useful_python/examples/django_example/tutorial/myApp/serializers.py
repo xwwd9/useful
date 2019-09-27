@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Book
+from .models import Book, Publish
 from django.contrib.auth.models import User
 
 class BookSerializer(serializers.ModelSerializer):
@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     # 这里的 book 和模型中 related_name 定义的名字要相同
     books = serializers.PrimaryKeyRelatedField(many=True, queryset=Book.objects.all())
-    # book_name = books.title
+    # book_name = serializers.ReadOnlyField(source=books.username)
     print("*****", books)
     # bb = serializers.StringRelatedField()
     class Meta:
@@ -26,5 +26,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
+
+class PublishSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Publish
+        fields = ("id", "name", "address")
 
 

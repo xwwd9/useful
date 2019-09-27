@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^api/users/$', apis.UserList.as_view()),
     url(r'^api/users/(?P<pk>[0-9]+)/$', apis.UserDetail.as_view()),
     url(r'^api/books/$', apis.BookList.as_view()),
+url(r'^api/books/(?P<pk>[0-9]+)/$', apis.BookDetail.as_view()),
 ]
 
 
