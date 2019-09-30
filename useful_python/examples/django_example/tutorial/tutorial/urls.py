@@ -18,16 +18,27 @@ from django.contrib import admin
 from django.urls import path
 # from myApp import apis
 import sys
+
+from myApp import apis
+
 sys.path.append('../')
 from myApp import apis
 from django.conf.urls import include
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'books', apis.BookViewSet)
+router.register(r'users', apis.UserViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api/users/$', apis.UserList.as_view()),
-    url(r'^api/users/(?P<pk>[0-9]+)/$', apis.UserDetail.as_view()),
-    url(r'^api/books/$', apis.BookList.as_view()),
-url(r'^api/books/(?P<pk>[0-9]+)/$', apis.BookDetail.as_view()),
+
+    path('', include(router.urls)),
+
+#     url(r'^api/users/$', apis.UserList.as_view()),
+#     url(r'^api/users/(?P<pk>[0-9]+)/$', apis.UserDetail.as_view()),
+#     url(r'^api/books/$', apis.BookList.as_view()),
+# url(r'^api/books/(?P<pk>[0-9]+)/$', apis.BookDetail.as_view()),
 ]
 
 

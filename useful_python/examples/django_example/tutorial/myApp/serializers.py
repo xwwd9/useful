@@ -6,6 +6,8 @@ class BookSerializer(serializers.ModelSerializer):
 
 
     ownere = serializers.ReadOnlyField(source='ownere.username')
+    highlight = serializers.HyperlinkedIdentityField(
+        view_name='book-highlight', format='html')
     class Meta:
         model = Book
         fields = ('id', 'title', 'author', 'amount', 'ownere')
@@ -13,10 +15,10 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     # 这里的 book 和模型中 related_name 定义的名字要相同
-    books = serializers.PrimaryKeyRelatedField(many=True, queryset=Book.objects.all())
+    books = serializers.HyperlinkedRelatedField(many=True, view_name='book-detail',queryset=Book.objects.all())
     # book_name = serializers.ReadOnlyField(source=books.username)
     print("*****", books)
     # bb = serializers.StringRelatedField()
@@ -27,7 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
-class PublishSerializer(serializers.ModelSerializer):
+class PublishSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Publish
