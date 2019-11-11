@@ -70,12 +70,15 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     111   |  343 |  1.9|  搞笑 |   日韩
     343   |  444 |  0.5|  搞笑 |   亚洲
     ```sql
-    select * from (
-    select *, row_number() over (partition by 分类) as index2 from (
-    select t.* from (
-    select t1.*, row_number() over (partition by 节目id order by 得分 desc) as index1 from table_name
-    ) t where index1<6 
-    ) s1 
+    select * from 
+  (
+      select *, row_number() over (partition by 分类) as index2 from 
+      (
+        select t.* from 
+        (
+          select t1.*, row_number() over (partition by 节目id order by 得分 desc) as index1 from table_name
+        ) t where index1<6 
+      ) s1 
     ) s2 where index2<400
     ```
     

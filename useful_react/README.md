@@ -160,7 +160,7 @@
 
 
 
-* reset.css (https://meyerweb.com/eric/tools/css/reset/) 用于同一pc端样式  
+* reset.css (https://meyerweb.com/eric/tools/css/reset/) 用于统一pc端样式  
 
 
 * position:  (https://blog.csdn.net/zzz365zz/article/details/79104063)
