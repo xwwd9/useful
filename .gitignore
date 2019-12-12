@@ -18,8 +18,11 @@ yarn.lock
 # Distribution / packaging
 .Python
 
-private_setting.cfg
 
+private_setting.cfg
+pri
+venv
+.idea
 venv/
 env/
 build/

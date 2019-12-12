@@ -60,10 +60,10 @@ if __name__ == "__main__":
             # time.sleep(25)
 
             WebDriverWait(driver, SLEET_TIME, 2).until(
-                lambda dv: dv.find_element_by_id('com.tencent.mm:id/b5m'))
+                lambda dv: dv.find_element_by_id('com.tencent.mm:id/bae'))
 
             WebDriverWait(driver, SLEET_TIME, 2).until(
-                lambda dv: dv.find_element_by_id('com.tencent.mm:id/b5m'))
+                lambda dv: dv.find_element_by_id('com.tencent.mm:id/bag'))
 
             subscription_flag = False
             err_cnt = 0
