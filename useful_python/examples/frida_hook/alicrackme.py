@@ -61,9 +61,21 @@ def on_message(message, data):
         print(message)
 
 
-process = frida.get_device_manager().enumerate_devices()[-1].attach(
-    "com.yaotong.crackme")
+# process = frida.get_device_manager().enumerate_devices()[-1].attach(
+#     "com.yaotong.crackme")
+
+# script = process.create_script(native_hook_code)
+
+
+print(frida.get_usb_device())
+process = frida.get_usb_device().attach('com.tencent.mm')
 script = process.create_script(native_hook_code)
+script.on('message', on_message)
+print('[*] Running CTF')
+script.load()
+sys.stdin.read()
+
+
 script.on('message', on_message)
 script.load()
 sys.stdin.read()
