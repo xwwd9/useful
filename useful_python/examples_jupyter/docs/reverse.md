@@ -27,7 +27,12 @@ adb push frida-server /data/frida_server
 
 
 
+# android studio 设置Java为1.8
+* File -> Project Structure -> Modules，将如下最后两个勾选1.8的选项
 
+* 修改build.gradle中为1.8
+
+* 光标放到错误的地方，直接点击出设置，然后设置1.8
 
 
 # xposed模块使用
@@ -44,23 +49,23 @@ adb push frida-server /data/frida_server
       dependencies 表是项目依赖项，compileOnly表示只在编译时有效，不会参与打包，后边82表示版本
      
     * 然后在Manifest.xml中的<application/>中添加
-    ```
-        <meta-data
-            android:name="xposedmodule"
-            android:value="true" />
-        <meta-data
-            android:name="xposeddescription"
-            android:value="myhook" />
-        <meta-data
-            android:name="xposedminversion"
-            android:value="82" />
-    ```
+        ```
+            <meta-data
+                android:name="xposedmodule"
+                android:value="true" />
+            <meta-data
+                android:name="xposeddescription"
+                android:value="myhook" />
+            <meta-data
+                android:name="xposedminversion"
+                android:value="82" />
+        ```
     分别表示这个是一个xposed模块， 描述是myhook ，支持的最小xposed版本是82
     
     * 在assets目录下新建一个名为xposed_init的文件，并将hook的类写入该文件中，如有多个类，则每行写一个，如下。
-    ```
-    xxx.xxx.myhook1
-    xxx.xxx.myhook2
-    ```
+        ```
+        xxx.xxx.myhook1
+        xxx.xxx.myhook2
+        ```
     assets目录默认是没有的，可以手动创建，或者选择Android模式，右键点击new->Folder->Assets Folder
 

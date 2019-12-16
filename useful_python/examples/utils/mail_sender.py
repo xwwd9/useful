@@ -9,14 +9,14 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-def mail_sender(file_path):
+def mail_sender(text, file_path = None):
     receivers = ["18200159908@139.com"]
 
     sender = "18200159908@139.com"
     mail_pass = "migu111112@"  # 邮箱的三方授权客户端密码
 
     mail_subject = "美滋滋"  # 邮件的标题
-    mail_context = "美滋滋"  # 邮件正文内容
+    mail_context = text  # 邮件正文内容
 
     # 创建一个带附件的实例
     msg = MIMEMultipart()
@@ -24,21 +24,18 @@ def mail_sender(file_path):
     msg["To"] = ";".join(receivers)  # 收件人
     msg["Subject"] = mail_subject  # 邮件标题
 
-    file_name = "节目量统计.xlsx"
-    # file_path = './docs/节目量统计.xlsx'
-
-    file_name = file_path.split('/')[-1]
-    # file_path = "/".join(file_path.split('/')[0:-1]) + "/"
 
     # ---------------------------------------附件内容-------------------------------------#
     # 邮件正文
     msg.attach(MIMEText(mail_context, 'plain', 'utf-8'))
     # 构造附件
-    att = MIMEText(open(file_path, "rb").read(), "base64", "utf-8")
-    att.add_header('Content-Disposition', 'attachment',
-                   filename=("utf-8", "", file_name))
+    if file_path:
+        file_name = file_path.split('/')[-1]
+        att = MIMEText(open(file_path, "rb").read(), "base64", "utf-8")
+        att.add_header('Content-Disposition', 'attachment',
+                       filename=("utf-8", "", file_name))
 
-    msg.attach(att)
+        msg.attach(att)
 
     try:
         # 启动网易SMTP服务，端口４６５

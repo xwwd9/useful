@@ -1,13 +1,10 @@
-import logging
-import time
 import logging.config
-import cv2
-import numpy as np
+import time
+
 import pyautogui as pyautogui
 import pywinauto
 from airtest.core.api import touch, exists, find_all
 from airtest.core.cv import Template
-from airtest.core.win import Windows
 from pywinauto.win32functions import GetSystemMetrics
 
 from useful_python.examples.my_pywinauto.tools import init_weixin, air_init
@@ -25,11 +22,11 @@ Y_BACK = -1
 SUBSCRIBE_DOWN_MOVE = int(Y_MAX * 0.064)
 SUBSCRIBE_RIGHT_MOVE = 700
 # 从下方点击订阅文章的初始位置
-SUBSCRIBE_DETAIL_START = int(Y_MAX * 0.88)
+SUBSCRIBE_DETAIL_START = int(Y_MAX * 0.88)-Y_MIDDLE+60
 # 详情页每上一步的距离
 SUBSCRIBE_DETAIL_UP = int(Y_MAX * 0.064)
 # 在详情页鼠标上移多少次
-SUBSCRIBE_DETAIL_UP_TIMES = 2
+SUBSCRIBE_DETAIL_UP_TIMES = 5
 
 IMG_PATH = 'imgs/'
 # 动作定义
@@ -42,6 +39,7 @@ PIC_AM = IMG_PATH + 'am.png'
 PIC_PM = IMG_PATH + 'pm.png'
 PIC_NEW = IMG_PATH + 'new.png'
 # PIC_NEW = IMG_PATH + 'fake_new.png'
+# PIC_NEW = IMG_PATH + 'new_old.png'
 
 # 图片序列名字
 img_index = 0
@@ -52,6 +50,20 @@ dlg = None
 
 def do_action(action):
     touch(Template(action))
+
+
+def click_subscribe():
+    """
+    点击点阅按钮，成功返回True，失败返回False
+    """
+    ret = exists(Template(CLICK_SUBSCRIBE, threshold=0.80))
+    if ret:
+        touch(Template(CLICK_SUBSCRIBE, threshold=0.80))
+        return True
+    return False
+
+# def is_sub_exist():
+
 
 
 def is_in_detail():
@@ -155,26 +167,34 @@ def screen_shot():
 def run_new():
     global bac_pos
     scroll_to_top()
+    # 点击订阅号
+    # 如果有订阅号的按钮，执行正常流程， 下滚10次
+
+    pywinauto.mouse.move(coords=(X_MIDDLE, 0))
     for i in range(10):
+        screen_shot()
+
+        # 鼠标移动到屏幕中间
         time.sleep(2)
         x, y = X_MIDDLE, Y_MIDDLE
 
+        # 查找当前新的消息
         rets = find_news()
-
-        logger.info('当前新消息的位置'+str(rets))
+        logger.info('当前新消息的位置' + str(rets))
         screen_shot()
 
+        # 找到当前新的消息， 依次点击
         for ret in rets:
+
             result = ret.get('result', (0, 0))
             pywinauto.mouse.move(coords=result)
             time.sleep(1)
-
             pywinauto.mouse.click(coords=result)
 
             logger.info('点击进入公众号')
             screen_shot()
 
-
+            # 不断点击公众号中的文章
             click_detail_list()
 
             logger.info("开始判断是否在公众号页面,需不需要返回")
@@ -196,6 +216,7 @@ def run_new():
         pywinauto.mouse.scroll(coords=(x, y), wheel_dist=-30)
 
 
+
 if __name__ == "__main__":
 
     logging.config.fileConfig('logging.cfg')
@@ -205,18 +226,18 @@ if __name__ == "__main__":
     # logger.error("error")
 
     dlg = init_weixin()
-    uuid = dlg.handle
-    air_init(uuid)
-    do_action(CLICK_SUBSCRIBE)
 
-    screen_shot()
-
-    pywinauto.mouse.move(coords=(X_MIDDLE, 0))
-
-    while True:
-        try:
-            run_new()
-        except Exception as e:
-            print(e)
-            logger.error(e)
-            time.sleep(10)
+    # while True:
+    #     try:
+    #         dlg = init_weixin()
+    #         uuid = dlg.handle
+    #         air_init(uuid)
+    #         success = click_subscribe()
+    #         if success:
+    #             run_new()
+    #         else:
+    #             logger.error("没有识别到订阅号，请检查")
+    #     except Exception as e:
+    #         print(e)
+    #         logger.error(e)
+    #         time.sleep(10)

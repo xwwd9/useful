@@ -1,11 +1,18 @@
+import pywinauto
 from airtest.core.api import init_device, touch
 from airtest.core.cv import Template
 from pywinauto import Application
 
 
 def init_weixin():
-    app = Application().start(
-        r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
+    # Application(
+    # app = Application().start(
+    #     r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
+
+
+    app = Application().connect(
+        path=r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
+
     if not app.windows():
         app = Application().connect(
             path=r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
