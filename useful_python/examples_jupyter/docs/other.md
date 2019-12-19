@@ -17,6 +17,12 @@
 
 
 
+# Pycharm 使用技巧
+
+* Kite
+    * ctrl+p 查看文档
+    * ctrl+shift+a 输入Kite: Docs at cursor 查看文档
+
 
 
 

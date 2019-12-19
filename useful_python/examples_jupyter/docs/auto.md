@@ -1,13 +1,12 @@
 
 
-# 安装appium
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Appium-Python-Client
 
 
-
-
-
-# appium配置参数
+# appium
+* 安装appium
+    pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Appium-Python-Client
+    
+* appium配置参数
     ```
     {
       "platformName": "Android",
@@ -25,5 +24,15 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Appium-Python-Client
       "skipDeviceInitialization": false
     }
     ```
+
+    * 报错集合  
+        * appium  Could not proxy command to remote server. Original error: Error: socket hang up 重新安装手机上的appium apk 是由于上回运行资源未释放
+
+
+# uiautomator2 使用
+
+* 安装插件pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simpl --pre weditor
+
+* 运行python -m  weditor 启动元素查看器
 
 

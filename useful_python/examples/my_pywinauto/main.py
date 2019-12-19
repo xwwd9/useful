@@ -7,7 +7,8 @@ from airtest.core.api import touch, exists, find_all
 from airtest.core.cv import Template
 from pywinauto.win32functions import GetSystemMetrics
 
-from useful_python.examples.my_pywinauto.tools import init_weixin, air_init
+from useful_python.examples.my_pywinauto.tools import init_weixin, air_init, \
+    mail_sender
 
 logger = logging.getLogger("main")
 
@@ -38,7 +39,7 @@ MORE_TEXT = IMG_PATH + 'more.png'
 PIC_AM = IMG_PATH + 'am.png'
 PIC_PM = IMG_PATH + 'pm.png'
 PIC_NEW = IMG_PATH + 'new.png'
-# PIC_NEW = IMG_PATH + 'fake_new.png'
+PIC_NEW = IMG_PATH + 'fake_new.png'
 # PIC_NEW = IMG_PATH + 'new_old.png'
 
 # 图片序列名字
@@ -186,6 +187,8 @@ def run_new():
         # 找到当前新的消息， 依次点击
         for ret in rets:
 
+            # 需要加个new位置的判断
+
             result = ret.get('result', (0, 0))
             pywinauto.mouse.move(coords=result)
             time.sleep(1)
@@ -207,7 +210,7 @@ def run_new():
                 pywinauto.mouse.click(coords=bac_pos)
             else:
                 # 没识别到返回页面，流程可能出错需要从进订阅号页面
-                do_action(CLICK_SUBSCRIBE)
+                click_subscribe()
                 logger.info("没识别到返回页面，流程可能出错需要从进订阅号页面")
                 screen_shot()
 
@@ -225,19 +228,27 @@ if __name__ == "__main__":
     # logger.info("info")
     # logger.error("error")
 
-    dlg = init_weixin()
+    # dlg = init_weixin()
 
-    # while True:
-    #     try:
-    #         dlg = init_weixin()
-    #         uuid = dlg.handle
-    #         air_init(uuid)
-    #         success = click_subscribe()
-    #         if success:
-    #             run_new()
-    #         else:
-    #             logger.error("没有识别到订阅号，请检查")
-    #     except Exception as e:
-    #         print(e)
-    #         logger.error(e)
-    #         time.sleep(10)
+    while True:
+        try:
+            dlgs = init_weixin()
+            if len(dlgs) != 1:
+                logger.error("未发现微信进程，请检查")
+                mail_sender("未发现微信进程，请检查")
+            for dlg in dlgs:
+                uuid = dlg.handle
+                air_init(uuid)
+                success = click_subscribe()
+                if success:
+                    run_new()
+                else:
+                    logger.error("没有识别到订阅号，请检查")
+
+            logger.info("循环跑完一次，暂停10分钟")
+            time.sleep(30)
+        except Exception as e:
+            print(e)
+            logger.error(e)
+            mail_sender(str(e))
+            time.sleep(10)

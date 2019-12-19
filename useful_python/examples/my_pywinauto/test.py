@@ -1,6 +1,7 @@
 import logging.config
 
 import pywinauto
+import requests
 
 from useful_python.examples.my_pywinauto.tools import init_weixin
 
@@ -18,8 +19,10 @@ if __name__ == "__main__":
 
 
     ret = pywinauto.findwindows.find_windows(class_name="WeChatMainWndForPC")
-    print(ret)
 
+
+    a = "okk"
+    a.translate()
 
 
     # dlg = init_weixin()

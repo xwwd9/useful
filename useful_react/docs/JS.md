@@ -133,3 +133,26 @@
       }
       
     ```
+  
+* Js中读取Json文件
+    ```
+    var fs  = require("fs")
+
+    //异步的方式读取
+    fs.readFile('./data.json',function(err,data){
+        if(err){
+            return console.error(err);
+        }
+        var companys = data.toString();//将二进制的数据转换为字符串
+        companys = JSON.parse(companys);//将字符串转换为json对象
+        
+        console.log("***", companys)
+        
+    })
+    
+    
+    //同步的方式读取
+    var companys = JSON.parse(fs.readFileSync('./data.json'))
+    
+    console.log(companys)
+    ```
