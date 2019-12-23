@@ -24,6 +24,9 @@
       "skipDeviceInitialization": false
     }
     ```
+  
+    * 定位元素
+     * 可直接通过xpath的属性定位，比如：//*[@text="关注公众号"]
 
     * 报错集合  
         * appium  Could not proxy command to remote server. Original error: Error: socket hang up 重新安装手机上的appium apk 是由于上回运行资源未释放
