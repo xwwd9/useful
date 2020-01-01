@@ -18,7 +18,7 @@ yarn.lock
 # Distribution / packaging
 .Python
 
-
+test.py
 private_setting.cfg
 pri
 venv

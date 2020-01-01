@@ -31,6 +31,7 @@ headers = {
 cookie_params = {}
 
 
+
 def get_cookies():
     global cookie_params
     # 获取3个cookie
@@ -83,6 +84,9 @@ def get_cookies():
 
     # print(cookie_params)
 
+
+
+
 def get_k_h(url):
     b = int(random.random() * 100) + 1
     a = url.find("url=")
@@ -92,93 +96,111 @@ def get_k_h(url):
 
 if __name__ == "__main__":
 
-    url = 'https://weixin.sogou.com/weixin?type=2&s_from=input&query={}&_sug_=n&_sug_type_=&page=2'.format(
-        parse.quote("格力电器"))
+    texts = ['格力电器', '新东方', 'a', "w", "asdf"]
+    for text in texts:
+        url = 'https://weixin.sogou.com/weixin?type=2&s_from=input&query={}&_sug_=n&_sug_type_=&page=2'.format(
+            parse.quote(text))
 
-    list_url = url
-
-
-    ret = requests.get(url, headers=headers, verify=False)
-
-    cookies = ret.headers['Set-Cookie']
-    cookie_params['SNUID'] = re.findall('SNUID=(.*?);', cookies, re.S)[0]
-    cookie_params['ABTEST'] = re.findall('ABTEST=(.*?);', cookies, re.S)[0]
-
-    get_cookies()
-    get_cookies()
+        list_url = url
 
 
-    from lxml import etree
-
-    html = etree.HTML(ret.text)
-    urls = ['https://weixin.sogou.com' + i for i in
-            html.xpath('//div[@class="img-box"]/a/@href')]
-
-    url = urls[0]
-
-    for index, url in enumerate(urls):
-        # if index :
-        #     continue
-
-        temp_headers = {
-            "Host": "weixin.sogou.com",
-            "Connection": "keep-alive",
-            "Upgrade-Insecure-Requests": "1",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
-            "Sec-Fetch-User":"?1",
-            "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
-            "Sec-Fetch-Site": "same-origin",
-            "Sec-Fetch-Mode": "navigate",
-            "Referer": "https://weixin.sogou.com/weixin?type=2&query=%E6%A0%BC%E5%8A%9B%E7%94%B5%E5%99%A8",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Accept-Language": "zh,zh-CN;q=0.9,ru;q=0.8,en;q=0.7,en-US;q=0.6",
-            "Cookie": "ABTEST={}; SNUID={}; IPLOC={}; SUID={}; JSESSIONID={}; SUV={}; weixinIndexVisited=1; sct=1; PHPSESSID=ii081dbh6596muqc2eu66j9080".format(
-                cookie_params['ABTEST'], cookie_params['SNUID'],
-                cookie_params['IPLOC'], cookie_params['SUID'],
-                cookie_params['JSESSIONID'],
-                cookie_params['SUV'])
-        }
-
-        url = get_k_h(url)
-        response3 = requests.get(url=url, headers=temp_headers, verify=False)
-
-        fragments = re.findall("url \+= '(.*?)'", response3.text, re.S)
-        itemurl = ''
-        for i in fragments:
-            itemurl += i
+        ret = requests.get(url, headers=headers, verify=False)
 
 
-        print(itemurl + '**************')
-        if not itemurl:
-            continue
 
-        # 先发送一个许可
-        apprve_url = re.findall("src = (.*?);", response3.text, re.S)
-        print(apprve_url)
+        # 提取approve_url
 
-        temp_headers = {
-            **headers,
-            "Cookie": "ABTEST={}; SNUID={}; IPLOC={}; SUID={}; JSESSIONID={}; SUV={}; weixinIndexVisited=1; sct=1; PHPSESSID=ii081dbh6596muqc2eu66j9080".format(
-                cookie_params['ABTEST'], cookie_params['SNUID'],
-                cookie_params['IPLOC'], cookie_params['SUID'],
-                cookie_params['JSESSIONID'],
-                cookie_params['SUV'])
-        }
+        uuid = re.findall(r'"uuid"          : "(.*?)",', ret.text, re.S)[0]
+        temp_url = re.findall(r'\$\.get\((.*?)\);', ret.text, re.S)[0]
+        temp_url = temp_url.split(' + ')
+        approve_url = temp_url[0]+uuid+temp_url[2]+temp_url[3]+temp_url[4]
+        approve_url = approve_url.replace("'", "")
+        approve_url = approve_url.replace('"', "")
 
-        ret = requests.get(url=eval(apprve_url[0]), headers=temp_headers, verify=False)
+        ret = requests.get(approve_url, headers=headers, verify=False)
 
 
-        # 文章url拿正文
-        # headers4 = {
-        #     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
-        #     "accept-encoding": "gzip, deflate, br",
-        #     "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
-        #     "cache-control": "max-age=0",
-        #     "user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
-        # }
-        ret = requests.get(itemurl, headers=headers, verify=False)
-        print(itemurl, ret.status_code, index)
-        time.sleep(2)
+
+        cookies = ret.headers['Set-Cookie']
+        cookie_params['SNUID'] = re.findall('SNUID=(.*?);', cookies, re.S)[0]
+        cookie_params['ABTEST'] = re.findall('ABTEST=(.*?);', cookies, re.S)[0]
+
+
+        get_cookies()
+        # get_cookies()
+
+        from lxml import etree
+
+
+        html = etree.HTML(ret.text)
+        urls = ['https://weixin.sogou.com' + i for i in
+                html.xpath('//div[@class="img-box"]/a/@href')]
+
+        url = urls[0]
+
+        for index, url in enumerate(urls):
+            if index>1:
+                break
+
+            temp_headers = {
+                "Host": "weixin.sogou.com",
+                "Connection": "keep-alive",
+                "Upgrade-Insecure-Requests": "1",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
+                "Sec-Fetch-User":"?1",
+                "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
+                "Sec-Fetch-Site": "same-origin",
+                "Sec-Fetch-Mode": "navigate",
+                "Referer": "https://weixin.sogou.com/weixin",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept-Language": "zh,zh-CN;q=0.9,ru;q=0.8,en;q=0.7,en-US;q=0.6",
+                "Cookie": "ABTEST={}; SNUID={}; IPLOC={}; SUID={}; JSESSIONID={}; SUV={}; weixinIndexVisited=1; sct=1; PHPSESSID=ii081dbh6596muqc2eu66j9080".format(
+                    cookie_params['ABTEST'], cookie_params['SNUID'],
+                    cookie_params['IPLOC'], cookie_params['SUID'],
+                    cookie_params['JSESSIONID'],
+                    cookie_params['SUV'])
+            }
+
+            url = get_k_h(url)
+            response3 = requests.get(url=url, headers=temp_headers, verify=False)
+
+            fragments = re.findall("url \+= '(.*?)'", response3.text, re.S)
+            itemurl = ''
+            for i in fragments:
+                itemurl += i
+
+
+            print(itemurl + '**************')
+            if not itemurl:
+                continue
+
+            # 先发送一个许可
+            apprve_url = re.findall("src = (.*?);", response3.text, re.S)
+            print(apprve_url)
+
+            temp_headers = {
+                **headers,
+                "Cookie": "SNUID={}; weixinIndexVisited=1; sct=1; PHPSESSID=ii081dbh6596muqc2eu66j9080".format(
+                     cookie_params['SNUID'])
+            }
+
+            ret = requests.get(url=eval(apprve_url[0]), headers=temp_headers, verify=False)
+
+
+
+
+            # 文章url拿正文
+            # headers4 = {
+            #     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
+            #     "accept-encoding": "gzip, deflate, br",
+            #     "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
+            #     "cache-control": "max-age=0",
+            #     "user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
+            # }
+
+            ret = requests.get(itemurl, headers=headers, verify=False)
+            print(itemurl, ret.status_code, index)
+            # time.sleep(2)
 
 
 

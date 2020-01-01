@@ -84,3 +84,10 @@
     
     reactor.run() # the script will block here until all crawling jobs are finished
     ```
+
+
+* cookie的使用
+    * "COOKIES_ENABLED":True 是否使用cookie
+    * 在使用Request()构造请求，或者直接在中间件中设置cookies的时候需要注意meta中donot_merge_cookies参数的设置，donot_merge_cookies = False 时，自己设置的cookie不会生效，也就是自己的cookie不会和scrapy的cookie合并。
+    
+    * 总而言之，要使用cookie，需要把设置打开，自己设置的cookie回合scrapy的进行合并。直接在header中设置cookie，这些参数是否生效，还未尝试。
