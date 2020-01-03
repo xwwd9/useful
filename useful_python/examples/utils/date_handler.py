@@ -4,10 +4,9 @@
 https://www.cnblogs.com/tkqasn/p/6001134.html
 """
 
-
+import datetime
 
 def get_current_date():
-    import datetime
     cur_data = datetime.date.today().strftime("%Y%m%d")
     # print(cur_data)
     return cur_data
@@ -19,7 +18,6 @@ def date_add(interval):
     :param interval:
     :return:
     """
-    import datetime
     cur_data = datetime.date.today()
     cur_data = (cur_data + datetime.timedelta(interval)).strftime("%Y%m%d")
     # print(cur_data)
@@ -31,9 +29,16 @@ def get_cur_week_day():
     isoweekday() 返回 1 2 3 4 5 6 7
     :return:
     """
-    import datetime
+
     return  datetime.datetime.now().isoweekday()
 
+
+def utcfromtimestamp(timestamp):
+    """
+    根据时间戳，返回datetime的datetime对象
+    """
+
+    return datetime.datetime.utcfromtimestamp(timestamp)
 
 #
 # def get_cur_time_millisecond():

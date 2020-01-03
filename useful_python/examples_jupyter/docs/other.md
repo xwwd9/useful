@@ -138,6 +138,83 @@
 * 将容器重新打包成镜像：docker commit test xxx/common
 * 将镜像推入厂库：docker push 192.168.4.125:5000/xxx_common
 * 给镜像打标签：docker tag xxx/common 192.168.4.125:50xxx00/xxx_common
-
-* 更改容器时区：ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+* * 更改容器时区：ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime。  
+  * 或者使用tzselect设置时区。  
+  * 注意一定要用ln，不要用cp，如果设置了不生效，请查看文件内的内容是否是正确的+8小时。
+  * 注意还要修改/etc/timezone文件中的内容为Asia/Shanghai，不然在程序中会时区报错。 
+  * 如果上述修改后还不行，可以尝试设置TZ环境变量：TZ='Asia/Shanghai'; export TZ并将这行命令添加到.profile中，然后退出并重新登录
 * 
+
+
+
+# 常用linux命令
+* 查看系统磁盘使用：df -h
+* 查看文件目录大小：  
+    * 先用：du -sh查看总目录大小
+    * 再用：du -sh * 查看分目录的大小 
+    
+# docker命令
+* 查看docker磁盘使用情况：docker system df
+* 查看命令：docker ps -a --no-trunc
+* 以supervisor的方式启动docker ：docker run -itd -p 7000:7000 -p 7001:7001 -p 7002:7002 -p 7003:7003 -p 7004:7004 --restart unless-stopped --name scrapydweb scrapy  supervisord -nc /work/supervisor/supervisord.conf 
+* 重启docker：systemctl restart docker
+* 进入docker：docker exec -it scrapydweb /bin/bash
+
+
+# redis常用命令
+* config set requirepass FNpn 设置密码，重启后失效
+* redis-cli -h 40.96.33.234 -p 6379 连接redis
+* 进入redis后使用auth认证
+* select 13 选取数据库
+* key * 查看当前有哪些keys
+* 一些常用命令查看：http://doc.redisfans.com/
+
+
+# anyproxy使用
+* 启动anyproxy -i --rule 文件.js: -i是表是抓取https
+* 注意开启防火墙，和代理设置。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 代理总结：
+* 使用过的代理：http://www.moguproxy.com/http
+```
+目前来说代理服务主要提供2种代理：
+1.常规代理：直接提供代理ip，访问一次接口，得到5-10个代理ip地址。
+	优点：较为灵活，不限制并发量。可以控制哪个请求用的是哪一个代理ip，在cookie和ip绑定的场景很实用。
+	缺点：服务端限制了获取代理ip的频率（一般是每10s获取5个ip代理），需要编写服务，维护ip代理池。
+	套餐配置：目前看到的有：1.每日获取ip量固定（ip短期有效/或长期有效） 2.每日获取ip量不固定（ip短期有效/或长期有效）
+2.转发代理：提供一个统一的服务端地址，请求到服务端后，由服务端随机分配代理ip。
+	优点：使用方便，不用自己维护代理池。
+	缺点：服务端会限制访问次数， 如每秒的并发请求次数不能超过5次，或者总请求量不能超过多少次。用的代理不能够自己安排，每回都是服务端随机分配的一个。
+	套餐配置：目前看到的有1.限制并发量的套餐 2.限制总请求次数的套餐。（平局要比常规代理的贵）
+
+
+总结：推荐使用常规代理服务（每日ip不限量,ip短期有效的套餐），自己维护ip代理池。
+	  转发代理服务限制并发数量，1-2个爬虫跑没有问题，但是爬虫多了每秒的并发量会很大，购买对应的套餐会很贵。
+```
