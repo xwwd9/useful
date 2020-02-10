@@ -155,11 +155,17 @@
     
 # docker命令
 * 查看docker磁盘使用情况：docker system df
-* 查看命令：docker ps -a --no-trunc
+* 查看命令：docker ps --no-trunc
 * 以supervisor的方式启动docker ：docker run -itd -p 7000:7000 -p 7001:7001 -p 7002:7002 -p 7003:7003 -p 7004:7004 --restart unless-stopped --name scrapydweb scrapy  supervisord -nc /work/supervisor/supervisord.conf 
 * 重启docker：systemctl restart docker
 * 进入docker：docker exec -it scrapydweb /bin/bash
-
+* 开机自启动：systemctl enable docker
+* 配置更新命令：docker container update --restart=unless-stopped myredis
+* 容器提交成镜像：docker commit test pgy/common (这种方式会把历史记录打包进去，容器可能会越来越大)
+* 保存镜像：docker save ID > xxx.tar
+           docker load < xxx.tar
+* 保存容器：docker export ID >xxx.tar
+           docker import xxx.tar containr:v1
 
 # redis常用命令
 * config set requirepass FNpn 设置密码，重启后失效
@@ -168,6 +174,11 @@
 * select 13 选取数据库
 * key * 查看当前有哪些keys
 * 一些常用命令查看：http://doc.redisfans.com/
+
+
+# mongo常用命令：
+* 创建索引：db.company_contact.createIndex({"companyName": 1, "source": 1}, {"background": true, "unique":true})
+* 查看当前索引：db.sentiment.getIndexes()
 
 
 # anyproxy使用
@@ -179,6 +190,15 @@
 
 
 
+# ssdb查询命令：
+* 查看keys：
+    1. keys　 '' '' 10　   字符串类型
+    
+    2. qlist　'' '' 10　　 列表类型
+    
+    3. hlist　'' '' 10　　 哈希类型
+    
+    4. zlist  '' '' 10　  有序集合类型
 
 
 
@@ -192,8 +212,7 @@
 
 
 
-
-
+* 阿里云 查看公网ip：curl httpbin.org/ip
 
 
 

@@ -8,17 +8,24 @@ import redis
 
 if __name__ == "__main__":
 
-    key = "sogouwechatinfo:requests"
+    key = "alidetail1688:requests"
 
-    r = redis.StrictRedis(host="*****", port=6379, db=15, password='*****')
+    host = "39.96.81.234"
+    password = 'FNlowtF!^fpn'
+
+    r = redis.StrictRedis(host=host, port=6379, db=14, password=password)
     ret = r.zrange(key, 0, -1)
     print(ret)
 
-    r2 = redis.StrictRedis(host="******", port=6379, db=14, password='****')
+    r2 = redis.StrictRedis(host=host, port=6379, db=15, password=password)
+
+    r2.keys()
 
     for index, i in enumerate(ret):
         ret = r2.execute_command('ZADD', key, 0, i)
         print(ret, index)
+
+
 
 
 
