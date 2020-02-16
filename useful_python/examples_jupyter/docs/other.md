@@ -177,8 +177,17 @@
 
 
 # mongo常用命令：
+* 启动mongo服务：
+    * 启动docker：docker run -itd --name mongo -p 27017:27017 mongo --auth
+    * 进入shell，选择admin用户：docker exec -it mongo mongo admin
+    * 创建用户：db.createUser({ user:'admin',pwd:'123456',roles:[ { role:'userAdminAnyDatabase', db: 'admin'}]});
+    * 授权链接： db.auth('admin', '123456')
+    * 创建一般用户：db.createUser({user: "pgy",pwd: "******",roles: [{role: "readWrite",db: "hope"}]})
 * 创建索引：db.company_contact.createIndex({"companyName": 1, "source": 1}, {"background": true, "unique":true})
 * 查看当前索引：db.sentiment.getIndexes()
+* 其他：
+    * show dbs
+    * show users
 
 
 # anyproxy使用
