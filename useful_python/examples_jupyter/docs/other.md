@@ -196,8 +196,11 @@
 
 
 
-
-
+# nodejs
+* 安装nodejs
+    * yum install npm
+    * 安装工具n（用于管理npm版本）：npm install -g n
+    * 想升级到一个指定的版本，则可以使用n 12.16.0来升级
 
 # ssdb查询命令：
 * 查看keys：
