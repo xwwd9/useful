@@ -52,6 +52,7 @@ def mail_sender(text, file_path = None):
         print(e)
 
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--file", help="邮件名字")

@@ -188,6 +188,56 @@
 * 其他：
     * show dbs
     * show users
+* 常用查询
+    * 模糊查询
+    ```
+        1.查询包含XXX:{name:/xxx/}
+        2.查询以XXX开头:{name:/^xxx/}
+        3.查询以XXX结尾:{name:/xxx^/}
+        4.查询忽略大小写:{name:/xxx/i}
+  
+        db.contacts.find({
+            contact_type:3,
+            contact_info:{ $regex:/.../}
+        }).count()
+    ```
+    * 列表类型的一些操作
+    ```
+    sources是个列表类型，其中存的是字典,查询字段是否存在
+    {
+        ***:***
+        "sources" : [
+            {
+                "c" : "***",
+                "s" : "***",
+                "s_url" : "***"
+            },
+            {
+                "c" : "***",
+                "s" : "***",
+                "s_date" : ***,
+                "s_url" : "***"
+            }
+        ],
+    }
+    db.contacts.find({"sources.s_date":{$exists: true}})
+       
+    对sources.source_date为空的字段进行删除，应该可以直接单独使用unset进行操作
+    db.contacts.update(
+       { },
+       { $unset: { "sources.$[elem].source_date" : "" } },
+       { multi: true,
+         arrayFilters: [ { "elem.source_date": "" } ]
+       }
+    )
+    ```
+  * remove操作
+    ```
+        db.contacts.remove({
+            type:3,
+            info:{ $regex:/.../}
+        })
+    ```
 
 
 # anyproxy使用
