@@ -266,6 +266,12 @@
 
 
 
+# 防火墙
+ * iptables -I INPUT -p tcp --dport 3000 -j ACCEPT
+ * firewall-cmd --zone=public --add-port=3001/tcp --permanent  
+   命令含义: –zone #作用域 –add-port=80/tcp #添加端口，格式为：端口/通讯协议 –permanent #永久生效，没有此参数重启后失效  
+   **开启端口后记得重启**  
+   **firewall-cmd --reload**
 
 
 
@@ -273,7 +279,7 @@
 
 
 
-
+# 阿里云
 * 阿里云 查看公网ip：curl httpbin.org/ip
 
 
