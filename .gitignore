@@ -19,8 +19,6 @@ yarn.lock
 .Python
 
 test.py
-private_setting.cfg
-private_setting.py
 pri
 venv
 .idea
