@@ -176,68 +176,7 @@
 * 一些常用命令查看：http://doc.redisfans.com/
 
 
-# mongo常用命令：
-* 启动mongo服务：
-    * 启动docker：docker run -itd --name mongo -p 27017:27017 mongo --auth
-    * 进入shell，选择admin用户：docker exec -it mongo mongo admin
-    * 创建用户：db.createUser({ user:'admin',pwd:'123456',roles:[ { role:'userAdminAnyDatabase', db: 'admin'}]});
-    * 授权链接： db.auth('admin', '123456')
-    * 创建一般用户：db.createUser({user: "pgy",pwd: "******",roles: [{role: "readWrite",db: "hope"}]})
-* 创建索引：db.company_contact.createIndex({"companyName": 1, "source": 1}, {"background": true, "unique":true})
-* 查看当前索引：db.sentiment.getIndexes()
-* 其他：
-    * show dbs
-    * show users
-* 常用查询
-    * 模糊查询
-    ```
-        1.查询包含XXX:{name:/xxx/}
-        2.查询以XXX开头:{name:/^xxx/}
-        3.查询以XXX结尾:{name:/xxx^/}
-        4.查询忽略大小写:{name:/xxx/i}
-  
-        db.contacts.find({
-            contact_type:3,
-            contact_info:{ $regex:/.../}
-        }).count()
-    ```
-    * 列表类型的一些操作
-    ```
-    sources是个列表类型，其中存的是字典,查询字段是否存在
-    {
-        ***:***
-        "sources" : [
-            {
-                "c" : "***",
-                "s" : "***",
-                "s_url" : "***"
-            },
-            {
-                "c" : "***",
-                "s" : "***",
-                "s_date" : ***,
-                "s_url" : "***"
-            }
-        ],
-    }
-    db.contacts.find({"sources.s_date":{$exists: true}})
-       
-    对sources.source_date为空的字段进行删除，应该可以直接单独使用unset进行操作
-    db.contacts.update(
-       { },
-       { $unset: { "sources.$[elem].source_date" : "" } },
-       { multi: true,
-         arrayFilters: [ { "elem.source_date": "" } ]
-       }
-    )
-    ```
-  * remove操作
-    ```
-        db.contacts.remove({
-            type:3,
-            info:{ $regex:/.../}
-        })
-    ```
+
 
 
 # anyproxy使用
