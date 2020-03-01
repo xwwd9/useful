@@ -12,10 +12,12 @@ def upload_byte():
                          bucket_name)
 
 
-    with open("C:\\Users\\kaiyi\\Pictures\\Camera Roll\\a.jpg", "rb") as f:
+    with open("C:\\Users\\pugui\\Pictures\\a.jpg", "rb") as f:
         b_img = f.read()
-        a = bucket.put_object(bucket_name, b_img)
-        print(a)
+        a = bucket.put_object("b.jpg", b_img)
+        # a = bucket.put_object_from_file('<yourObjectName>', '<yourLocalFile>')
+        print(bucket.sign_url('GET', 'b.jpg', 60))
+        # print(a)
 
 
 
