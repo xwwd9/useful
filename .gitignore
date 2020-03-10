@@ -62,7 +62,7 @@ docs/_build/
 
 pyvenv.cfg
 pip-selfcheck.json
-
+package-lock.json
 
 # Created by .ignore support plugin (hsz.mobi)
 
