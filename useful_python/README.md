@@ -34,6 +34,12 @@
     * 下载图片需重写ImagesPipeline
     * 如果在spider中用了custom_settings,需要注意不是和全局的setting合并，而是只用spider中自己的settings
     * xpath总结
+        * //后有多个节点直接通过[1]来选取，1是代表第一个
+            ```
+               // 有多个div选第一个
+               response.xpath("//div[@class='hy-mainLeftA'][1]/ul/li").extract_first()
+            ```
+        * 选取兄弟节点 following-sibling::li[1]
 
 
 

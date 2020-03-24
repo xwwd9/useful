@@ -237,6 +237,26 @@ ar
         vertical-align: middle;
     }
     ```
+  
+* css 选择器
+    ```
+        通用选择器：*
+        
+        id选择器：#header{}
+        
+        class选择器：.header{}
+        
+        元素选择器：div{}
+        
+        子选择器：ul > li{}
+        
+        后代选择器：div p{}
+    ```
+  
+* css图谱
+    * ![avatar](../docs/css.png)  
+ 
+
 
 # [JS总结](./docs/JS.md)  
 

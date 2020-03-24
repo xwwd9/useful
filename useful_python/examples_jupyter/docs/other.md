@@ -143,6 +143,8 @@
   * 注意一定要用ln，不要用cp，如果设置了不生效，请查看文件内的内容是否是正确的+8小时。
   * 注意还要修改/etc/timezone文件中的内容为Asia/Shanghai，不然在程序中会时区报错。 
   * 如果上述修改后还不行，可以尝试设置TZ环境变量：TZ='Asia/Shanghai'; export TZ并将这行命令添加到.profile中，然后退出并重新登录
+  * 将文件拷贝进入docker：docker cp sources.list  scrapyweb:/work
+  
 * 
 
 
@@ -223,6 +225,23 @@
 
 
 
+
+* docker 镜像加速
+    ```
+        sudo mkdir -p /etc/docker
+        sudo tee /etc/docker/daemon.json <<-'EOF'
+        {
+            "registry-mirrors": [
+                "https://1nj0zren.mirror.aliyuncs.com",
+                "https://docker.mirrors.ustc.edu.cn",
+                "http://f1361db2.m.daocloud.io",
+                "https://registry.docker-cn.com"
+            ]
+        }
+        EOF
+        sudo systemctl daemon-reload
+        sudo systemctl restart docker
+    ```
 
 
 

@@ -114,3 +114,17 @@
             $match：匹配条件
             $unwind：拆分字段
         ```
+      
+      
+
+
+
+* 导入导出
+    https://www.runoob.com/mongodb/mongodb-linux-install.html
+    export PATH=/usr/local/mongodb/bin:$PATH
+    ```
+        mongoexport --authenticationDatabase nbd_cloud_st -h dds-2ze1ef8846dcb504118410.mongodb.rds.aliyuncs.com:3717 -u nbd_cloud_st -p fanshan@2019  -d nbd_cloud_st -c clue_social_qixinbao -o  ./clue_social_qixinbao.json
+        
+        mongoimport --authenticationDatabase data_rawdb -h dds-2ze1ef8846dcb504118410.mongodb.rds.aliyuncs.com:3717 -u data_rawdb -p Raw_Fs2020  -d data_rawdb -c statistics --file ./a.json
+    
+    ```
