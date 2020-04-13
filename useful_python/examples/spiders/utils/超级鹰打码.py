@@ -74,6 +74,6 @@ if __name__ == '__main__':
     # print(chaojiying.PostPic(im, 1902))
 
 
-    im = open('b.png', 'rb').read()
+    im = open('a.jpg', 'rb').read()
     print(chaojiying.PostPic(im, 6001))
 
