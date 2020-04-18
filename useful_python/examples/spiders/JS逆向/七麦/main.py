@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import base64
 import re
 import time
@@ -11,13 +5,13 @@ from functools import cmp_to_key
 from urllib.parse import quote
 
 
-def g(t,n="00000008d78d46a"):
+def g(t, n="00000008d78d46a"):
     t = [i for i in t]
     a = len(t)
     e = len(n)
     i = 0
-    while i<a:
-        t[i] = chr(ord(t[i])^ord(n[(i+10)%e]))
+    while i < a:
+        t[i] = chr(ord(t[i]) ^ ord(n[(i + 10) % e]))
         i += 1
 
     ret = "".join(t)
@@ -27,8 +21,9 @@ def g(t,n="00000008d78d46a"):
 
 def s(a):
     b = a.group()[1:]
-    return chr(int('0x'+b, 16))
+    return chr(int('0x' + b, 16))
     # return 'a'
+
 
 def encode(n):
     """
@@ -38,7 +33,7 @@ def encode(n):
     n = quote(n)
     print(n)
     pattern = re.compile(r'%([0-9A-F]{2})')
-    ret = pattern.sub(lambda a:s(a), n)
+    ret = pattern.sub(lambda a: s(a), n)
 
     print(ret, len(ret), len(ret.encode()))
 
@@ -56,14 +51,14 @@ def encode(n):
 
 def sort_str_int(x, y):
     if type(x) == type(y):
-        return x>y
+        return x > y
     elif type(x) == int:
         return -1
     else:
         return 1
 
 
-def base_encoder(api_type, page = 1, appid = "", words = "", market = ""):
+def base_encoder(api_type, page=1, appid="", words="", market=""):
     if api_type == 1:
         # 表面是遍历接口
         i = [page, market, words]
@@ -106,12 +101,10 @@ def base_encoder(api_type, page = 1, appid = "", words = "", market = ""):
     return r
 
 
-def get_urls(api_type, appid = "", words = "", market = ""):
-
-
+def get_urls(api_type, appid="", words="", market=""):
     # 遍历接口
     if api_type == 1:
-        analysis = base_encoder(api_type, page = 1, words = words, market = market)
+        analysis = base_encoder(api_type, page=1, words=words, market=market)
         analysis = quote(analysis)
         words = quote(words)
         url_template = "https://api.qimai.cn/search/android?analysis={analysis}&page=1&search={words}&market={market}"
@@ -141,14 +134,8 @@ def get_urls(api_type, appid = "", words = "", market = ""):
         print(ret)
         return ret
 
-
-
-
-
     # return url_template.format(analysis=analysis, market=market, words=words)
     # 详情接口
-
-
 
 
 if __name__ == '__main__':
@@ -156,9 +143,3 @@ if __name__ == '__main__':
     # get_urls(2, appid="61", market="100")
     # get_urls(3, appid="61")
     get_urls(4, appid="61")
-
-
-
-
-
-
