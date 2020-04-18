@@ -9,12 +9,18 @@
     * https://obfuscator.io/
 
 # 混淆环境
-npm install esprima estraverse escodegen -S
+* npm install esprima estraverse escodegen -S
 
 
 
+# 逆向大纲
+* hello world，console.log 混淆解密
+* 利用AST去除debugger无限循环
 
-* AST树笔记
+
+
+# AST笔记
+* 节点含义
 
     * 可将混淆代码转换成AST树，从而替换节点，达到解密的目的。
     * CallExpression函数对应的AST和源码
