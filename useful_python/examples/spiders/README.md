@@ -8,6 +8,7 @@
     ```python
     b = bytes('我', encoding='utf8')
     c = [*b]
+    # 这里的c实际就为对应的ASCII编码对应的数组
     bytearray(c).decode(encoding="utf8")
     ```
 
