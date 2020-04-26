@@ -140,6 +140,6 @@ def get_urls(api_type, appid="", words="", market=""):
 
 if __name__ == '__main__':
     # get_urls(1, "4", "王者荣耀")
-    # get_urls(2, appid="61", market="100")
+    get_urls(2, appid="61", market="100")
     # get_urls(3, appid="61")
-    get_urls(4, appid="61")
+    # get_urls(4, appid="61")
