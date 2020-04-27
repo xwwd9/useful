@@ -133,9 +133,101 @@
         }
 
         ```
-
-
-
+      
+    * CallExpression: 中有callee和arguments,callee中如果是Identifier会有name
+        ```
+        //源码
+        _0x8787()
+        //AST
+        "expression": {
+              "type": "CallExpression",
+              "start": 163,
+              "end": 172,
+              "loc": {
+                "start": {
+                  "line": 6,
+                  "column": 0
+                },
+                "end": {
+                  "line": 6,
+                  "column": 9
+                }
+              },
+              "callee": {
+                "type": "Identifier",
+                "start": 163,
+                "end": 170,
+                "loc": {
+                  "start": {
+                    "line": 6,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 6,
+                    "column": 7
+                  },
+                  "identifierName": "_0x8787"
+                },
+                "name": "_0x8787"
+              },
+              "arguments": []
+            }
+        ```
+      
+    * NumericLiteral和StringLiteral：
+        ```
+        // 对于，16进制转换成人可读的数组和字符串，只需要去掉extra就可以
+        // delete path.node.extra
+        // 0xa3
+        // '\x70\x75\x73\x68'
+      
+        //AST
+        "expression": {
+          "type": "NumericLiteral",
+          "start": 185,
+          "end": 189,
+          "loc": {
+            "start": {
+              "line": 9,
+              "column": 0
+            },
+            "end": {
+              "line": 9,
+              "column": 4
+            }
+          },
+          "extra": {
+            "rawValue": 163,
+            "raw": "0xa3"
+          },
+          "value": 163
+        }
+      
+      
+      
+      
+      
+        "expression": {
+          "type": "StringLiteral",
+          "start": 190,
+          "end": 208,
+          "loc": {
+            "start": {
+              "line": 10,
+              "column": 0
+            },
+            "end": {
+              "line": 10,
+              "column": 18
+            }
+          },
+          "extra": {
+            "rawValue": "push",
+            "raw": "'\\x70\\x75\\x73\\x68'"
+          },
+          "value": "push"
+        }
+        ```
 
 
 * AST小结
