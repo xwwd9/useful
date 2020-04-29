@@ -134,7 +134,8 @@
 
         ```
       
-    * CallExpression: 中有callee和arguments,callee中如果是Identifier会有name
+    * CallExpression: 中有callee和arguments,callee中如果是Identifier会有name,  
+        callee就是括号左边的值，如a\['a'\](),callee就是a\['a'\],是个MemberExpression。
         ```
         //源码
         _0x8787()
@@ -228,8 +229,140 @@
           "value": "push"
         }
         ```
+      
+    * WhileStatement和IfStatement
+        ```
+        //源码
+        
+        while(true){
+          
+        }
+        if(true){
+        }
+      
+        //AST
+        {
+            "type": "WhileStatement",
+            "start": 179,
+            "end": 196,
+            "loc": {
+              "start": {
+                "line": 8,
+                "column": 0
+              },
+              "end": {
+                "line": 10,
+                "column": 1
+              }
+            },
+            "test": {
+              "type": "BooleanLiteral",
+              "start": 185,
+              "end": 189,
+              "loc": {
+                "start": {
+                  "line": 8,
+                  "column": 6
+                },
+                "end": {
+                  "line": 8,
+                  "column": 10
+                }
+              },
+              "value": true
+            },
+            "body": {
+              "type": "BlockStatement",
+              "start": 190,
+              "end": 196,
+              "loc": {
+                "start": {
+                  "line": 8,
+                  "column": 11
+                },
+                "end": {
+                  "line": 10,
+                  "column": 1
+                }
+              },
+              "body": [],
+              "directives": []
+            },
+            "leadingComments": [
+              {
+                "type": "CommentBlock",
+                "value": "*\n * Paste or drop some JavaScript here and explore\n * the syntax tree created by chosen parser.\n * You can use all the cool new features from ES6\n * and even more. Enjoy!\n ",
+                "start": 0,
+                "end": 177,
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 6,
+                    "column": 3
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "IfStatement",
+            "start": 200,
+            "end": 211,
+            "loc": {
+              "start": {
+                "line": 14,
+                "column": 0
+              },
+              "end": {
+                "line": 15,
+                "column": 1
+              }
+            },
+            "test": {
+              "type": "BooleanLiteral",
+              "start": 203,
+              "end": 207,
+              "loc": {
+                "start": {
+                  "line": 14,
+                  "column": 3
+                },
+                "end": {
+                  "line": 14,
+                  "column": 7
+                }
+              },
+              "value": true
+            },
+            "consequent": {
+              "type": "BlockStatement",
+              "start": 208,
+              "end": 211,
+              "loc": {
+                "start": {
+                  "line": 14,
+                  "column": 8
+                },
+                "end": {
+                  "line": 15,
+                  "column": 1
+                }
+              },
+              "body": [],
+              "directives": []
+            },
+            "alternate": null
+          }
 
+        ```
 
+    * SwitchStatement: 中有个discriminant，就是switch(d)中的d
+    
+    * ReturnStatement:中有个argument，为返回值
+    
 * AST小结
     ```
     Esprima 本质上将 js 代码解析成了两大部分：
@@ -241,4 +374,7 @@
     1.关键字组成的 statement，如 IfStatement, ForStatement等，这里面的BlockStatement有些特殊，因为其body又是 StatementListItem，产生递归。
     2.运算语句（赋值、计算之类的操作）组成的 ExpressionStatement
     
+  
+    利用path.toString()可以将当前AST对应的源码打印出来
+  
     ```
