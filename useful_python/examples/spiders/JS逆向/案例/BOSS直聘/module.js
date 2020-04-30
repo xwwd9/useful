@@ -40,7 +40,6 @@ var _0x5c34 = function(_0x8c2ed, _0x1aa96f) {
             for (var _0x24949f = 0x0, _0xc0d313 = _0x290afe['length']; _0x24949f < _0xc0d313; _0x24949f++) {
                 _0x27ae9d += '%' + ('00' + _0x290afe['charCodeAt'](_0x24949f)['toString'](0x10))['slice'](-0x2);
             }
-            console.log(_0x27ae9d)
             return decodeURIComponent(_0x27ae9d);
         }
         ;
