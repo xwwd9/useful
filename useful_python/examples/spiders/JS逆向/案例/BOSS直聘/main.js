@@ -82,54 +82,52 @@ traverse(ast, {
                     // console.log("okkk")
 
                 let exp = node.expression
-                if(!t.isMemberExpression(exp.left) || !t.isFunctionExpression(exp.right) || !t.isIdentifier(exp.left.object) || exp.left.object.name !== object_name)
-                    return
-                // 当前节点确定为一个函数赋值表达式,确定替换体
-                let property_name = exp.left.property.value;
-                let retStmt = exp.right.body.body[0] // 替换体
+                    if(t.isFunctionExpression(exp.right)){
+
+
+                        if(!t.isMemberExpression(exp.left) || !t.isFunctionExpression(exp.right) || !t.isIdentifier(exp.left.object) || exp.left.object.name !== object_name)
+                            return
+                        // 当前节点确定为一个函数赋值表达式,确定替换体
+                        let property_name = exp.left.property.value;
+                        let retStmt = exp.right.body.body[0] // 替换体
 
 
 
 
-                // 将满足条件的语句替换
-                start_fun_path.traverse({
-                     CallExpression: function (_path) {
 
-                        if (!t.isMemberExpression(_path.node.callee)) return
+                        // 将满足条件的语句替换
+                        start_fun_path.traverse({
+                             CallExpression: function (_path) {
 
-                         if(_path.node.callee.property.value !== property_name)
-                             return
-                        let node = _path.node.callee
-                        if (!t.isIdentifier(node.object)) return
-                        let args = _path.node.arguments // 调用传入的参数
+                                if (!t.isMemberExpression(_path.node.callee)) return
 
-                        if (t.isBinaryExpression(retStmt.argument) && args.length === 2) {
-                            _path.replaceWith(t.binaryExpression(retStmt.argument.operator, args[0], args[1]))
-                        }
-                        if (t.isLogicalExpression(retStmt.argument) && args.length === 2) {
-                            _path.replaceWith(t.logicalExpression(retStmt.argument.operator, args[0], args[1]))
-                        }
-                        if (t.isCallExpression(retStmt.argument) && t.isIdentifier(retStmt.argument.callee)) {
-                            // console.log(_path.toString())
-                            _path.replaceWith(t.callExpression(args[0], args.slice(1)))
-                        }
+                                 if(_path.node.callee.property.value !== property_name)
+                                     return
+                                let node = _path.node.callee
+                                if (!t.isIdentifier(node.object)) return
+                                let args = _path.node.arguments // 调用传入的参数
+
+                                if (t.isBinaryExpression(retStmt.argument) && args.length === 2) {
+                                    _path.replaceWith(t.binaryExpression(retStmt.argument.operator, args[0], args[1]))
+                                }
+                                if (t.isLogicalExpression(retStmt.argument) && args.length === 2) {
+                                    _path.replaceWith(t.logicalExpression(retStmt.argument.operator, args[0], args[1]))
+                                }
+                                if (t.isCallExpression(retStmt.argument) && t.isIdentifier(retStmt.argument.callee)) {
+                                    // console.log(_path.toString())
+                                    _path.replaceWith(t.callExpression(args[0], args.slice(1)))
+                                }
+                            }
+                        })
                     }
-                })
 
-
-                path.remove()
-            },
-                MemberExpression(path){
-                    let node = path.node
-                    if(!t.isAssignmentExpression(node.expression))
-                        return
-
-                    let exp = node.expression
-                    if(!t.isMemberExpression(exp.left) || !t.isStringLiteral(exp.right) || exp.left.object.name !== object_name)
+                    if(t.isMemberExpression(exp.left)){
+                        if(!t.isMemberExpression(exp.left) || !t.isStringLiteral(exp.right) || exp.left.object.name !== object_name)
                         return
 
                     // 当前节点确定为一个函数赋值表达式,确定替换体
-                    let property_name = node.property.value;
+                    //     console.log(exp.right.property)
+                    let property_name = exp.left.property.value;
                     let retStmt = exp.right.value // 替换体
 
                      start_fun_path.traverse({
@@ -143,8 +141,12 @@ traverse(ast, {
                          }
                      })
 
+                    }
 
-                },
+
+                path.remove()
+            },
+
         })
         }
 
