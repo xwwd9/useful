@@ -2,7 +2,7 @@
 * 启动mongo服务：
     * 启动docker：docker run -itd --name mongo -p 27017:27017 mongo --auth
     * 进入shell，选择admin用户：docker exec -it mongo mongo admin
-    * 创建用户：db.createUser({ user:'admin',pwd:'123456',roles:[ { role:'userAdminAnyDatabase', db: 'admin'}]});
+    * 创建用户(在哪个库下创建的用户，登录的时候需要指定这个数据库)：db.createUser({ user:'admin',pwd:'123456',roles:[ { role:'userAdminAnyDatabase', db: 'admin'}]});
     * 授权链接： db.auth('admin', '123456')
     * 创建一般用户：db.createUser({user: "pgy",pwd: "******",roles: [{role: "readWrite",db: "hope"}]})
     * 更新权限：db.grantRolesToUser("pgy", [{role:"root", db:"admin"}])
