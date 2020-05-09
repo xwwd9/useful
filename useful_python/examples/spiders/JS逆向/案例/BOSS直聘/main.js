@@ -143,7 +143,6 @@ traverse(ast, {
 
                     }
 
-
                 path.remove()
             },
 
