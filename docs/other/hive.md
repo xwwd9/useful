@@ -1,3 +1,4 @@
+[返回上一级](../../README.md)
 
 
 * 查看分区  
@@ -42,7 +43,7 @@
     因为原数据是string（并不是真正的数组类型）类型的，所以无法直接使用explode函数
     1. regexp_extract('xxx','^\[(.+)\]$',1) 这里是把需要解析的json数组去除左右中括号，需要注意的是这里的中括号需要两个转义字符\[。
     2. regexp_replace('xxx','\}\,\{', '\}\|\|\{') 把json数组的逗号分隔符变成两根竖线||，可以自定义分隔符只要不在json数组项出现就可以。
-    ![avatar](../../../docs/hive_json_extract.png) 
+    ![avatar](../imgs/hive_json_extract.png) 
     
     ```sql
     
@@ -105,3 +106,7 @@ desc extended table_name partition(partition_name=partition_value);
 ```sql
  alter table students add columns(age string);
 ```
+
+
+
+[返回上一级](../../README.md)

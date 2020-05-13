@@ -2,7 +2,7 @@
 
 # django笔记
 
-[返回上一级](../README.md)
+[返回上一级](../../README.md)
 
 
 * 创建项目 django-admin startproject service
@@ -96,5 +96,8 @@ books = serializers.PrimaryKeyRelatedField(many=True, queryset=Book.objects.all(
             serializer.save(owner=self.request.user)
     ```
 
+
+
+[返回上一级](../../README.md)
 
 

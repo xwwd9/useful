@@ -1,5 +1,5 @@
 
-[返回主目录](../README.md)
+[返回主目录](../../README.md)
 
 # react总结
 

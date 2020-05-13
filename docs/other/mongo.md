@@ -1,3 +1,5 @@
+[返回上一级](../../README.md)
+
 # mongo常用命令：
 * 启动mongo服务：
     * 启动docker：docker run -itd --name mongo -p 27017:27017 mongo --auth
@@ -129,3 +131,6 @@
         mongoimport --authenticationDatabase data_rawdb -h dds-2ze1ef8846dcb504118410.mongodb.rds.aliyuncs.com:3717 -u data_rawdb -p ***  -d data_rawdb -c statistics --file ./a.json
     
     ```
+
+
+[返回上一级](../../README.md)

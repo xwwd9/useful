@@ -1,6 +1,7 @@
-# scrapy笔记
 
-[返回上一级](../README.md)
+[返回上一级](../../README.md)
+
+# scrapy笔记
 
 * 获取scrapy的配置文件  
     ```python
@@ -20,7 +21,10 @@
     ```python
     request.headers.update(tk_headers)  
   
+    # 这种方式是如果该字段不存在就会用setdefault的，如果存在不会更新。
     request.headers.setdefault('User-Agent', ua)
+    # 推荐用以下方式更新
+    request.headers['User-Agent'] = ua
     ```
 
 
@@ -90,4 +94,7 @@
     * "COOKIES_ENABLED":True 是否使用cookie
     * 在使用Request()构造请求，或者直接在中间件中设置cookies的时候需要注意meta中donot_merge_cookies参数的设置，donot_merge_cookies = False 时，自己设置的cookie不会生效，也就是自己的cookie不会和scrapy的cookie合并。
     
-    * 总而言之，要使用cookie，需要把设置打开，自己设置的cookie回合scrapy的进行合并。直接在header中设置cookie，这些参数是否生效，还未尝试。
+    * 总而言之，要使用cookie，需要把设置打开，自己设置的cookie会合scrapy的进行合并。直接在header中设置cookie，这些参数是否生效，还未尝试。
+    
+
+[返回上一级](../../README.md)

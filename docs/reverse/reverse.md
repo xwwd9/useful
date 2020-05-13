@@ -1,3 +1,6 @@
+
+[返回上一级](../../README.md)
+
 # 连接夜神模拟器
 adb connect 127.0.0.1:62001
 
@@ -69,3 +72,6 @@ adb push frida-server /data/frida_server
         ```
     assets目录默认是没有的，可以手动创建，或者选择Android模式，右键点击new->Folder->Assets Folder
 
+
+
+[返回上一级](../../README.md)

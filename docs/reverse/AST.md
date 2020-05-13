@@ -1,4 +1,7 @@
+[返回上一级](../../README.md)
 
+
+目录：JS逆向/JS混淆测试
 
 * 参考链接
     * https://www.jianshu.com/p/47d9b2a365c5
@@ -24,7 +27,7 @@
 
     * 可将混淆代码转换成AST树，从而替换节点，达到解密的目的。
     * CallExpression函数对应的AST和源码
-    ![avatar](../../../../../docs/js_ast_tree_hello_word.png)  
+    ![avatar](../../../../../docs/imgs/js_ast_tree_hello_word.png)  
         ```
             _0x3137('0x1')
         ```
@@ -378,3 +381,6 @@
     利用path.toString()可以将当前AST对应的源码打印出来
   
     ```
+  
+
+[返回上一级](../../README.md)

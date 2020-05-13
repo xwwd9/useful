@@ -3,17 +3,27 @@
 
 
 # 说明  
-对于python react hive的一些知识点总结和小demo
+一些知识点备忘录
 
 
+* [python笔记](./docs/python/python.md)
 
-## [python笔记](./useful_python/README.md)
+* [react笔记](./docs/web/react.md)
 
+* [js混淆笔记](./docs/reverse/AST.md)
 
-## [react笔记](./useful_react/README.md)
+* [mongo笔记](./docs/other/mongo.md)
 
+* [js笔记](./docs/web/JS.md)
 
-## [hive笔记](./useful_bigdata/README.md)
+* [hive sql 笔记](./docs/other/hive.md)
 
+* [django 笔记](./docs/python/django.md)
 
+* [scrapy 笔记](./docs/python/scrapy.md)
 
+* [自动化笔记](./docs/python/auto.md)
+
+* [逆向笔记](./docs/reverse/reverse.md)
+
+* [杂项笔记](./docs/other/other.md)
