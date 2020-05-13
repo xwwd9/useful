@@ -10,8 +10,8 @@ if __name__ == "__main__":
 
     key = "alidetail1688:requests"
 
-    host = "39.96.81.234"
-    password = 'FNlowtF!^fpn'
+    host = "*****"
+    password = '*****'
 
     r = redis.StrictRedis(host=host, port=6379, db=14, password=password)
     ret = r.zrange(key, 0, -1)

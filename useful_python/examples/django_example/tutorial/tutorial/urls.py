@@ -22,10 +22,12 @@ import sys
 # from myApp import apis
 # from myApp import apis
 
-sys.path.append('../')
-from myApp import apis
+# sys.path.append('../')
+# from myApp import apis
 from django.conf.urls import include
 from rest_framework.routers import DefaultRouter
+
+from myApp import apis
 
 router = DefaultRouter()
 router.register(r'books', apis.BookViewSet)

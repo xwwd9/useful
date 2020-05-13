@@ -19,7 +19,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                                                 view_name='book-detail',
                                                 queryset=Book.objects.all())
     # # book_name = serializers.ReadOnlyField(source=books.username)
-    print("*****", books)
+    # print("*****", books)
 
     # bb = serializers.StringRelatedField()
     class Meta:

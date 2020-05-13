@@ -35,7 +35,7 @@ class BookViewSet(viewsets.ModelViewSet):
 
     Additionally we also provide an extra `highlight` action.
     """
-    queryset = Book.objects.all()
+    queryset = Book.objects.all()[:1]
     serializer_class = BookSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
