@@ -1,4 +1,3 @@
-
 [返回主目录](../../README.md)
 
 # react总结
@@ -7,6 +6,17 @@
 * 创建项目  
     npm install -g create-react-app
     create-react-app project_name
+
+
+* [pycharm 调试react](https://www.jianshu.com/p/87a5609c5f44)
+    * 添加JS debug
+    * 添加URL：http://localhost:3000
+    * 在Remote url中添加：webpack:///src
+    
+    
+* 升级包
+    yarn upgrade-interactive --latest
+
 
 * 占位符  
     import {Fragment} from 'react';  
@@ -20,10 +30,28 @@
 
 * setState  
     异步函数，可以将几次set合并成一次。
+    
+* 获取路由中的参数
+    *  this.props.match.params.type  //获取type参数
+    
+* js控制跳转到顶部
+    ```
+      window.scrollTo({
+              left: 0,
+              top: 0,
+      });
+    ```
+  
+* js控制打开页面
+    ```
+        * window.location.href="http://www.baidu.com";     //在同当前窗口中打开窗口
+        * window.open("http://www.baidu.com");                 //在另外新建窗口中打开窗口
+        * <Link to={"/basic/" + imdb} target="_blank">
+    ```
 
 * 生命周期函数  
     
-    ![avatar](../docs/imgs/react_life_time.png)  
+    ![avatar](../imgs/react_life_time.png)  
     componentWillReceiveProps: 从父组件中接收props,只有在父组件从新render的时候才会执行,也就是说子组件第一回渲染的时候不会执行。  
     
     shouldComponentUpdate : 组件被更新之前自动执行,需要返回一个bool类型变量,决定是否更新。  
@@ -156,7 +184,7 @@
         width: 100%;
     }
     ```
-    ![avatar](../docs/imgs/css_text_align.png)  
+    ![avatar](../imgs/css_text_align.png)  
 
 
 
@@ -165,9 +193,9 @@
 
 * position:  (https://blog.csdn.net/zzz365zz/article/details/79104063)
     relative:定位为relative的元素脱离正常的文本流中，但其在文本流中的位置依然存在。定位的层总是相对于其最近的父元素，无论其父元素是何种定位方式。  
-    ![avatar](../docs/imgs/position_relative.png)
+    ![avatar](../imgs/position_relative.png)
     absolute:定位为absolute的层脱离正常文本流，但与relative的区别是其在正常流中的位置不在存在。定位的层总是相对于其最近的定义为absolute或relative的父层,如果其父层中都未定义absolute或relative，则其将相对body进行定位。如果有子项，那么absolute的宽高会自动适应(具体查看demo下SearchInfo组件)。  
-     ![avatar](../docs/imgs/position_absolute.png)
+     ![avatar](../imgs/position_absolute.png)
 
 
 
@@ -237,7 +265,22 @@ ar
         vertical-align: middle;
     }
     ```
-  
+
+* 使用flex布局后，图片变小，变形
+    ```
+    一、flex-shrink: 0
+    给 img 设置 flex-shrink: 0;
+    flex-shrink 的默认值为1，如果没有显示定义该属性，将会自动按照默认值1在所有因子相加之后计算比率来进行空间收缩。设置为0表示不收缩。
+    flex 元素仅在默认宽度之和大于容器的时候才会发生收缩，其收缩的大小是依据 flex-shrink 的值。注意：如果元素不是弹性盒对象的元素，则 flex-shrink 属性不起作用。
+    缺点：仅兼容IE11
+    
+    二、height: 100%
+    在父元素没有设置高度的情况下，给图片设置 height: 100%;
+    
+    三、外层div标签包裹
+    用div标签包裹图片，这种方案比较通用，缺点：产生无用标签。
+    ```   
+
 * css 选择器
     ```
         通用选择器：*
@@ -254,11 +297,9 @@ ar
     ```
   
 * css图谱
-    * ![avatar](../docs/imgs/css.png)  
+    * ![avatar](../imgs/css.png)  
  
 
-
-# [JS总结](./docs/JS.md)  
 
 
 
@@ -267,7 +308,7 @@ ar
 * [在线模拟接口平台](https://www.fastmock.site/)
     
 * fiddler 接口测试测试  
-    ![avatar](../docs/imgs/fiddler_auto_response.png)  
+    ![avatar](../imgs/fiddler_auto_response.png)  
 
 
 
