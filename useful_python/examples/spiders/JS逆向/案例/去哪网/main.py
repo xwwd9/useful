@@ -43,6 +43,10 @@ cookies = {
     }
 
 def get_pre():
+    """
+    获取pre参数，还需要修改。这样获取出来是不正确的
+    :return:
+    """
     url_template = "https://flight.qunar.com/site/oneway_list.htm?searchDepartureAirport=%E5%8C%97%E4%BA%AC&searchArrivalAirport=%E6%98%86%E6%98%8E&searchDepartureTime=2020-05-23&searchArrivalTime=2020-05-26&nextNDays=0&startSearch=true&fromCode=BJS&toCode=KMG&from=qunarindex&lowestPrice=null"
 
     ret = requests.get(url=url_template, verify=False, headers=headers, cookies=cookies)
