@@ -77,7 +77,12 @@
 
 
 * [跨域请求](https://www.cnblogs.com/DI-DIAO/p/8977847.html)
-
+    *设置白名单
+    ```
+        CORS_ORIGIN_WHITELIST = (
+            'http://8.210.11.100:3000',
+        )
+    ```
 
 
 
