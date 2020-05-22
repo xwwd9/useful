@@ -1,11 +1,13 @@
+import hashlib
 import os
 import sqlite3
 import urllib
 
-from win32crypt import CryptUnprotectData
+
 
 
 def get_cookie(host='.taobao.com'):
+    from win32crypt import CryptUnprotectData
     cookiepath = os.environ['LOCALAPPDATA'] + r"\Google\Chrome\User Data\Default\Cookies"
     sql = "select host_key,name,encrypted_value from cookies where host_key='%s'" % host
     with sqlite3.connect(cookiepath) as conn:
@@ -26,6 +28,14 @@ def url_encoder(text):
     return urllib.parse.quote(text, safe='/', encoding=None, errors=None)
 
 
+
+def char_code_at(text):
+    return ord(text)
+
+
+def md5(text):
+    md5_ed = hashlib.md5(text.encode('utf-8')).hexdigest()
+    return md5_ed
 
 
 def common_header():
