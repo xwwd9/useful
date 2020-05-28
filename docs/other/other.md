@@ -162,7 +162,14 @@
         sudo systemctl restart docker
     ```
 * 开机启动：systemctl enable docker
-
+* 常用docker启动
+    ```
+        启动redis：
+          docker run -p 6379:6379 --name myredis -d redis:latest redis-server
+  
+        启动mongo：
+          docker run -p 27017:27017 --name mymongo -d mongo
+    ```
 
 
 # 常用linux命令
