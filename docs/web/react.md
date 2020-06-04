@@ -301,6 +301,30 @@ ar
  
 
 
+* 更改tdk(title, description, keywords)
+    ```
+        document.title = detail.get("china_name")+ " 电影资讯";
+        document.querySelector('meta[name="keywords"]').setAttribute('content',`${detail.get("china_name")}  ${detail.get("english_name")} 剧情 电影详情 电影简介`);
+        document.querySelector('meta[name="description"]').setAttribute('content',`${detail.get("china_name")}, ${detail.get("english_name")} 详情 剧情,电影简介, 最新电影，电影资讯`);
+    ```
+
+
+* seo react-snap使用
+    ```
+        "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "postbuild": "react-snap"
+      },
+      "reactSnap": {
+        "puppeteerArgs": [
+          "--disable-web-security"
+        ]
+      },
+    ```
+
 
 
 # 小tips

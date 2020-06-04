@@ -19,6 +19,21 @@
 
 
 
+* linux 设置交换分区 设置swap
+    * dd if=/dev/zero of=/tmp/swap bs=1M count=2048 （创建 SWAP 文件，设置大小，这里我设置为 1G。（bs * count = SWAP 大小））
+    * chmod 600 /tmp/swap （设置文件权限）
+    * mkswap /tmp/swap （创建 SWAP）
+    * swapon /tmp/swap （启用）
+    * swapon -s 或者 free -m （查看 SWAP 状态）
+    
+    * echo '/var/swap   swap   swap   default 0 0' >> /etc/fstab（ 添加开机启动)
+    * swapoff /tmp/swap（停用）
+    * swapoff /tmp/swap（关闭）
+    * rm -rf /tmp/swap （删除）
+    * sed -i '/\/var\/swap   swap   swap   default 0 0/d'  /etc/fstab（去掉开机启动）
+
+    
+
 
 
 # 安卓刷机
@@ -165,10 +180,13 @@
 * 常用docker启动
     ```
         启动redis：
-          docker run -p 6379:6379 --name myredis -d redis:latest redis-server
+          docker run -p 6379:6379 --restart=unless-stopped --name myredis -d redis:latest redis-server
   
         启动mongo：
-          docker run -p 27017:27017 --name mymongo -d mongo
+          docker run -p 27017:27017 --restart=unless-stopped --name mymongo -d mongo
+  
+        启动centos：
+          docker run -itd --net="host" --restart=unless-stopped --name centos centos /bin/bash
     ```
 
 

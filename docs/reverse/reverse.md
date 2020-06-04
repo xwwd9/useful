@@ -95,9 +95,39 @@ adb push frida-server /data/frida_server
 
 
 # frida笔记
+* 启动或附加到程序
+```
+    # 启动并附加
+    device = frida.get_usb_device()
+    pid = device.spawn(["com.roysue.demo02"])
+    device.resume(pid)
+    session = device.attach(pid)
 
-* 定位类：my_class = Java.use("com.roysue.demo02.MainActivity");
-* 更改方法实现：my_class.fun.implementation = function(x,y){}
+    # 直接附加到
+    session = frida.get_usb_device().attach('com.tencent.mm')
+```
+
+* 加载启动脚本
+```
+    # 通过文件的方式加载启动
+    with open("s1.js") as f:
+        script = session.create_script(f.read())
+    script.load()
+
+    # 直接传入js字符串
+    script = process.create_script(native_hook_code)
+    script.load()
+```
+
+
+* 定位类
+    ```
+    my_class = Java.use("com.roysue.demo02.MainActivity");
+    ```
+* 更改方法实现
+    ```
+    my_class.fun.implementation = function(x,y){}
+    ```
 
 
 
