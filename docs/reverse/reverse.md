@@ -10,8 +10,28 @@ adb shell dumpsys window windows | grep mFocusedApp
 
 
 
+# 脱360壳
+* 查看.so中函数名 nm libart.so |grep OpenMemory
+    ```
+        oppo libart.so 中 OpenMemory名字
+        32位（一般用这个）：_ZN3art7DexFile10OpenMemoryEPKhjRKNSt3__112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEjPNS_6MemMapEPKNS_10OatDexFileEPS9_
+        64位：_ZN3art7DexFile10OpenMemoryEPKhmRKNSt3__112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEjPNS_6MemMapEPKNS_10OatDexFileEPS9_
+            
+    ```
+* dump出来的壳需要放在/data/data/包名/ 下
 
-# 通过adb上传文件前可能会提示read-only
+
+# dex转smail
+*  java -jar baksmali.jar disassemble -o ./a/ 5904.dex
+    
+
+
+# 通过adb上传文件
+
+# dex转smail
+*  java -jar baksmali.jar disassemble -o ./a/ 5904.dex
+    
+前可能会提示read-only
 ```
 重新挂载mount -o remount -w 目录
 mount -o remount -w /data
@@ -71,6 +91,14 @@ adb push frida-server /data/frida_server
         xxx.xxx.myhook2
         ```
     assets目录默认是没有的，可以手动创建，或者选择Android模式，右键点击new->Folder->Assets Folder
+
+
+
+# frida笔记
+
+* 定位类：my_class = Java.use("com.roysue.demo02.MainActivity");
+* 更改方法实现：my_class.fun.implementation = function(x,y){}
+
 
 
 

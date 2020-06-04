@@ -39,4 +39,19 @@
 
 
 
+
+# python自动化
+
+* 测试用列和类要用t和T开头。
+
+* PyCharm Community Edition-->Preference-->Tools-->Python Integrated Tools， 把Default test runner换为py.test就可以了。  
+
+* 指定运行某个用列：
+    ```
+        pytest.main(["test_auto.py::TestCalculator::test_1verifyqrcode"])
+    ```
+     
+
+
+
 [返回上一级](../../README.md)
