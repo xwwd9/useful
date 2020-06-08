@@ -121,15 +121,171 @@ adb push frida-server /data/frida_server
 
 
 * 定位类
-    ```
+```
     my_class = Java.use("com.roysue.demo02.MainActivity");
-    ```
+```
 * 更改方法实现
-    ```
+```
+    直接重写一个类中的函数
     my_class.fun.implementation = function(x,y){}
-    ```
+    有重载的情况写一个函数
+    my_class.fun.overload('int', 'int').implementation
+```
+
+* 新建一个变量
+```
+    新建一个String
+    var newString = Java.use("java.lang.String").$new("MYTESTSTRING2");
+```
+
+* 打印堆栈
+```
+    console.log(Java.use("android.util.Log").getStackTraceString(Java.use("java.lang.Exception").$new()));
+```
+
+* 调用函数或者设置变量    
+```
+
+    # 静态函数的调用
+    clazz = Java.use("xxx.xxx.xxx")
+    clazz.static_fun()
+    # 静态变量直接设置结果
+    clazz.static_bool_var.value = true;
+    
 
 
+    # 先是找到实列，然后在回调中写逻辑，有多少个实列就会调用多少次，可以再找到的时候调用隐藏函数.
+    Java.choose("com.r0ysue.a0512demo02.MainActivity",{
+            onMatch : function(instance){
+                console.log("found instance :"+ instance);
+                // 设置成员变量
+                instance.bool_var.value = true ;
+                // 调用实列函数
+                console.log("Result of scerect func:"+instance.secret());
+                // 调用成员变量（类成员和方法重名的时候需要在前面加下滑线_，表明是成员变量
+                instance._same_name_bool_var.value = true ;
+        },
+            onComplete : function(){
+                console.log("Search Completed!")
+            }
+        })
+```
+
+* 内部类的hook
+```
+    # 可以查看smail，遭到$符号后边的名字，然后hook
+    Java.use("com.example.androiddemo.Activity.FridaActivity4$InnerClasses").check1.implementation = function(){return true;}
+```
+
+
+* 注意传参
+```
+    可用以下变为字符串
+    x.toString()
+```
+
+* 发送消息和回调
+```
+    js中
+    send(string_to_send); // send data to python code
+    recv(function (received_json_object) {
+        string_to_recv = received_json_object.my_data
+        console.log("string_to_recv: " + string_to_recv);
+    }).wait();
+
+    python中
+    def my_message_handler(message, payload):
+        print(message)
+        print(payload)
+        script.post({"my_data": data}) 
+    
+    script.on("message", my_message_handler)
+```
+
+
+* frida使用
+```
+    查看进程包名
+    frida-ps -U | grep xx.xx.xx
+
+    spawn启动js文件
+    （肯能会启动太快，找不到实列变量）
+    frida -U -f xx.xx.xx -l a.js
+
+    attach启动js文件
+    frida -U xx.xx.xx -l a.js
+
+```
+
+
+
+# objection使用
+* 查看so函数
+```
+    memory list exports  **.so 
+    # 导出到json文件
+    memroy list exports **.so --json a.txt
+```
+* 查看堆上实列
+```
+    android heap search instance 包名.类名 
+
+    # 有了实列handle id可以直接调用实列中的函数
+    # 没有重载的情况
+    android heap execute handle_id 函数
+    # 有重载的情况
+    android heap evalute handle_id
+    然后在控制台写js代码调用函数
+```
+
+* 查看当前activates
+```
+    # 列出当前程序活动中的activities，都有哪些页面
+    android hooking list activities
+    # 直接启动一个activity,相当于直接去到一个页面
+    android intent lanuch_activity 上个命令列出来的东西
+    # 查看当前hook的class
+    android hooking list classes
+    android hooking search classname
+    # 查看方法
+    android hooking search methods name
+    # 生成hook方法
+    android hooking generate simple 包名.类名.方法
+```
+
+
+```
+    # hook到app
+    objection -g com.r0ysue.a0512demo02  explore
+    # 通过类名查找
+    android hooking search classes MainActi
+    # 然后具体查看类中的方法
+    android hooking watch class com.r0ysue.a0512demo02.MainActivity --dump-args --dump-backtrace --dump-return
+    # 查看具体的一个方法,调用的时候都会被打印
+    android hooking watch class_method com.r0ysue.a0512demo02.MainActivity.fun --dump-args --dump-backtrac
+e --dump-return
+
+```
+
+
+
+# 技巧
+* 通过file可以查看文件类型
+
+* 解压ab文件
+```
+    java -jar ade.jar unpack 1.ab 1.tar 
+```
+
+* 连接夜神模拟器
+```
+    adb connect 127.0.0.1:21503
+```
+
+* 通过adb输入input
+```
+    adb shell input text "ok"
+```
 
 
 # 错误解决
