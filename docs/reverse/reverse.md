@@ -169,6 +169,14 @@ adb push frida-server /data/frida_server
                 console.log("Search Completed!")
             }
         })
+
+    
+    # 调用构造函数
+    Java.use("com.tlamb96.kgbmessenger.b.a").$init.implementation = ...
+    
+    # new一个对象和析构一个对象
+    var ins = Exception.$new("Exception");
+    Exception.$dispose();
 ```
 
 * 内部类的hook
