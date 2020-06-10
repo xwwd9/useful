@@ -277,6 +277,16 @@ e --dump-return
 
 
 
+# ida pro笔记
+
+```
+    1. shift + f12:打开字符串窗口
+    2. vxx的这种变量上按y，改为  JNIEnv*  就行了
+    3. 是个函数调用，点击右键，再点击Force call type可以查看参数
+```
+
+
+
 # 技巧
 * 通过file可以查看文件类型
 
@@ -294,6 +304,33 @@ e --dump-return
 ```
     adb shell input text "ok"
 ```
+
+* JNI动态注册
+```
+     jint RegisterNatives(jclass clazz, const JNINativeMethod* methods, jint nMethods)
+    
+    第一个参数：需要注册native函数的上层Java类
+    
+    第二个参数：注册的方法结构体信息
+    这里当然是重点看第二个参数，这里当然也需要知道方法结构体信息：
+    typedef struct {
+        const char* name;
+        const char* signature;
+        void*       fnPtr;
+    } JNINativeMethod;
+    结构体包含三部分分别是：方法名、方法的签名、对应的native函数地址
+    如下就是一个结构体
+    static JNINativeMethod getMethods[] = {
+        {"getRandomNum","()I",(void*)get_random_num},
+    };
+    
+    第三个参数：需要注册的方法个数
+```
+
+* jni编译的so中查看函数名，有很长一串名字，这个是没有加extern c， 可用c++flit进行还原
+
+
+* jin静态注册函数，前2个参数是必填的，一个是env，还有个一个是object
 
 
 # 错误解决
