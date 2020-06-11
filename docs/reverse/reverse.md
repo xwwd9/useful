@@ -210,6 +210,43 @@ adb push frida-server /data/frida_server
     script.on("message", my_message_handler)
 ```
 
+* 打印堆栈
+```
+    function printStack(name) {
+    Java.perform(function () {
+        var Exception = Java.use("java.lang.Exception");
+        var ins = Exception.$new("Exception");
+        var straces = ins.getStackTrace();
+        if (straces != undefined && straces != null) {
+            var strace = straces.toString();
+            var replaceStr = strace.replace(/,/g, "\\n");
+            console.log("=============================" + name + " Stack strat=======================");
+            console.log(replaceStr);
+            console.log("=============================" + name + " Stack end=======================\r\n");
+            Exception.$dispose();
+        }
+    });
+}   
+```
+
+
+* frida 常用函数
+```
+    # byte转String
+    function byte2string(array){
+        var result = "";
+        for(var i = 0; i < array.length; ++i){
+            result+= (String.fromCharCode(array[i]));
+        }
+       return result;
+    }
+
+
+    # 将String转换为Json对象然后取值
+    var content = JSON.parse(a)
+    console.log(content.c, "ccc")
+```
+
 
 * frida使用
 ```
@@ -273,6 +310,11 @@ adb push frida-server /data/frida_server
     android hooking watch class_method com.r0ysue.a0512demo02.MainActivity.fun --dump-args --dump-backtrac
 e --dump-return
 
+```
+
+* 加载插件
+```
+    进入objection REPL 然后： plugin load 插件路径 
 ```
 
 
