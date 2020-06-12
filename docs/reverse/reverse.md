@@ -1,4 +1,3 @@
-
 [返回上一级](../../README.md)
 
 # 连接夜神模拟器
@@ -13,9 +12,15 @@ adb shell dumpsys window windows | grep mFocusedApp
 # 脱360壳
 * 查看.so中函数名 nm libart.so |grep OpenMemory
     ```
+        # 提取libart.so文件
+        adb pull /system/lib/libart.so
         oppo libart.so 中 OpenMemory名字
         32位（一般用这个）：_ZN3art7DexFile10OpenMemoryEPKhjRKNSt3__112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEjPNS_6MemMapEPKNS_10OatDexFileEPS9_
         64位：_ZN3art7DexFile10OpenMemoryEPKhmRKNSt3__112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEjPNS_6MemMapEPKNS_10OatDexFileEPS9_
+  
+        Huawei 6p
+        32:
+        
             
     ```
 * dump出来的壳需要放在/data/data/包名/ 下
@@ -153,7 +158,6 @@ adb push frida-server /data/frida_server
     clazz.static_bool_var.value = true;
     
 
-
     # 先是找到实列，然后在回调中写逻辑，有多少个实列就会调用多少次，可以再找到的时候调用隐藏函数.
     Java.choose("com.r0ysue.a0512demo02.MainActivity",{
             onMatch : function(instance){
@@ -245,6 +249,21 @@ adb push frida-server /data/frida_server
     # 将String转换为Json对象然后取值
     var content = JSON.parse(a)
     console.log(content.c, "ccc")
+
+
+    # 将object转换为一个json进行输出
+    Java.openClassFile("/data/local/tmp/r0gson.dex").load();
+    const gson = Java.use('com.r0ysue.gson.Gson');
+    console.log(gson.$new().toJson(ret))
+
+
+```
+
+
+* frida js 编写自动补全
+```
+    git clone https://github.com/k3v1n1990s/frida-agent-example.git 后npm安装
+    或者直接用package.json安装，将node_modules文件夹拷贝到工程最外边
 ```
 
 
@@ -373,6 +392,23 @@ e --dump-return
 
 
 * jin静态注册函数，前2个参数是必填的，一个是env，还有个一个是object
+
+
+* 逆向搜索关键
+```
+    # 搜索body中的关键字
+    .put("xxx
+
+    
+
+```
+
+反射
+```
+    通过反射可以获取到Java中的类，类成员变量，类函数等，可通过反射操作实列。可编写so，通过反射操作Java。
+```
+
+
 
 
 # 错误解决

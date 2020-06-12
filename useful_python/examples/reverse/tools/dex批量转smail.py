@@ -3,8 +3,7 @@
 # 需要将dex文件和baksmali.jar放在一起，然后在该目录下运行该脚本
 import os
 
-import time
-files = os.listdir("./")
+files = os.listdir("../")
 
 for file in files:
     tfile = file.split(".")
