@@ -1,17 +1,82 @@
 [返回上一级](../../README.md)
 
+- [1. pip 改源](#1-pip-改源)
+  - [1.1. linux下，修改 ~/.pip/pip.conf (没有就创建一个)， 修改 index-url至tuna，内容如下：](#11-linux下修改pippipconf没有就创建一个-修改index-url至tuna内容如下)
+  - [1.2. windows下，直接在user目录中创建一个pip目录，如：C:\Users\xx\pip，新建文件pip.ini，内容如下](#12-windows下直接在user目录中创建一个pip目录如cusersxxpip新建文件pipini内容如下)
+  - [1.3. linux 设置交换分区 设置swap](#13-linux-设置交换分区-设置swap)
+- [2. 安卓刷机](#2-安卓刷机)
+- [3. Pycharm 使用技巧](#3-pycharm-使用技巧)
+  - [3.1. Kite](#31-kite)
+- [4. pm2 使用](#4-pm2-使用)
+  - [4.1. 启动next.js: pm2 start yarn --name hope -- run start](#41-启动nextjs-pm2-start-yarn---name-hope----run-start)
+- [5. supervisor 使用](#5-supervisor-使用)
+  - [5.1. 使用步骤：](#51-使用步骤)
+  - [5.2. 编写配置文件：](#52-编写配置文件)
+- [6. docker使用](#6-docker使用)
+  - [6.1. 进入容器：docker exec -it scrapy /bin/bash](#61-进入容器docker-exec--it-scrapy-binbash)
+  - [6.2. 删除镜像：docker rmi xxx](#62-删除镜像docker-rmi-xxx)
+  - [6.3. 将容器重新打包成镜像：docker commit test xxx/common](#63-将容器重新打包成镜像docker-commit-test-xxxcommon)
+  - [6.4. 将镜像推入厂库：docker push 192.168.4.125:5000/xxx_common](#64-将镜像推入厂库docker-push-19216841255000xxx_common)
+  - [6.5. 给镜像打标签：docker tag xxx/common 192.168.4.125:50xxx00/xxx_common](#65-给镜像打标签docker-tag-xxxcommon-192168412550xxx00xxx_common)
+  - [6.6. 更改容器时区：](#66-更改容器时区)
+  - [6.7. docker 镜像加速](#67-docker-镜像加速)
+  - [6.8. 开机启动：systemctl enable docker](#68-开机启动systemctl-enable-docker)
+  - [6.9. 常用docker启动](#69-常用docker启动)
+- [7. docker命令](#7-docker命令)
+  - [7.1. 查看docker磁盘使用情况：docker system df](#71-查看docker磁盘使用情况docker-system-df)
+  - [7.2. 查看命令：docker ps --no-trunc](#72-查看命令docker-ps---no-trunc)
+  - [7.3. 以supervisor的方式启动docker ：docker run -itd -p 7000:7000 -p 7001:7001 -p 7002:7002 -p 7003:7003 -p 7004:7004 --restart unless-stopped --name scrapydweb scrapy  supervisord -nc /work/supervisor/supervisord.conf](#73-以supervisor的方式启动docker-docker-run--itd--p-70007000--p-70017001--p-70027002--p-70037003--p-70047004---restart-unless-stopped---name-scrapydweb-scrapy-supervisord--nc-worksupervisorsupervisordconf)
+  - [7.4. 重启docker：systemctl restart docker](#74-重启dockersystemctl-restart-docker)
+  - [7.5. 进入docker：docker exec -it scrapydweb /bin/bash](#75-进入dockerdocker-exec--it-scrapydweb-binbash)
+  - [7.6. 开机自启动：systemctl enable docker](#76-开机自启动systemctl-enable-docker)
+  - [7.7. 配置更新命令：docker container update --restart=unless-stopped myredis](#77-配置更新命令docker-container-update---restartunless-stopped-myredis)
+  - [7.8. 容器提交成镜像：docker commit test pgy/common (这种方式会把历史记录打包进去，容器可能会越来越大)](#78-容器提交成镜像docker-commit-test-pgycommon-这种方式会把历史记录打包进去容器可能会越来越大)
+  - [7.9. 保存镜像：docker save ID > xxx.tar](#79-保存镜像docker-save-id--xxxtar)
+  - [7.10. 保存容器：docker export ID >xxx.tar](#710-保存容器docker-export-id-xxxtar)
+- [8. nginx 常用配置](#8-nginx-常用配置)
+  - [8.1. 多个域名，通一个ip。在域名服务商处查看域名前缀，一般@表明主机名为空](#81-多个域名通一个ip在域名服务商处查看域名前缀一般表明主机名为空)
+- [9. 常用linux命令](#9-常用linux命令)
+  - [9.1. 查看系统磁盘使用：df -h](#91-查看系统磁盘使用df--h)
+  - [9.2. 查看文件目录大小：](#92-查看文件目录大小)
+  - [9.3. 修改history条数](#93-修改history条数)
+- [10. redis常用命令](#10-redis常用命令)
+  - [10.1. config set requirepass FNpn 设置密码，重启后失效](#101-config-set-requirepass-fnpn-设置密码重启后失效)
+  - [10.2. redis-cli -h 40.96.33.234 -p 6379 连接redis](#102-redis-cli--h-409633234--p-6379-连接redis)
+  - [10.3. 进入redis后使用auth认证](#103-进入redis后使用auth认证)
+  - [10.4. select 13 选取数据库](#104-select-13-选取数据库)
+  - [10.5. key * 查看当前有哪些keys](#105-key--查看当前有哪些keys)
+  - [10.6. 一些常用命令查看：http://doc.redisfans.com/](#106-一些常用命令查看httpdocredisfanscom)
+- [11. wordpress使用](#11-wordpress使用)
+  - [11.1. docker启动wordpress](#111-docker启动wordpress)
+  - [11.2. css自定义](#112-css自定义)
+  - [11.3. 错误排查](#113-错误排查)
+- [12. mysql](#12-mysql)
+  - [12.1. docker 启动](#121-docker-启动)
+  - [12.2. 创建一个库](#122-创建一个库)
+- [13. anyproxy使用](#13-anyproxy使用)
+  - [13.1. 启动anyproxy -i --rule 文件.js: -i是表是抓取https](#131-启动anyproxy--i---rule-文件js--i是表是抓取https)
+  - [13.2. 注意开启防火墙，和代理设置。](#132-注意开启防火墙和代理设置)
+- [14. nodejs](#14-nodejs)
+  - [14.1. 安装nodejs](#141-安装nodejs)
+- [15. ssdb查询命令：](#15-ssdb查询命令)
+  - [15.1. 查看keys：](#151-查看keys)
+- [16. 防火墙](#16-防火墙)
+  - [16.1. iptables -I INPUT -p tcp --dport 3000 -j ACCEPT](#161-iptables--i-input--p-tcp---dport-3000--j-accept)
+  - [16.2. firewall-cmd --zone=public --add-port=3001/tcp --permanent](#162-firewall-cmd---zonepublic---add-port3001tcp---permanent)
+- [17. 阿里云](#17-阿里云)
+- [18. 代理总结：](#18-代理总结)
 
 
 
-# pip 改源
+# 1. pip 改源
 
-* linux下，修改 ~/.pip/pip.conf (没有就创建一个)， 修改 index-url至tuna，内容如下：
+## 1.1. linux下，修改 ~/.pip/pip.conf (没有就创建一个)， 修改 index-url至tuna，内容如下：
     ```
     [global]
     index-url = https://pypi.tuna.tsinghua.edu.cn/simple
     ```
 
-* windows下，直接在user目录中创建一个pip目录，如：C:\Users\xx\pip，新建文件pip.ini，内容如下
+## 1.2. windows下，直接在user目录中创建一个pip目录，如：C:\Users\xx\pip，新建文件pip.ini，内容如下
     ```
      [global]
      index-url = https://pypi.tuna.tsinghua.edu.cn/simple
@@ -19,7 +84,7 @@
 
 
 
-* linux 设置交换分区 设置swap
+## 1.3. linux 设置交换分区 设置swap
     * dd if=/dev/zero of=/tmp/swap bs=1M count=2048 （创建 SWAP 文件，设置大小，这里我设置为 1G。（bs * count = SWAP 大小））
     * chmod 600 /tmp/swap （设置文件权限）
     * mkswap /tmp/swap （创建 SWAP）
@@ -36,7 +101,7 @@
 
 
 
-# 安卓刷机
+# 2. 安卓刷机
 1. 去[这里](https://www.romzhijia.net/)下载手机的固件  
 2. 采用线刷或者直接9008端口刷机  
 3. 需要安装高通端口驱动
@@ -48,20 +113,17 @@
 
 
 
-# Pycharm 使用技巧
+# 3. Pycharm 使用技巧
 
-* Kite
+## 3.1. Kite
     * ctrl+p 查看文档
     * ctrl+shift+a 输入Kite: Docs at cursor 查看文档
 
 
 
-# 爬虫技巧
-* 在测试cookie哪个有效的时候，如果删除了某个cookie失效了，不一定是这个cookie失效，可能是服务端判断你有连续的2次相同访问，或者没有走正常流程，而访问失效，比如搜狗微信。
 
-
-# pm2 使用
-* 启动next.js: pm2 start yarn --name hope -- run start
+# 4. pm2 使用
+## 4.1. 启动next.js: pm2 start yarn --name hope -- run start
 ```
     0 pm2需要全局安装 nnpm install -g pm2
     1 启动进程/应用 pm2 start bin/www 或 pm2 start app.js
@@ -81,14 +143,14 @@
 ```
 
 
-# supervisor 使用
+# 5. supervisor 使用
 
-* 使用步骤：
+## 5.1. 使用步骤：
     * 创建配置文件：echo_supervisord_conf > /work/supervisor/supervisord.conf
     * 编写配置文件
     * 启动supervisor：supervisord -c /work/supervisor/supervisord.conf
 
-* 编写配置文件：
+## 5.2. 编写配置文件：
     * 如果需要web页面查看，需要打开[inet_http_server]配置
     * 可以将配置单独写到另外的文件件中去
         ```
@@ -165,21 +227,22 @@
 
 
 
-# docker使用
+# 6. docker使用
 
-* 进入容器：docker exec -it scrapy /bin/bash
-* 删除镜像：docker rmi xxx
-* 将容器重新打包成镜像：docker commit test xxx/common
-* 将镜像推入厂库：docker push 192.168.4.125:5000/xxx_common
-* 给镜像打标签：docker tag xxx/common 192.168.4.125:50xxx00/xxx_common
-* * 更改容器时区：ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime。  
+## 6.1. 进入容器：docker exec -it scrapy /bin/bash
+## 6.2. 删除镜像：docker rmi xxx
+## 6.3. 将容器重新打包成镜像：docker commit test xxx/common
+## 6.4. 将镜像推入厂库：docker push 192.168.4.125:5000/xxx_common
+## 6.5. 给镜像打标签：docker tag xxx/common 192.168.4.125:50xxx00/xxx_common
+## 6.6. 更改容器时区：
+  * ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime。  
   * 或者使用tzselect设置时区。  
   * 注意一定要用ln，不要用cp，如果设置了不生效，请查看文件内的内容是否是正确的+8小时。
   * 注意还要修改/etc/timezone文件中的内容为Asia/Shanghai，不然在程序中会时区报错。 
   * 如果上述修改后还不行，可以尝试设置TZ环境变量：TZ='Asia/Shanghai'; export TZ并将这行命令添加到.profile中，然后退出并重新登录
   * 将文件拷贝进入docker：docker cp sources.list  scrapyweb:/work
   
-* docker 镜像加速
+## 6.7. docker 镜像加速
     ```
         sudo mkdir -p /etc/docker
         sudo tee /etc/docker/daemon.json <<-'EOF'
@@ -195,8 +258,8 @@
         sudo systemctl daemon-reload
         sudo systemctl restart docker
     ```
-* 开机启动：systemctl enable docker
-* 常用docker启动
+## 6.8. 开机启动：systemctl enable docker
+## 6.9. 常用docker启动
     ```
         启动redis：
           docker run -p 6379:6379 --restart=unless-stopped --name myredis -d --requirepass "password" redis:latest redis-server
@@ -215,23 +278,23 @@
     ```
 
     
-# docker命令
-* 查看docker磁盘使用情况：docker system df
-* 查看命令：docker ps --no-trunc
-* 以supervisor的方式启动docker ：docker run -itd -p 7000:7000 -p 7001:7001 -p 7002:7002 -p 7003:7003 -p 7004:7004 --restart unless-stopped --name scrapydweb scrapy  supervisord -nc /work/supervisor/supervisord.conf 
-* 重启docker：systemctl restart docker
-* 进入docker：docker exec -it scrapydweb /bin/bash
-* 开机自启动：systemctl enable docker
-* 配置更新命令：docker container update --restart=unless-stopped myredis
-* 容器提交成镜像：docker commit test pgy/common (这种方式会把历史记录打包进去，容器可能会越来越大)
-* 保存镜像：docker save ID > xxx.tar
+# 7. docker命令
+## 7.1. 查看docker磁盘使用情况：docker system df
+## 7.2. 查看命令：docker ps --no-trunc
+## 7.3. 以supervisor的方式启动docker ：docker run -itd -p 7000:7000 -p 7001:7001 -p 7002:7002 -p 7003:7003 -p 7004:7004 --restart unless-stopped --name scrapydweb scrapy  supervisord -nc /work/supervisor/supervisord.conf 
+## 7.4. 重启docker：systemctl restart docker
+## 7.5. 进入docker：docker exec -it scrapydweb /bin/bash
+## 7.6. 开机自启动：systemctl enable docker
+## 7.7. 配置更新命令：docker container update --restart=unless-stopped myredis
+## 7.8. 容器提交成镜像：docker commit test pgy/common (这种方式会把历史记录打包进去，容器可能会越来越大)
+## 7.9. 保存镜像：docker save ID > xxx.tar
            docker load < xxx.tar
-* 保存容器：docker export ID >xxx.tar
+## 7.10. 保存容器：docker export ID >xxx.tar
            docker import xxx.tar containr:v1
            
            
-# nginx 常用配置
-* 多个域名，通一个ip。在域名服务商处查看域名前缀，一般@表明主机名为空
+# 8. nginx 常用配置
+## 8.1. 多个域名，通一个ip。在域名服务商处查看域名前缀，一般@表明主机名为空
 ```
 server {
         listen 80 default_server;
@@ -258,12 +321,12 @@ server {
 ```
 
 
-# 常用linux命令
-* 查看系统磁盘使用：df -h
-* 查看文件目录大小：  
+# 9. 常用linux命令
+## 9.1. 查看系统磁盘使用：df -h
+## 9.2. 查看文件目录大小：  
     * 先用：du -sh查看总目录大小
     * 再用：du -sh * 查看分目录的大小 
-* 修改history条数
+## 9.3. 修改history条数
 ```
     vim /etc/profile
     HISTSIZE = 100000
@@ -271,13 +334,13 @@ server {
 ```
     
     
-# redis常用命令
-* config set requirepass FNpn 设置密码，重启后失效
-* redis-cli -h 40.96.33.234 -p 6379 连接redis
-* 进入redis后使用auth认证
-* select 13 选取数据库
-* key * 查看当前有哪些keys
-* 一些常用命令查看：http://doc.redisfans.com/
+# 10. redis常用命令
+## 10.1. config set requirepass FNpn 设置密码，重启后失效
+## 10.2. redis-cli -h 40.96.33.234 -p 6379 连接redis
+## 10.3. 进入redis后使用auth认证
+## 10.4. select 13 选取数据库
+## 10.5. key * 查看当前有哪些keys
+## 10.6. 一些常用命令查看：http://doc.redisfans.com/
 
 
 
@@ -285,14 +348,13 @@ server {
 
 
 
-# wordpress使用
-
-* docker启动wordpress
+# 11. wordpress使用
+## 11.1. docker启动wordpress
 ```
 docker run -d --name wordpress -e WORDPRESS_DB_HOST=mysql -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASSWORD=*** -e WORDPRESS_DB_NAME=myword -p 9086:80 --link mysql:mysql wordpress
 ```
 
-* css自定义
+## 11.2. css自定义
 ```
 .header {
   background: #fff url('https://movie-image-hope.oss-cn-shanghai.aliyuncs.com/static/header.jpg') repeat-x 0 100%;
@@ -309,7 +371,7 @@ p{
 
 ```
 
-* 错误排查
+## 11.3. 错误排查
 ```
 打开 wp-config.php 文件，将原来的 WP_Debug 设置改成如下设置：
 define('WP_DEBUG', true);
@@ -324,32 +386,32 @@ define('WP_DEBUG_LOG', true);
 然后就可以在 wp-content/debug.log 文件中看到相应的错误信息了。
 ```
 
-# mysql 
-* docker 启动
+# 12. mysql 
+## 12.1. docker 启动
 ```
 docker run -itd --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=**** mysql:5.7.30
 ```
-* 创建一个库
+## 12.2. 创建一个库
 ```
 create database  hope CHARSET=UTF8;
 ```
 
 
 
-# anyproxy使用
-* 启动anyproxy -i --rule 文件.js: -i是表是抓取https
-* 注意开启防火墙，和代理设置。
+# 13. anyproxy使用
+## 13.1. 启动anyproxy -i --rule 文件.js: -i是表是抓取https
+## 13.2. 注意开启防火墙，和代理设置。
 
 
 
-# nodejs
-* 安装nodejs
+# 14. nodejs
+## 14.1. 安装nodejs
     * yum install npm
     * 安装工具n（用于管理npm版本）：npm install -g n
     * 想升级到一个指定的版本，则可以使用n 12.16.0来升级
 
-# ssdb查询命令：
-* 查看keys：
+# 15. ssdb查询命令：
+## 15.1. 查看keys：
     1. keys　 '' '' 10　   字符串类型
     
     2. qlist　'' '' 10　　 列表类型
@@ -362,9 +424,9 @@ create database  hope CHARSET=UTF8;
 
 
 
-# 防火墙
- * iptables -I INPUT -p tcp --dport 3000 -j ACCEPT
- * firewall-cmd --zone=public --add-port=3001/tcp --permanent  
+# 16. 防火墙
+## 16.1. iptables -I INPUT -p tcp --dport 3000 -j ACCEPT
+## 16.2. firewall-cmd --zone=public --add-port=3001/tcp --permanent  
    命令含义: –zone #作用域 –add-port=80/tcp #添加端口，格式为：端口/通讯协议 –permanent #永久生效，没有此参数重启后失效  
    **开启端口后记得重启**  
    **firewall-cmd --reload**
@@ -375,7 +437,7 @@ create database  hope CHARSET=UTF8;
 
 
 
-# 阿里云
+# 17. 阿里云
 * 阿里云 查看公网ip：curl httpbin.org/ip
 
 
@@ -386,7 +448,9 @@ create database  hope CHARSET=UTF8;
 
 
 
-# 代理总结：
+
+
+# 18. 代理总结：
 * 使用过的代理：http://www.moguproxy.com/http
 ```
 目前来说代理服务主要提供2种代理：

@@ -1,16 +1,69 @@
 [返回上一级](../../README.md)
 
-# 连接夜神模拟器
+
+- [1. 连接夜神模拟器](#1-连接夜神模拟器)
+- [2. 查看安卓当前activity](#2-查看安卓当前activity)
+- [3. 脱360壳](#3-脱360壳)
+  - [3.1. 查看.so中函数名 nm libart.so |grep OpenMemory](#31-查看so中函数名-nm-libartso-grep-openmemory)
+  - [3.2. dump出来的壳需要放在/data/data/包名/ 下](#32-dump出来的壳需要放在datadata包名-下)
+- [4. dex转smail](#4-dex转smail)
+- [5. 通过adb上传文件](#5-通过adb上传文件)
+- [6. dex转smail](#6-dex转smail)
+- [7. frida-server下载地址](#7-frida-server下载地址)
+- [8. 上传运行frida-server](#8-上传运行frida-server)
+- [9. android studio 设置Java为1.8](#9-android-studio-设置java为18)
+- [10. xposed模块使用](#10-xposed模块使用)
+  - [10.1. 创建工程](#101-创建工程)
+- [11. frida笔记](#11-frida笔记)
+  - [11.1. 启动或附加到程序](#111-启动或附加到程序)
+  - [11.2. 加载启动脚本](#112-加载启动脚本)
+  - [11.3. 定位类](#113-定位类)
+  - [11.4. 更改方法实现](#114-更改方法实现)
+  - [11.5. 新建一个变量](#115-新建一个变量)
+  - [11.6. 打印堆栈](#116-打印堆栈)
+  - [11.7. 调用函数或者设置变量](#117-调用函数或者设置变量)
+  - [11.8. 内部类的hook](#118-内部类的hook)
+  - [11.9. 注意传参](#119-注意传参)
+  - [11.10. 发送消息和回调](#1110-发送消息和回调)
+  - [11.11. 打印堆栈](#1111-打印堆栈)
+  - [11.12. frida 常用函数](#1112-frida-常用函数)
+  - [11.13. frida js 编写自动补全](#1113-frida-js-编写自动补全)
+  - [11.14. frida使用](#1114-frida使用)
+- [12. objection使用](#12-objection使用)
+  - [12.1. 查看so函数](#121-查看so函数)
+  - [12.2. 查看堆上实列](#122-查看堆上实列)
+  - [12.3. 查看当前activates](#123-查看当前activates)
+  - [12.4. 常用方法](#124-常用方法)
+  - [12.5. 加载插件](#125-加载插件)
+- [13. ida pro笔记](#13-ida-pro笔记)
+- [14. 技巧](#14-技巧)
+  - [14.1. 通过file可以查看文件类型](#141-通过file可以查看文件类型)
+  - [14.2. 解压ab文件](#142-解压ab文件)
+  - [14.3. 连接夜神模拟器](#143-连接夜神模拟器)
+  - [14.4. 通过adb输入input](#144-通过adb输入input)
+  - [14.5. JNI动态注册](#145-jni动态注册)
+  - [14.6. jni编译的so中查看函数名，有很长一串名字，这个是没有加extern c， 可用c++flit进行还原](#146-jni编译的so中查看函数名有很长一串名字这个是没有加extern-c-可用cflit进行还原)
+  - [14.7. jin静态注册函数，前2个参数是必填的，一个是env，还有个一个是object](#147-jin静态注册函数前2个参数是必填的一个是env还有个一个是object)
+  - [14.8. 逆向搜索关键](#148-逆向搜索关键)
+  - [14.9. 反射](#149-反射)
+  - [14.10. dex](#1410-dex)
+- [15. nodejs](#15-nodejs)
+  - [15.1. nodejs 和 浏览器环境区别](#151-nodejs-和-浏览器环境区别)
+- [16. 错误解决](#16-错误解决)
+
+
+
+# 1. 连接夜神模拟器
 adb connect 127.0.0.1:62001
 
 
-# 查看安卓当前activity
+# 2. 查看安卓当前activity
 adb shell dumpsys window windows | grep mFocusedApp
 
 
 
-# 脱360壳
-* 查看.so中函数名 nm libart.so |grep OpenMemory
+# 3. 脱360壳
+## 3.1. 查看.so中函数名 nm libart.so |grep OpenMemory
     ```
         # 提取libart.so文件
         # OpenMemory第一个参数为指向dex文件的指针，因此hook OpenMemory函数，读取第一个参数作为dump起始地址，根据dex文件格式，0x20偏移处为dex的长度，进而dump出整个dex文件。
@@ -23,17 +76,17 @@ adb shell dumpsys window windows | grep mFocusedApp
         _ZN3art7DexFile10OpenCommonEPKhjRKNSt3__112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEjPKNS_10OatDexFileEbbPS9_PNS0_12VerifyResultE
             
     ```
-* dump出来的壳需要放在/data/data/包名/ 下
+## 3.2. dump出来的壳需要放在/data/data/包名/ 下
 
 
-# dex转smail
+# 4. dex转smail
 *  java -jar baksmali.jar disassemble -o ./a/ 5904.dex
     
 
 
-# 通过adb上传文件
+# 5. 通过adb上传文件
 
-# dex转smail
+# 6. dex转smail
 *  java -jar baksmali.jar disassemble -o ./a/ 5904.dex
     
 前可能会提示read-only
@@ -43,10 +96,10 @@ mount -o remount -w /data
 adb push frida-server /data/frida_server 
 ```
 
-# [frida-server下载地址](https://github.com/frida/frida/releases)
+# 7. [frida-server下载地址](https://github.com/frida/frida/releases)
 
 
-# 上传运行frida-server
+# 8. 上传运行frida-server
 1. 直接adb push基本上不成功，adb root也不成功
 2. 先将软件通过奇兔刷机上传到手机上
 3. 上传的目录用adb shell进去大概是/mnt/sdcard/data/frida_server
@@ -55,7 +108,7 @@ adb push frida-server /data/frida_server
 
 
 
-# android studio 设置Java为1.8
+# 9. android studio 设置Java为1.8
 * File -> Project Structure -> Modules，将如下最后两个勾选1.8的选项
 
 * 修改build.gradle中为1.8
@@ -63,9 +116,9 @@ adb push frida-server /data/frida_server
 * 光标放到错误的地方，直接点击出设置，然后设置1.8
 
 
-# xposed模块使用
+# 10. xposed模块使用
 
-* 创建工程
+## 10.1. 创建工程
     * 创建工程在app目录下的gradle中添加配置如下
         ```
         dependencies {
@@ -99,8 +152,8 @@ adb push frida-server /data/frida_server
 
 
 
-# frida笔记
-* 启动或附加到程序
+# 11. frida笔记
+## 11.1. 启动或附加到程序
 ```
     # 启动并附加
     device = frida.get_usb_device()
@@ -112,7 +165,7 @@ adb push frida-server /data/frida_server
     session = frida.get_usb_device().attach('com.tencent.mm')
 ```
 
-* 加载启动脚本
+## 11.2. 加载启动脚本
 ```
     # 通过文件的方式加载启动
     with open("s1.js") as f:
@@ -125,11 +178,11 @@ adb push frida-server /data/frida_server
 ```
 
 
-* 定位类
+## 11.3. 定位类
 ```
     my_class = Java.use("com.roysue.demo02.MainActivity");
 ```
-* 更改方法实现
+## 11.4. 更改方法实现
 ```
     直接重写一个类中的函数
     my_class.fun.implementation = function(x,y){}
@@ -137,18 +190,18 @@ adb push frida-server /data/frida_server
     my_class.fun.overload('int', 'int').implementation
 ```
 
-* 新建一个变量
+## 11.5. 新建一个变量
 ```
     新建一个String
     var newString = Java.use("java.lang.String").$new("MYTESTSTRING2");
 ```
 
-* 打印堆栈
+## 11.6. 打印堆栈
 ```
     console.log(Java.use("android.util.Log").getStackTraceString(Java.use("java.lang.Exception").$new()));
 ```
 
-* 调用函数或者设置变量    
+## 11.7. 调用函数或者设置变量    
 ```
 
     # 静态函数的调用
@@ -183,20 +236,20 @@ adb push frida-server /data/frida_server
     Exception.$dispose();
 ```
 
-* 内部类的hook
+## 11.8. 内部类的hook
 ```
     # 可以查看smail，遭到$符号后边的名字，然后hook
     Java.use("com.example.androiddemo.Activity.FridaActivity4$InnerClasses").check1.implementation = function(){return true;}
 ```
 
 
-* 注意传参
+## 11.9. 注意传参
 ```
     可用以下变为字符串
     x.toString()
 ```
 
-* 发送消息和回调
+## 11.10. 发送消息和回调
 ```
     js中
     send(string_to_send); // send data to python code
@@ -214,7 +267,7 @@ adb push frida-server /data/frida_server
     script.on("message", my_message_handler)
 ```
 
-* 打印堆栈
+## 11.11. 打印堆栈
 ```
 
     # 一行代码打印调用堆栈
@@ -238,7 +291,7 @@ adb push frida-server /data/frida_server
 ```
 
 
-* frida 常用函数
+## 11.12. frida 常用函数
 ```
     # byte转String
     function byte2string(array){
@@ -264,14 +317,14 @@ adb push frida-server /data/frida_server
 ```
 
 
-* frida js 编写自动补全
+## 11.13. frida js 编写自动补全
 ```
     git clone https://github.com/k3v1n1990s/frida-agent-example.git 后npm安装
     或者直接用package.json安装，将node_modules文件夹拷贝到工程最外边
 ```
 
 
-* frida使用
+## 11.14. frida使用
 ```
     查看进程包名
     frida-ps -U | grep xx.xx.xx
@@ -287,14 +340,14 @@ adb push frida-server /data/frida_server
 
 
 
-# objection使用
-* 查看so函数
+# 12. objection使用
+## 12.1. 查看so函数
 ```
     memory list exports  **.so 
     # 导出到json文件
     memroy list exports **.so --json a.txt
 ```
-* 查看堆上实列
+## 12.2. 查看堆上实列
 ```
     android heap search instance 包名.类名 
 
@@ -306,7 +359,7 @@ adb push frida-server /data/frida_server
     然后在控制台写js代码调用函数
 ```
 
-* 查看当前activates
+## 12.3. 查看当前activates
 ```
     # 列出当前程序活动中的activities，都有哪些页面
     android hooking list activities
@@ -321,7 +374,7 @@ adb push frida-server /data/frida_server
     android hooking generate simple 包名.类名.方法
 ```
 
-
+## 12.4. 常用方法
 ```
     # hook到app
     objection -g com.r0ysue.a0512demo02  explore
@@ -335,14 +388,14 @@ e --dump-return
 
 ```
 
-* 加载插件
+## 12.5. 加载插件
 ```
     进入objection REPL 然后： plugin load 插件路径 
 ```
 
 
 
-# ida pro笔记
+# 13. ida pro笔记
 
 ```
     1. shift + f12:打开字符串窗口
@@ -352,25 +405,25 @@ e --dump-return
 
 
 
-# 技巧
-* 通过file可以查看文件类型
+# 14. 技巧
+## 14.1. 通过file可以查看文件类型
 
-* 解压ab文件
+## 14.2. 解压ab文件
 ```
     java -jar ade.jar unpack 1.ab 1.tar 
 ```
 
-* 连接夜神模拟器
+## 14.3. 连接夜神模拟器
 ```
     adb connect 127.0.0.1:21503
 ```
 
-* 通过adb输入input
+## 14.4. 通过adb输入input
 ```
     adb shell input text "ok"
 ```
 
-* JNI动态注册
+## 14.5. JNI动态注册
 ```
      jint RegisterNatives(jclass clazz, const JNINativeMethod* methods, jint nMethods)
     
@@ -392,13 +445,13 @@ e --dump-return
     第三个参数：需要注册的方法个数
 ```
 
-* jni编译的so中查看函数名，有很长一串名字，这个是没有加extern c， 可用c++flit进行还原
+## 14.6. jni编译的so中查看函数名，有很长一串名字，这个是没有加extern c， 可用c++flit进行还原
 
 
-* jin静态注册函数，前2个参数是必填的，一个是env，还有个一个是object
+## 14.7. jin静态注册函数，前2个参数是必填的，一个是env，还有个一个是object
 
 
-* 逆向搜索关键
+## 14.8. 逆向搜索关键
 ```
     # 搜索body中的关键字
     .put("xxx
@@ -409,21 +462,21 @@ e --dump-return
 ```
 
 
-反射
+## 14.9. 反射
 ```
     通过反射可以获取到Java中的类，类成员变量，类函数等，可通过反射操作实列。可编写so，通过反射操作Java。
 ```
 
 
 
-dex
+## 14.10. dex
 
 * dex文件格式，0x20偏移处为dex的长度
 
 
 
-# nodejs
-* nodejs 和 浏览器环境区别
+# 15. nodejs
+## 15.1. nodejs 和 浏览器环境区别
 ```
 1. 内置对象不同
     浏览器环境中提供了 window 全局对象
@@ -439,7 +492,7 @@ dex
 
 
 
-# 错误解决
+# 16. 错误解决
 
 
 
