@@ -35,7 +35,7 @@
 * 主表查询子表  
     django 默认每个主表的对象都有一个是外键的属性，可以通过它来查询到所有属于主表的子表的信息。这个属性的名称默认是以子表的名称小写加上_set()来表示，也可以在创建外键的时候用related_name这个参数指定。
     ```python
-    class Person(models.Model)
+    class Person(models.Model):
         name = models.CharField(verbose_name='作者姓名', max_length=10)
         age = models.IntegerField(verbose_name='作者年龄')
 
@@ -132,11 +132,19 @@ books = serializers.PrimaryKeyRelatedField(many=True, queryset=Book.objects.all(
     ```
 
 
+* 对返回的数据中某一项进行修改
+```
+    # 在serialzer中添加如下代码，可对返回值中的某项进行修改
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        org_id = data.get("org_id")
+        data['cover_main_image_path'] = get_img_path('cover/' + org_id + '.jpg')
+        return data
+```
 
 
 
-* 跨域请求的时候前段设置localhost和127.0.0.1是有区别的
-
+* 跨域请求的时候前端设置localhost和127.0.0.1是有区别的
 
 
 
@@ -148,8 +156,26 @@ books = serializers.PrimaryKeyRelatedField(many=True, queryset=Book.objects.all(
        ```
 
     
-    
-    
+* 自定义分页
+```
+# 分页自定义
+from rest_framework.pagination import PageNumberPagination
+class ArticlePagination(PageNumberPagination):
+    page_size = 4 # 表示每页的默认显示数量
+    page_size_query_param = 'page_size' # 表示url中每页数量参数
+    page_query_param = 'p' # 表示url中的页码参数
+    max_page_size = 100  # 表示每页最大显示数量，做限制使用，避免突然大量的查询数据，数据库崩溃
+
+class ArticleListleView(generics.ListCreateAPIView):
+
+    queryset = Article.objects.all()  # 查询结果集
+    serializer_class = ArticleSerializer # 序列化类
+    pagination_class = ArticlePagination   # 自定义分页会覆盖settings全局配置的
+
+```
+
+
+
 
 
 

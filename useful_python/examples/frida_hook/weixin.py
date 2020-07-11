@@ -12,9 +12,7 @@ Java.perform(function () {
             send('onClick');
             console.log(a, b, c, d)
         };
-        
-        
-        
+  
     }
      
 )

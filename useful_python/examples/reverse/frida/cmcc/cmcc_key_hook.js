@@ -9,11 +9,21 @@ function hookai() {
         const gson = Java.use('com.r0ysue.gson.Gson');
 
         // // hook到解密参数的前一步
-        // var clazz = Java.use("com.cmcc.dependency.util.ai")
+        var clazz = Java.use("com.cmcc.dependency.util.ai")
         // clazz.a.overload('[B', '[B').implementation = function (a, b) {
         //     console.log("加密key 和 加密参数", byte2string(a), byte2string(b))
         //     return this.a(a, b)
         // }
+
+        // 查看header中a,b生成的前一步的参数
+        clazz.a.overload('int', '[B').implementation = function(a, b){
+            var temp1 = byte2string(b)
+            console.log(a, temp1)
+            var ret = this.a(a, b)
+            console.log(ret)
+            return ret
+        };
+
         //
         // // hook 调用header中a, b参数生成函数
         // var clazz1 = Java.use("com.cmcc.dependency.b.e")
@@ -51,11 +61,12 @@ function hookai() {
         var clazz3 = Java.use("com.cmcc.dependency.util.bj")
         console.log("clazz3.t()", clazz3.t())
 
-        // 加密和解密的key，是根据请求的c参数，和返回的c参数生成的
+        // 加密和解密的key，是根据请求的c参数，和返回的c参数生成的,将c的值在下边替换，生成key
         var clazz4 = Java.use("com.cmcc.dependency.b.b.d")
         console.log("clazz4.a(0, w)", clazz4.a(0, "MBYBDCVnLjKx3veM1zVemcj5iVdZP2VERICwZTR85Ds="))
 
-        // 查看解密密匙的生成，是根据返回的c字段进行解密的
+        // 查看header中a和c是如何生成的
+        // var clazz5 = Java.use("com.cmcc.dependency.util.ai")
 
 
 

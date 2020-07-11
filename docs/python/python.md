@@ -22,6 +22,15 @@
 * [一些技巧总结](../../useful_python/examples_jupyter/tips.ipynb)
     * 下载文件，获取文件名，并保存。以下载百度文库举例
     
+    * 显示base64图片
+    ```
+        # 显示图片
+        import io
+        from PIL import Image
+        import base64
+        im = Image.open(io.BytesIO(base64.b64decode("")))
+        im.show()
+    ```
     
     
 * 进程的三中方式：

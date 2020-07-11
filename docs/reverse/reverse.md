@@ -13,14 +13,14 @@ adb shell dumpsys window windows | grep mFocusedApp
 * 查看.so中函数名 nm libart.so |grep OpenMemory
     ```
         # 提取libart.so文件
+        # OpenMemory第一个参数为指向dex文件的指针，因此hook OpenMemory函数，读取第一个参数作为dump起始地址，根据dex文件格式，0x20偏移处为dex的长度，进而dump出整个dex文件。
         adb pull /system/lib/libart.so
         oppo libart.so 中 OpenMemory名字
         32位（一般用这个）：_ZN3art7DexFile10OpenMemoryEPKhjRKNSt3__112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEjPNS_6MemMapEPKNS_10OatDexFileEPS9_
         64位：_ZN3art7DexFile10OpenMemoryEPKhmRKNSt3__112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEjPNS_6MemMapEPKNS_10OatDexFileEPS9_
   
-        Huawei 6p
-        32:
-        
+        Huawei 6p 8.0 OpenCommon
+        _ZN3art7DexFile10OpenCommonEPKhjRKNSt3__112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEjPKNS_10OatDexFileEbbPS9_PNS0_12VerifyResultE
             
     ```
 * dump出来的壳需要放在/data/data/包名/ 下
@@ -216,6 +216,10 @@ adb push frida-server /data/frida_server
 
 * 打印堆栈
 ```
+
+    # 一行代码打印调用堆栈
+    console.log(Java.use("android.util.Log").getStackTraceString(Java.use("java.lang.Throwable").$new()));
+    # 或者
     function printStack(name) {
     Java.perform(function () {
         var Exception = Java.use("java.lang.Exception");
@@ -400,12 +404,36 @@ e --dump-return
     .put("xxx
 
     
+    
 
 ```
+
 
 反射
 ```
     通过反射可以获取到Java中的类，类成员变量，类函数等，可通过反射操作实列。可编写so，通过反射操作Java。
+```
+
+
+
+dex
+
+* dex文件格式，0x20偏移处为dex的长度
+
+
+
+# nodejs
+* nodejs 和 浏览器环境区别
+```
+1. 内置对象不同
+    浏览器环境中提供了 window 全局对象
+    NodeJS 环境中的全局对象不叫 window , 叫 global
+2. this 默认指向不同
+    浏览器环境中全局this默认指向 window
+    NodeJS 环境中全局this默认指向空对象 {}
+3. API 不同
+    浏览器环境中提供了操作节点的 DOM 相关 API 和操作浏览器的 BOM 相关 API
+    NodeJS 环境中没有 HTML 节点也没有浏览器, 所以 NodeJS 环境中没有 DOM / BOM
 ```
 
 

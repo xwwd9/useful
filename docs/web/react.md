@@ -327,6 +327,92 @@ ar
 
 
 
+
+# Next.js使用
+
+* 创建一个app
+    yarn create next-app
+    
+* 更改启动端口
+    ```
+        "start": "next -p 80"
+    ```
+
+
+* 当页面初次加载时，getInitialProps只会在服务端执行一次。getInitialProps只有在路由切换的时候（如Link组件跳转或路由自定义跳转）时，客户端的才会被执行。
+    注意：getInitialProps将不能使用在子组件中。只能使用在pages页面中。
+
+
+* 路由
+    ```
+        import React from 'react'
+        import Router,{ withRouter } from 'next/router'
+        
+        const Demo = (props) => {
+            return(
+                <>
+                    <button onClick={()=>Router.push('/')} >送我去主页</button>
+                    <div>这里是demo页</div>
+                    <div>{props.router.query.id}</div>
+                </>
+            )
+        }
+        export default withRouter(Demo);
+    ```
+
+
+* 解决不能引入css问题
+```
+    npm install  --save @zeit/next-css
+
+    安装成功，需要在根目录建立next.config.js，填入以下内容
+
+    const withCss = require('@zeit/next-css')
+    if(typeof require !== 'undefined'){
+        require.extensions['.css']=file=>{}
+    }
+    module.exports = withCss({})
+```
+
+* 当页面初始化加载时，getInitialProps只会加载在服务端。只有当路由跳转（Link组件跳转或 API 方法跳转）时，客户端才会执行getInitialProps。
+
+
+* nextjs Warning: Prop `className` did not match.
+```
+Install babel plugin:
+yarn add --dev babel-plugin-styled-components
+create new file .babelrc in your root project folder and add this:
+{
+    "env": {
+      "development": {
+        "plugins": [
+          [
+            "babel-plugin-styled-components",
+            { "ssr": true, "displayName": true, "preprocess": false }
+          ]
+        ],
+        "presets": ["next/babel"]
+      },
+      "production": {
+        "plugins": [
+          [
+            "babel-plugin-styled-components",
+            { "ssr": true, "displayName": true, "preprocess": false }
+          ]
+        ],
+        "presets": ["next/babel"]
+      }
+    },
+    "plugins": [
+      [
+        "babel-plugin-styled-components",
+        { "ssr": true, "displayName": true, "preprocess": false }
+      ]
+    ]
+}
+```
+
+
 # 小tips
 
 * [在线模拟接口平台](https://www.fastmock.site/)

@@ -60,6 +60,25 @@
 * 在测试cookie哪个有效的时候，如果删除了某个cookie失效了，不一定是这个cookie失效，可能是服务端判断你有连续的2次相同访问，或者没有走正常流程，而访问失效，比如搜狗微信。
 
 
+# pm2 使用
+* 启动next.js: pm2 start yarn --name hope -- run start
+```
+    0 pm2需要全局安装 nnpm install -g pm2
+    1 启动进程/应用 pm2 start bin/www 或 pm2 start app.js
+    2 重命名进程/应用 pm2 start app.js --name wb123
+    3 添加进程/应用 watch pm2 start bin/www --watch
+    4 结束进程/应用 pm2 stop www
+    5 结束所有进程/应用 pm2 stop all
+    6 删除进程/应用 pm2 delete www
+    7 删除所有进程/应用 pm2 delete all
+    8 列出所有进程/应用 pm2 list
+    9 查看某个进程/应用具体情况 pm2 describe www
+    10 查看进程/应用的资源消耗情况 pm2 monit
+    11 查看pm2的日志 pm2 logs
+    12 若要查看某个进程/应用的日志,使用 pm2 logs www
+    13 重新启动进程/应用 pm2 restart www
+    14 重新启动所有进程/应用 pm2 restart all
+```
 
 
 # supervisor 使用
@@ -180,21 +199,21 @@
 * 常用docker启动
     ```
         启动redis：
-          docker run -p 6379:6379 --restart=unless-stopped --name myredis -d redis:latest redis-server
+          docker run -p 6379:6379 --restart=unless-stopped --name myredis -d --requirepass "password" redis:latest redis-server
   
         启动mongo：
-          docker run -p 27017:27017 --restart=unless-stopped --name mymongo -d mongo
+          docker run -p 27017:27017 --restart=unless-stopped --name mymongo -d mongo --auth
+        启动mongo后再用以下创建用户名密码
+            $ docker exec -it mongo mongo admin
+            # 创建一个名为 admin，密码为 123456 的用户。
+            >  db.createUser({ user:'admin',pwd:'123456',roles:[ { role:'userAdminAnyDatabase', db: 'admin'}]});
+            # 尝试使用上面创建的用户信息进行连接。
+            > db.auth('admin', '123456')
   
         启动centos：
           docker run -itd --net="host" --restart=unless-stopped --name centos centos /bin/bash
     ```
 
-
-# 常用linux命令
-* 查看系统磁盘使用：df -h
-* 查看文件目录大小：  
-    * 先用：du -sh查看总目录大小
-    * 再用：du -sh * 查看分目录的大小 
     
 # docker命令
 * 查看docker磁盘使用情况：docker system df
@@ -209,7 +228,49 @@
            docker load < xxx.tar
 * 保存容器：docker export ID >xxx.tar
            docker import xxx.tar containr:v1
+           
+           
+# nginx 常用配置
+* 多个域名，通一个ip。在域名服务商处查看域名前缀，一般@表明主机名为空
+```
+server {
+        listen 80 default_server;
+        server_name _;
+        return 404; # 过滤其他域名的请求，返回444状态码
+    }
+    server {
+        listen       80;
+        server_name  xxx1.com;
 
+
+        location / {
+        proxy_pass   http://0.0.0.0:9085;
+        }
+    }
+    server {
+        listen       80;
+        server_name  xxx.com;
+        location / {
+        proxy_pass   http://0.0.0.0:9086;
+       }
+
+    }
+```
+
+
+# 常用linux命令
+* 查看系统磁盘使用：df -h
+* 查看文件目录大小：  
+    * 先用：du -sh查看总目录大小
+    * 再用：du -sh * 查看分目录的大小 
+* 修改history条数
+```
+    vim /etc/profile
+    HISTSIZE = 100000
+    source /etc/profile
+```
+    
+    
 # redis常用命令
 * config set requirepass FNpn 设置密码，重启后失效
 * redis-cli -h 40.96.33.234 -p 6379 连接redis
@@ -219,6 +280,59 @@
 * 一些常用命令查看：http://doc.redisfans.com/
 
 
+
+
+
+
+
+# wordpress使用
+
+* docker启动wordpress
+```
+docker run -d --name wordpress -e WORDPRESS_DB_HOST=mysql -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASSWORD=*** -e WORDPRESS_DB_NAME=myword -p 9086:80 --link mysql:mysql wordpress
+```
+
+* css自定义
+```
+.header {
+  background: #fff url('https://movie-image-hope.oss-cn-shanghai.aliyuncs.com/static/header.jpg') repeat-x 0 100%;
+}
+
+.footer{
+    background: #fff url('https://movie-image-hope.oss-cn-shanghai.aliyuncs.com/static/header.jpg') repeat-x;
+}
+
+p{
+	font-size: 2rem;
+  line-height: 3.2rem;
+}
+
+```
+
+* 错误排查
+```
+打开 wp-config.php 文件，将原来的 WP_Debug 设置改成如下设置：
+define('WP_DEBUG', true);
+define('WP_DEBUG_DISPLAY', true);
+保存之后，再刷新前台或者后台，就可以看到错误的 log 了。
+
+打开 wp-config.php 文件，将原来的 WP_Debug 设置改成如下设置：
+
+define('WP_DEBUG', true);
+define('WP_DEBUG_DISPLAY', false);
+define('WP_DEBUG_LOG', true);
+然后就可以在 wp-content/debug.log 文件中看到相应的错误信息了。
+```
+
+# mysql 
+* docker 启动
+```
+docker run -itd --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=**** mysql:5.7.30
+```
+* 创建一个库
+```
+create database  hope CHARSET=UTF8;
+```
 
 
 
