@@ -3,21 +3,21 @@
 
 # scrapy笔记
 
-* 获取scrapy的配置文件  
+# 获取scrapy的配置文件  
     ```python
     get_project_settings()
     ```
     
-* 可以用SpiderLoader通过名字来加载爬虫  
+# 可以用SpiderLoader通过名字来加载爬虫  
     ```python
     loader = SpiderLoader(settings)
     spider_cls = loader.load(spider_name)
     ```
 
-* 命令行工具scrapy是通过当前目录下的scrapy.cfg配置文件中指定的scrapy工程配置文件来启动 
+# 命令行工具scrapy是通过当前目录下的scrapy.cfg配置文件中指定的scrapy工程配置文件来启动 
     
 
-* middlerware跟新header  
+# middlerware跟新header  
     ```python
     request.headers.update(tk_headers)  
   
@@ -28,7 +28,7 @@
     ```
 
 
-* 下载图片需重写ImagesPipeline  [参考](https://docs.scrapy.org/en/latest/topics/media-pipeline.html?highlight=ImagesPipeline)  
+# 下载图片需重写ImagesPipeline  [参考](https://docs.scrapy.org/en/latest/topics/media-pipeline.html?highlight=ImagesPipeline)  
     ```python
     注意重写文件路径函数重写要和父函数中参数声明一致，不然传参会有问题，文档中给的example不正确。
     def file_path(self, request, response=None, info=None):
@@ -39,11 +39,11 @@
        
    文件不管下载成功还是失败，都会进入item_completed。
     
-* 如果在spider中用了custom_settings,需要注意不是和全局的setting合并，而是只用spider中自己的settings
+# 如果在spider中用了custom_settings,需要注意不是和全局的setting合并，而是只用spider中自己的settings
 
 
 
-* xpath  
+# xpath  
     * 同时满足2种属性：
     ```
     //div[@class='para-title level-2' and @label-module='para-title']
@@ -63,7 +63,7 @@
     ```
     
     
-* 运行spider,可使用CrawlerProcess， 和CrawlerRunner， 一般使用CrawlerRunner。
+# 运行spider,可使用CrawlerProcess， 和CrawlerRunner， 一般使用CrawlerRunner。
 
     ```python
     import scrapy
@@ -90,11 +90,25 @@
     ```
 
 
-* cookie的使用
+# cookie的使用
     * "COOKIES_ENABLED":True 是否使用cookie
     * 在使用Request()构造请求，或者直接在中间件中设置cookies的时候需要注意meta中donot_merge_cookies参数的设置，donot_merge_cookies = False 时，自己设置的cookie不会生效，也就是自己的cookie不会和scrapy的cookie合并。
     
     * 总而言之，要使用cookie，需要把设置打开，自己设置的cookie会合scrapy的进行合并。直接在header中设置cookie，这些参数是否生效，还未尝试。
+    
+    
+    
+# 使用aiohttp
+## 使用async关键字
+```
+    async def process_request(self, request, spider):
+        print('请求一个延迟5秒的网址开始')
+        await asyncio.create_task(self.get_ip())
+
+    在setting添加
+    TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
+```
+
     
 
 [返回上一级](../../README.md)
