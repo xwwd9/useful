@@ -11,8 +11,6 @@ def read_line():
 
 
 
-
-
 if __name__ == "__main__":
 
     read_line()
