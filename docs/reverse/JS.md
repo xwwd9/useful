@@ -21,6 +21,10 @@
 $("#输入框的id")
 $(".输入框的classname")
 ```
+## 查找拦截器(用户发送请求和接受请求时候的http处理)
+```
+    axios.interceptors
+```
 
 
 # 2. 加密总结
@@ -66,3 +70,7 @@ $(".输入框的classname")
   Object.defineProperty(_,"*", {})
 ```
 
+
+
+# chrome 中技巧
+## 在控制台输入copy(变量)，可以直接复制变量。

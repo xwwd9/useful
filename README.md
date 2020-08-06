@@ -10,8 +10,6 @@
 
 * [react笔记](./docs/web/react.md)
 
-* [js混淆笔记](./docs/reverse/AST.md)
-
 * [mongo笔记](./docs/other/mongo.md)
 
 * [js笔记](./docs/web/JS.md)
@@ -25,5 +23,9 @@
 * [自动化笔记](./docs/python/auto.md)
 
 * [逆向笔记](./docs/reverse/reverse.md)
+
+* [js混淆笔记](./docs/reverse/AST.md)
+
+* [js逆向笔记](./docs/reverse/JS.md)
 
 * [杂项笔记](./docs/other/other.md)
