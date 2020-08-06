@@ -22,7 +22,7 @@
 
 * [自动化笔记](./docs/python/auto.md)
 
-* [逆向笔记](./docs/reverse/reverse.md)
+* [APP逆向笔记](./docs/reverse/reverse.md)
 
 * [js混淆笔记](./docs/reverse/AST.md)
 
