@@ -23,7 +23,9 @@ $(".输入框的classname")
 ```
 ## 查找拦截器(用户发送请求和接受请求时候的http处理)
 ```
+    # axios的拦截器
     axios.interceptors
+    # 还有其他库的拦截器
 ```
 
 
