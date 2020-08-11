@@ -24,6 +24,8 @@
   - [3.7. 每个页面都有一个body元素， 并且所有其他元素将继承body元素的样式。](#37-每个页面都有一个body元素-并且所有其他元素将继承body元素的样式)
   - [3.8. HTML DOM Element 对象](#38-html-dom-element-对象)
     - [3.8.1. textContent 设置或返回节点及其后代的文本内容。](#381-textcontent-设置或返回节点及其后代的文本内容)
+- [svg](#svg)
+  - [text-anchor](#text-anchor)
 # 2. css
 
 ## 2.1. 选择器
@@ -114,3 +116,18 @@
 
 ## 3.8. HTML DOM Element 对象
 ### 3.8.1. textContent 设置或返回节点及其后代的文本内容。  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

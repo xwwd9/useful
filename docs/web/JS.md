@@ -281,6 +281,23 @@
     { value: undefined, done: true }
 ```
 
+
+# flat(), map(), flatmap()
+```
+    // map() 对于每个元素返回新的处理
+    const huh = scattered.map( chunk => chunk.split( " " ) );
+    console.log( huh ); // [ [ "my", "favorite" ], [ "hamburger" ], [ "is", "a" ], [ "chicken", "sandwich" ] ]
+    
+    // 如果函数处理后是数组，则flat下（可以指定deep）
+    const better = scattered.flatMap( chunk => chunk.split( " " ) );
+    console.log( better ); // [ "my", "favorite", "hamburger", "is", "a", "chicken", "sandwich" ]
+    
+    const nestedArraysOhMy = [ "a", ["b", "c"], ["d", ["e", "f", ["dd", "dd"]]]];
+    // .flat() 接收一个可选的深度（deep）参数
+    const ahhThatsBetter = nestedArraysOhMy.flat( 2 );
+    console.log( ahhThatsBetter ); // [ "a", "b", "c", "d", "e", "f" ]
+```
+
 [返回主目录](../../README.md)
 
 
