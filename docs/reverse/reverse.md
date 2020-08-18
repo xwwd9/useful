@@ -49,7 +49,11 @@
   - [14.10. dex](#1410-dex)
 - [15. nodejs](#15-nodejs)
   - [15.1. nodejs 和 浏览器环境区别](#151-nodejs-和-浏览器环境区别)
-- [16. 错误解决](#16-错误解决)
+- [16. charles](#16-charles)
+  - [16.1. 破解地址](#161-破解地址)
+  - [16.2. 安装证书](#162-安装证书)
+- [17. vpn检测](#17-vpn检测)
+- [18. 错误解决](#18-错误解决)
 
 
 
@@ -78,6 +82,18 @@ adb shell dumpsys window windows | grep mFocusedApp
     ```
 ## 3.2. dump出来的壳需要放在/data/data/包名/ 下
 
+## 脱壳后多个dex合并成一个
+```
+    1.将包中的META-INF提取出来
+    2.将脱壳后得到的dex命名成classes.dex,classes2.dex,等
+    3.将上2步的文件合并然后压缩成apk
+```
+
+## 多个dex查找关键字
+```
+    grep -ril "keyword" //当前目录递归 忽略大小写 打印搜索到的文件
+    
+```
 
 # 4. dex转smail
 *  java -jar baksmali.jar disassemble -o ./a/ 5904.dex
@@ -331,7 +347,7 @@ adb push frida-server /data/frida_server
 
     spawn启动js文件
     （肯能会启动太快，找不到实列变量）
-    frida -U -f xx.xx.xx -l a.js
+    frida -U -f xx.xx.xx -l a.js --no-pause
 
     attach启动js文件
     frida -U xx.xx.xx -l a.js
@@ -382,7 +398,7 @@ adb push frida-server /data/frida_server
     android hooking search classes MainActi
     # 然后具体查看类中的方法
     android hooking watch class com.r0ysue.a0512demo02.MainActivity --dump-args --dump-backtrace --dump-return
-    # 查看具体的一个方法,调用的时候都会被打印
+    # 查看具体的一个方法,调用的时候都会被打印(参数，返回值，堆栈都会被打印)
     android hooking watch class_method com.r0ysue.a0512demo02.MainActivity.fun --dump-args --dump-backtrac
 e --dump-return
 
@@ -474,7 +490,6 @@ e --dump-return
 * dex文件格式，0x20偏移处为dex的长度
 
 
-
 # 15. nodejs
 ## 15.1. nodejs 和 浏览器环境区别
 ```
@@ -491,8 +506,67 @@ e --dump-return
 
 
 
+# 16. charles
+## 16.1. [破解地址](https://www.zzzmode.com/mytools/charles/)
+## 16.2. 安装证书
+```
+    地址:chls.pro/ssl
+    证书会被安装到 /data/misc/user/0/cacerts-added
 
-# 16. 错误解决
+    讲证书拷贝到系统
+    mount -o remount,rw /
+    cp * /etc/security/cacerts/
+    mount -o remount,ro /
+
+    或者
+    cd /data/misc/user/0/cacerts-added  #移动至于用户证书目录
+    mount -o remount,rw /system   #将系统证书目录权限改成可读可写就可以移动文件不然不行
+    cp * /etc/security/cacerts/  #这里可以使用cp也可以使用mv
+    mount -o remount,ro /system  #移动完之后记得把权限改回只读
+
+```
+
+
+
+# 17. vpn检测
+```
+
+    1.vpn检测直接hook java.net.NetworkInterface.getName(), 返回tun0就可以
+    2.搜索下面的关键字hook对应的检测地方。
+
+
+    # 以下2种判断方法，通过搜索以下的一些关键字，来hook
+    判断网络接口名字包含 ppp0 或 tun0
+    public void isDeviceInVPN() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (name.equals("tun0") || name.equals("ppp0")) {
+                    Log.i("TAG", "isDeviceInVPN  current device is in VPN.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    获取当前网络 Transpoart 字样
+    public void networkCheck() {
+        try {
+            ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            Network network = connectivityManager.getActiveNetwork();
+
+            NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(network);
+            Log.i("TAG", "networkCapabilities -> " + networkCapabilities.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+```
+
+
+
+# 18. 错误解决
 
 
 

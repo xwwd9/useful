@@ -13,6 +13,7 @@
   - [10.1. async 是一个修饰符，async 定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数](#101-async-是一个修饰符async-定义的函数会默认的返回一个promise对象resolve的值因此对async函数可以直接进行then操作返回的值即为then方法的传入函数)
   - [10.2. await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值, 等待异步函数的执行结果。](#102-await-关键字-只能放在-async-函数内部-await关键字的作用-就是获取-promise中返回的内容-获取的是promise函数中resolve或者reject的值-等待异步函数的执行结果)
 - [11. yield 一个Generator函数与普通function的区别就是函数名前面多了一个星号 * 但是执行时有很大不同，与yield命令配合，可以实现暂停执行的功能](#11-yield-一个generator函数与普通function的区别就是函数名前面多了一个星号--但是执行时有很大不同与yield命令配合可以实现暂停执行的功能)
+- [flat(), map(), flatmap()](#flat-map-flatmap)
 
 
 # 1. js对象拷贝  
@@ -285,10 +286,13 @@
 # flat(), map(), flatmap()
 ```
     // map() 对于每个元素返回新的处理
+    const nestedArraysOhMy = [ "a", ["b", "c"], ["d", ["e", "f"]]];
     const huh = scattered.map( chunk => chunk.split( " " ) );
     console.log( huh ); // [ [ "my", "favorite" ], [ "hamburger" ], [ "is", "a" ], [ "chicken", "sandwich" ] ]
     
-    // 如果函数处理后是数组，则flat下（可以指定deep）
+
+    const scattered = [ "my favorite", "hamburger", "is a", "chicken sandwich" ];
+    // 如果函数处理后是数组，则flat下
     const better = scattered.flatMap( chunk => chunk.split( " " ) );
     console.log( better ); // [ "my", "favorite", "hamburger", "is", "a", "chicken", "sandwich" ]
     
