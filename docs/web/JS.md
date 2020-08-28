@@ -14,6 +14,7 @@
   - [10.2. await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值, 等待异步函数的执行结果。](#102-await-关键字-只能放在-async-函数内部-await关键字的作用-就是获取-promise中返回的内容-获取的是promise函数中resolve或者reject的值-等待异步函数的执行结果)
 - [11. yield 一个Generator函数与普通function的区别就是函数名前面多了一个星号 * 但是执行时有很大不同，与yield命令配合，可以实现暂停执行的功能](#11-yield-一个generator函数与普通function的区别就是函数名前面多了一个星号--但是执行时有很大不同与yield命令配合可以实现暂停执行的功能)
 - [flat(), map(), flatmap()](#flat-map-flatmap)
+- [arguments 类数组](#arguments-类数组)
 
 
 # 1. js对象拷贝  
@@ -300,6 +301,21 @@
     // .flat() 接收一个可选的深度（deep）参数
     const ahhThatsBetter = nestedArraysOhMy.flat( 2 );
     console.log( ahhThatsBetter ); // [ "a", "b", "c", "d", "e", "f" ]
+```
+
+
+# arguments 类数组
+```
+    函数 arguments 对象是所有（非箭头）函数中都可用的局部变量, 是一个类似数组的对象。你可以使用arguments对象在函数中引用函数的（实际）参数。
+
+    function foo() {
+        console.log(arguments);
+    }
+    ​
+    foo(1, "foo", false, {name: "bar"}); // [1, "foo", false, object]
+    function foo() {
+        console.log(typeof arguments);
+}
 ```
 
 [返回主目录](../../README.md)

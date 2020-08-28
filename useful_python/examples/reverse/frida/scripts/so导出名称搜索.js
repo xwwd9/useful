@@ -1,3 +1,5 @@
+//通过搜索so中的全部导出名称，确定导出函数是在哪个so中。
+
 function test() {
     console.log("Entering")
     var modules = Process.enumerateModules()

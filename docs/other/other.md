@@ -13,7 +13,7 @@
   - [5.1. 使用步骤：](#51-使用步骤)
   - [5.2. 编写配置文件：](#52-编写配置文件)
 - [6. docker使用](#6-docker使用)
-  - [6.1. 进入容器：docker exec -it scrapy /bin/bash](#61-进入容器docker-exec--it-scrapy-binbash)
+  - [6.1. 进入容器：docker exec -it scrapy /bin/bash 或者/bin/sh](#61-进入容器docker-exec--it-scrapy-binbash-或者binsh)
   - [6.2. 删除镜像：docker rmi xxx](#62-删除镜像docker-rmi-xxx)
   - [6.3. 将容器重新打包成镜像：docker commit test xxx/common](#63-将容器重新打包成镜像docker-commit-test-xxxcommon)
   - [6.4. 将镜像推入厂库：docker push 192.168.4.125:5000/xxx_common](#64-将镜像推入厂库docker-push-19216841255000xxx_common)
@@ -33,38 +33,53 @@
   - [7.8. 容器提交成镜像：docker commit test pgy/common (这种方式会把历史记录打包进去，容器可能会越来越大)](#78-容器提交成镜像docker-commit-test-pgycommon-这种方式会把历史记录打包进去容器可能会越来越大)
   - [7.9. 保存镜像：docker save ID > xxx.tar](#79-保存镜像docker-save-id--xxxtar)
   - [7.10. 保存容器：docker export ID >xxx.tar](#710-保存容器docker-export-id-xxxtar)
+  - [7.11. 安装错误](#711-安装错误)
 - [8. nginx 常用配置](#8-nginx-常用配置)
   - [8.1. 多个域名，通一个ip。在域名服务商处查看域名前缀，一般@表明主机名为空](#81-多个域名通一个ip在域名服务商处查看域名前缀一般表明主机名为空)
 - [9. 常用linux命令](#9-常用linux命令)
   - [9.1. 查看系统磁盘使用：df -h](#91-查看系统磁盘使用df--h)
   - [9.2. 查看文件目录大小：](#92-查看文件目录大小)
   - [9.3. 修改history条数](#93-修改history条数)
-- [10. redis常用命令](#10-redis常用命令)
-  - [10.1. config set requirepass FNpn 设置密码，重启后失效](#101-config-set-requirepass-fnpn-设置密码重启后失效)
-  - [10.2. redis-cli -h 40.96.33.234 -p 6379 连接redis](#102-redis-cli--h-409633234--p-6379-连接redis)
-  - [10.3. 进入redis后使用auth认证](#103-进入redis后使用auth认证)
-  - [10.4. select 13 选取数据库](#104-select-13-选取数据库)
-  - [10.5. key * 查看当前有哪些keys](#105-key--查看当前有哪些keys)
-  - [10.6. 一些常用命令查看：http://doc.redisfans.com/](#106-一些常用命令查看httpdocredisfanscom)
-- [11. wordpress使用](#11-wordpress使用)
-  - [11.1. docker启动wordpress](#111-docker启动wordpress)
-  - [11.2. css自定义](#112-css自定义)
-  - [11.3. 错误排查](#113-错误排查)
-- [12. mysql](#12-mysql)
-  - [12.1. docker 启动](#121-docker-启动)
-  - [12.2. 创建一个库](#122-创建一个库)
-- [13. anyproxy使用](#13-anyproxy使用)
-  - [13.1. 启动anyproxy -i --rule 文件.js: -i是表是抓取https](#131-启动anyproxy--i---rule-文件js--i是表是抓取https)
-  - [13.2. 注意开启防火墙，和代理设置。](#132-注意开启防火墙和代理设置)
-- [14. nodejs](#14-nodejs)
-  - [14.1. 安装nodejs](#141-安装nodejs)
-- [15. ssdb查询命令：](#15-ssdb查询命令)
-  - [15.1. 查看keys：](#151-查看keys)
-- [16. 防火墙](#16-防火墙)
-  - [16.1. iptables -I INPUT -p tcp --dport 3000 -j ACCEPT](#161-iptables--i-input--p-tcp---dport-3000--j-accept)
-  - [16.2. firewall-cmd --zone=public --add-port=3001/tcp --permanent](#162-firewall-cmd---zonepublic---add-port3001tcp---permanent)
-- [17. 阿里云](#17-阿里云)
-- [18. 代理总结：](#18-代理总结)
+  - [9.4. 利用awk批量kill](#94-利用awk批量kill)
+- [10. sh脚本](#10-sh脚本)
+  - [10.1. 获取时间](#101-获取时间)
+  - [10.2. sleep](#102-sleep)
+- [11. redis常用命令](#11-redis常用命令)
+  - [11.1. config set requirepass FNpn 设置密码，重启后失效](#111-config-set-requirepass-fnpn-设置密码重启后失效)
+  - [11.2. redis-cli -h 40.96.33.234 -p 6379 连接redis](#112-redis-cli--h-409633234--p-6379-连接redis)
+  - [11.3. 进入redis后使用auth认证](#113-进入redis后使用auth认证)
+  - [11.4. select 13 选取数据库](#114-select-13-选取数据库)
+  - [11.5. key * 查看当前有哪些keys](#115-key--查看当前有哪些keys)
+  - [11.6. 一些常用命令查看：http://doc.redisfans.com/](#116-一些常用命令查看httpdocredisfanscom)
+- [12. wordpress使用](#12-wordpress使用)
+  - [12.1. docker启动wordpress](#121-docker启动wordpress)
+  - [12.2. css自定义](#122-css自定义)
+  - [12.3. 错误排查](#123-错误排查)
+- [13. mysql](#13-mysql)
+  - [13.1. docker 启动](#131-docker-启动)
+  - [13.2. 创建一个库](#132-创建一个库)
+- [14. anyproxy使用](#14-anyproxy使用)
+  - [14.1. 启动anyproxy -i --rule 文件.js: -i是表是抓取https](#141-启动anyproxy--i---rule-文件js--i是表是抓取https)
+  - [14.2. 注意开启防火墙，和代理设置。](#142-注意开启防火墙和代理设置)
+- [15. nodejs](#15-nodejs)
+  - [15.1. 安装nodejs](#151-安装nodejs)
+- [16. ssdb查询命令：](#16-ssdb查询命令)
+  - [16.1. 查看keys：](#161-查看keys)
+- [17. 防火墙](#17-防火墙)
+  - [17.1. iptables -I INPUT -p tcp --dport 3000 -j ACCEPT](#171-iptables--i-input--p-tcp---dport-3000--j-accept)
+  - [17.2. firewall-cmd --zone=public --add-port=3001/tcp --permanent](#172-firewall-cmd---zonepublic---add-port3001tcp---permanent)
+- [18. 阿里云](#18-阿里云)
+- [19. 搜索技巧（google）](#19-搜索技巧google)
+  - [19.1. "空格-号"排除关键词](#191-空格-号排除关键词)
+  - [19.2. 英文双引号精确搜索](#192-英文双引号精确搜索)
+  - [19.3. or 多个关键词搜索](#193-or-多个关键词搜索)
+  - [19.4. *号模糊匹配](#194-号模糊匹配)
+  - [19.5. filetype:pdf ppt doc 指定文件类型搜索](#195-filetypepdf-ppt-doc-指定文件类型搜索)
+  - [19.6. site:网站 对指定网站进行搜索](#196-site网站-对指定网站进行搜索)
+  - [19.7. inurl:（表示其中一个包含）或者allinurl（表示后续都要包含）:](#197-inurl表示其中一个包含或者allinurl表示后续都要包含)
+  - [19.8. intitle: allintitle:在标题中进行搜索](#198-intitle-allintitle在标题中进行搜索)
+  - [19.9.](#199)
+- [20. 代理总结：](#20-代理总结)
 
 
 
@@ -229,7 +244,7 @@
 
 # 6. docker使用
 
-## 6.1. 进入容器：docker exec -it scrapy /bin/bash
+## 6.1. 进入容器：docker exec -it scrapy /bin/bash 或者/bin/sh
 ## 6.2. 删除镜像：docker rmi xxx
 ## 6.3. 将容器重新打包成镜像：docker commit test xxx/common
 ## 6.4. 将镜像推入厂库：docker push 192.168.4.125:5000/xxx_common
@@ -275,6 +290,42 @@
   
         启动centos：
           docker run -itd --net="host" --restart=unless-stopped --name centos centos /bin/bash
+          可以使用systemctl命名：
+          docker run -itd -p 8899:22 --restart=unless-stopped --privileged=true --name centos centos /usr/sbin/init
+         
+         centos ssh dockerfile
+         **********************
+            # 生成的新镜像以centos镜像为基础
+                FROM centos
+                # 指定作者信息
+                MAINTAINER by Test
+                # 安装openssh-server
+                RUN yum -y install openssh-server
+                
+                RUN mkdir /var/run/sshd
+                RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
+                RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key
+                
+                # 指定root密码
+                RUN /bin/echo 'root:123456'|chpasswd
+                RUN /bin/sed -i 's/.*session.*required.*pam_loginuid.so.*/session optional pam_loginuid.so/g' /etc/pam.d/sshd
+                RUN /bin/echo -e "LANG=\"en_US.UTF-8\"" > /etc/default/local
+                EXPOSE 22
+                CMD /usr/sbin/sshd -D
+                
+                # docker build -t my-centos:v1.0.0 .
+                # docker run -itd -p 5522:22 --name centos --restart=always my-centos:v1.0.0
+                
+                然后访问5522端口就可以ssh
+         **********************
+          
+          
+
+        启动ss:
+          docker run -e PASSWORD=WERsdf123 -e METHOD=aes-256-cfb -p 8377:8388 --name ss --restart=unless-stopped -d shadowsocks/shadowsocks-libev
+
+        启动mysql:
+          docker run -itd --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=**** mysql:5.7.30
     ```
 
     
@@ -291,6 +342,19 @@
            docker load < xxx.tar
 ## 7.10. 保存容器：docker export ID >xxx.tar
            docker import xxx.tar containr:v1
+
+## 7.11. 安装错误
+```
+
+  Problem: package docker-ce-3:19.03.12-3.el7.x86_64 requires containerd.io >= 1.2.2-3, but none of the providers can be installed
+  - cannot install the best candidate for the job
+
+  解决：
+  containerd.io软件包下载地址：https://download.docker.com/linux/centos/7/x86_64/edge/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
+
+  yum -y install containerd.io-1.2.6-3.3.el7.x86_64.rpm
+```
+
            
            
 # 8. nginx 常用配置
@@ -332,15 +396,35 @@ server {
     HISTSIZE = 100000
     source /etc/profile
 ```
+## 9.4. 利用awk批量kill
+```
+  1. kill -9 `ps -ef | grep -i xxx | grep -v grep | awk '{print $2}'` 
+  2. ps aux | grep xxx | awk '{print $2}' | xargs kill -9
+```
+
+# 10. sh脚本
+## 10.1. 获取时间
+```
+  time=$(date -d "2 days ago" "+%Y-%m-%d")//2天前
+```
+## 10.2. sleep
+```
+  sleep 1 睡眠1秒
+  sleep 1s 睡眠1秒
+  sleep 1m 睡眠1分
+  sleep 1h 睡眠1小时
+```
+
+
     
     
-# 10. redis常用命令
-## 10.1. config set requirepass FNpn 设置密码，重启后失效
-## 10.2. redis-cli -h 40.96.33.234 -p 6379 连接redis
-## 10.3. 进入redis后使用auth认证
-## 10.4. select 13 选取数据库
-## 10.5. key * 查看当前有哪些keys
-## 10.6. 一些常用命令查看：http://doc.redisfans.com/
+# 11. redis常用命令
+## 11.1. config set requirepass FNpn 设置密码，重启后失效
+## 11.2. redis-cli -h 40.96.33.234 -p 6379 连接redis
+## 11.3. 进入redis后使用auth认证
+## 11.4. select 13 选取数据库
+## 11.5. key * 查看当前有哪些keys
+## 11.6. 一些常用命令查看：http://doc.redisfans.com/
 
 
 
@@ -348,13 +432,13 @@ server {
 
 
 
-# 11. wordpress使用
-## 11.1. docker启动wordpress
+# 12. wordpress使用
+## 12.1. docker启动wordpress
 ```
 docker run -d --name wordpress -e WORDPRESS_DB_HOST=mysql -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASSWORD=*** -e WORDPRESS_DB_NAME=myword -p 9086:80 --link mysql:mysql wordpress
 ```
 
-## 11.2. css自定义
+## 12.2. css自定义
 ```
 .header {
   background: #fff url('https://movie-image-hope.oss-cn-shanghai.aliyuncs.com/static/header.jpg') repeat-x 0 100%;
@@ -371,7 +455,7 @@ p{
 
 ```
 
-## 11.3. 错误排查
+## 12.3. 错误排查
 ```
 打开 wp-config.php 文件，将原来的 WP_Debug 设置改成如下设置：
 define('WP_DEBUG', true);
@@ -386,32 +470,32 @@ define('WP_DEBUG_LOG', true);
 然后就可以在 wp-content/debug.log 文件中看到相应的错误信息了。
 ```
 
-# 12. mysql 
-## 12.1. docker 启动
+# 13. mysql 
+## 13.1. docker 启动
 ```
 docker run -itd --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=**** mysql:5.7.30
 ```
-## 12.2. 创建一个库
+## 13.2. 创建一个库
 ```
 create database  hope CHARSET=UTF8;
 ```
 
 
 
-# 13. anyproxy使用
-## 13.1. 启动anyproxy -i --rule 文件.js: -i是表是抓取https
-## 13.2. 注意开启防火墙，和代理设置。
+# 14. anyproxy使用
+## 14.1. 启动anyproxy -i --rule 文件.js: -i是表是抓取https
+## 14.2. 注意开启防火墙，和代理设置。
 
 
 
-# 14. nodejs
-## 14.1. 安装nodejs
+# 15. nodejs
+## 15.1. 安装nodejs
     * yum install npm
     * 安装工具n（用于管理npm版本）：npm install -g n
     * 想升级到一个指定的版本，则可以使用n 12.16.0来升级
 
-# 15. ssdb查询命令：
-## 15.1. 查看keys：
+# 16. ssdb查询命令：
+## 16.1. 查看keys：
     1. keys　 '' '' 10　   字符串类型
     
     2. qlist　'' '' 10　　 列表类型
@@ -424,9 +508,9 @@ create database  hope CHARSET=UTF8;
 
 
 
-# 16. 防火墙
-## 16.1. iptables -I INPUT -p tcp --dport 3000 -j ACCEPT
-## 16.2. firewall-cmd --zone=public --add-port=3001/tcp --permanent  
+# 17. 防火墙
+## 17.1. iptables -I INPUT -p tcp --dport 3000 -j ACCEPT
+## 17.2. firewall-cmd --zone=public --add-port=3001/tcp --permanent  
    命令含义: –zone #作用域 –add-port=80/tcp #添加端口，格式为：端口/通讯协议 –permanent #永久生效，没有此参数重启后失效  
    **开启端口后记得重启**  
    **firewall-cmd --reload**
@@ -437,7 +521,7 @@ create database  hope CHARSET=UTF8;
 
 
 
-# 17. 阿里云
+# 18. 阿里云
 * 阿里云 查看公网ip：curl httpbin.org/ip
 
 
@@ -445,12 +529,27 @@ create database  hope CHARSET=UTF8;
 
 
 
+# 19. 搜索技巧（google）
+## 19.1. "空格-号"排除关键词
+```
+  apple -iphone -ipad
+```
+## 19.2. 英文双引号精确搜索
+## 19.3. or 多个关键词搜索
+## 19.4. *号模糊匹配
+## 19.5. filetype:pdf ppt doc 指定文件类型搜索
+## 19.6. site:网站 对指定网站进行搜索
+## 19.7. inurl:（表示其中一个包含）或者allinurl（表示后续都要包含）: 
+```
+  电影 inurl:movie
+```
+## 19.8. intitle: allintitle:在标题中进行搜索
+## 19.9. 
 
 
 
 
-
-# 18. 代理总结：
+# 20. 代理总结：
 * 使用过的代理：http://www.moguproxy.com/http
 ```
 目前来说代理服务主要提供2种代理：

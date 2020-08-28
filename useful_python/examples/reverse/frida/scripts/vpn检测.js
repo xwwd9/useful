@@ -5,21 +5,19 @@ function main() {
         var vpn = Java.use("java.net.NetworkInterface")
         vpn.getName.implementation = function(){
 
-            console.log(this.getName())
+            // console.log(this.getName())
             if(this.getName() == "tun0" || this.getName() == "ppp0"){
                 console.log(this.getName())
                 return "tun0"
             }
-            // console.log("dd")
-            // console.log(Java.use("android.util.Log").getStackTraceString(Java.use("java.lang.Exception").$new()));
-            // console.log(this.getName())
             return "tun0"
-        }
+        };
 
-        //以下需要在apk包中搜索 getNetworkCapabilities 等关键字确定位置
-        var vpn3 = Java.use("com.taihebase.activity.utils.SecurityUtil")
-        vpn3.hasVpnTransport.implementation = function(){
-            return false
+        var ConManger = Java.use("android.net.ConnectivityManager")
+        ConManger.getNetworkCapabilities.implementation = function(arg){
+            var result = this.getNetworkCapabilities(arg)
+            console.log("vpn", result, typeof result)
+            return null
         }
 
     })

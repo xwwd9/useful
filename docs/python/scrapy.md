@@ -101,12 +101,23 @@
 # 使用aiohttp
 ## 使用async关键字
 ```
-    async def process_request(self, request, spider):
-        print('请求一个延迟5秒的网址开始')
-        await asyncio.create_task(self.get_ip())
+    class TestAiohttp:
+        async def get_ip(self):
+            async with aiohttp.ClientSession() as client:
+                resp = await client.get('http://httpbin.org/delay/5')
+                result = await resp.json()
+                print(result)
+
+        async def process_request(self, request, spider):
+            print('请求一个延迟5秒的网址开始')
+            await asyncio.create_task(self.get_ip())
 
     在setting添加
     TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
+
+    可在中间件或者pipeline中添加该异步请求
+
+
 ```
 
     

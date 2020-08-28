@@ -77,5 +77,16 @@ $(".输入框的classname")
 
 
 
+# 过程记录
+## F12，右键反调试
+```
+  https://www.aqistudy.cn/historydata/daydata.php?city=%E5%B9%BF%E5%B7%9E&month=202008
+  右键可用chrome插件恢复
+  1. 在network中点击对应的请求然后右键（Save for Overrides），重写页面文件，保存在source->Overrides中。（需要提前在Overrides中新建一个目录，不然请求右键不会有Save for Overrides
+  2. 保存后刷新页面即可看到请求，如果没有多试下其他页面
+  3. 然后就是找到ajax的发送和success回调的地方完成解密
+```
+
+
 # 6. chrome 中技巧
 ## 6.1. 在控制台输入copy(变量)，可以直接复制变量。

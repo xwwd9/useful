@@ -1,11 +1,13 @@
 [返回上一级](../../README.md)
 
 
-- [1. 连接夜神模拟器](#1-连接夜神模拟器)
+- [1. 连接一些模拟器](#1-连接一些模拟器)
 - [2. 查看安卓当前activity](#2-查看安卓当前activity)
 - [3. 脱360壳](#3-脱360壳)
   - [3.1. 查看.so中函数名 nm libart.so |grep OpenMemory](#31-查看so中函数名-nm-libartso-grep-openmemory)
   - [3.2. dump出来的壳需要放在/data/data/包名/ 下](#32-dump出来的壳需要放在datadata包名-下)
+  - [脱壳后多个dex合并成一个](#脱壳后多个dex合并成一个)
+  - [多个dex查找关键字](#多个dex查找关键字)
 - [4. dex转smail](#4-dex转smail)
 - [5. 通过adb上传文件](#5-通过adb上传文件)
 - [6. dex转smail](#6-dex转smail)
@@ -53,12 +55,22 @@
   - [16.1. 破解地址](#161-破解地址)
   - [16.2. 安装证书](#162-安装证书)
 - [17. vpn检测](#17-vpn检测)
+- [ida使用](#ida使用)
+- [Android 正向开发的一些东西](#android-正向开发的一些东西)
+  - [sourceSet 通过修改SourceSets中的属性，可以指定哪些源文件（或文件夹下的源文件）要被编译，哪些源文件要被排除。](#sourceset-通过修改sourcesets中的属性可以指定哪些源文件或文件夹下的源文件要被编译哪些源文件要被排除)
+  - [给控件添加ID后访问](#给控件添加id后访问)
+  - [指定启动入口](#指定启动入口)
 - [18. 错误解决](#18-错误解决)
 
 
 
-# 1. 连接夜神模拟器
-adb connect 127.0.0.1:62001
+# 1. 连接一些模拟器
+```
+    夜神模拟器
+    adb connect 127.0.0.1:62001
+    逍遥模拟器
+    adb connect 127.0.0.1:21503
+```
 
 
 # 2. 查看安卓当前activity
@@ -459,6 +471,11 @@ e --dump-return
     };
     
     第三个参数：需要注册的方法个数
+
+
+    查找动态注册函数地址：
+        1. 在ida中查看，通过分析找到地址
+        2. 通过hook_registerNatives.js（yang神）脚本直接打印出注册函数的偏移地址，然后在ida中jump address就可以查看到
 ```
 
 ## 14.6. jni编译的so中查看函数名，有很长一串名字，这个是没有加extern c， 可用c++flit进行还原
@@ -532,6 +549,7 @@ e --dump-return
 ```
 
     1.vpn检测直接hook java.net.NetworkInterface.getName(), 返回tun0就可以
+    2.hook android.net.ConnectivityManager.getNetworkCapabilities 返回null就可以
     2.搜索下面的关键字hook对应的检测地方。
 
 
@@ -564,6 +582,54 @@ e --dump-return
     }
 ```
 
+
+# ida使用
+```
+    1.动态注册
+        将一些int类型修改成 JNIEnv *，然后就会出现RegisterNatives关键字，然后右键force call type进一步转换函数，然后点进偏移地址，就可以看到动态注册的函数，找到偏移地址点进去
+```
+
+
+# Android 正向开发的一些东西
+## sourceSet 通过修改SourceSets中的属性，可以指定哪些源文件（或文件夹下的源文件）要被编译，哪些源文件要被排除。
+```
+    在使用AndServer 的时候有使用这个参数，在module的gradle中加入jniLibs
+    android {
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+        }
+
+}
+```
+## 给控件添加ID后访问
+```
+    //activity_main.xml 中添加ID
+    <TextView
+        android:id="@+id/textView"  // 添加ID
+        .....
+    />
+    
+    // 获取控件
+    TextView testview = findViewById(R.id.textView);
+```
+## 指定启动入口
+```
+    // manifest 文件中修改
+    <application
+        android:name=".MyApp"
+        ...
+    />
+
+    
+```
 
 
 # 18. 错误解决
