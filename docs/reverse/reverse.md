@@ -37,6 +37,7 @@
   - [12.3. 查看当前activates](#123-查看当前activates)
   - [12.4. 常用方法](#124-常用方法)
   - [12.5. 加载插件](#125-加载插件)
+  - [常用hook点](#常用hook点)
 - [13. ida pro笔记](#13-ida-pro笔记)
 - [14. 技巧](#14-技巧)
   - [14.1. 通过file可以查看文件类型](#141-通过file可以查看文件类型)
@@ -56,10 +57,6 @@
   - [16.2. 安装证书](#162-安装证书)
 - [17. vpn检测](#17-vpn检测)
 - [ida使用](#ida使用)
-- [Android 正向开发的一些东西](#android-正向开发的一些东西)
-  - [sourceSet 通过修改SourceSets中的属性，可以指定哪些源文件（或文件夹下的源文件）要被编译，哪些源文件要被排除。](#sourceset-通过修改sourcesets中的属性可以指定哪些源文件或文件夹下的源文件要被编译哪些源文件要被排除)
-  - [给控件添加ID后访问](#给控件添加id后访问)
-  - [指定启动入口](#指定启动入口)
 - [18. 错误解决](#18-错误解决)
 
 
@@ -421,6 +418,12 @@ e --dump-return
     进入objection REPL 然后： plugin load 插件路径 
 ```
 
+## 常用hook点
+```
+    1. 弹窗hook
+        android hooking watch class_method android.app.Dialog.show --dump-args --dump-backtrace --dump-return
+```
+
 
 
 # 13. ida pro笔记
@@ -590,46 +593,8 @@ e --dump-return
 ```
 
 
-# Android 正向开发的一些东西
-## sourceSet 通过修改SourceSets中的属性，可以指定哪些源文件（或文件夹下的源文件）要被编译，哪些源文件要被排除。
-```
-    在使用AndServer 的时候有使用这个参数，在module的gradle中加入jniLibs
-    android {
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            resources.srcDirs = ['src']
-            aidl.srcDirs = ['src']
-            renderscript.srcDirs = ['src']
-            res.srcDirs = ['res']
-            assets.srcDirs = ['assets']
-            jniLibs.srcDirs = ['libs']
-        }
 
-}
-```
-## 给控件添加ID后访问
-```
-    //activity_main.xml 中添加ID
-    <TextView
-        android:id="@+id/textView"  // 添加ID
-        .....
-    />
-    
-    // 获取控件
-    TextView testview = findViewById(R.id.textView);
-```
-## 指定启动入口
-```
-    // manifest 文件中修改
-    <application
-        android:name=".MyApp"
-        ...
-    />
 
-    
-```
 
 
 # 18. 错误解决

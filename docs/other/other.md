@@ -80,6 +80,7 @@
   - [19.8. intitle: allintitle:在标题中进行搜索](#198-intitle-allintitle在标题中进行搜索)
   - [19.9.](#199)
 - [20. 代理总结：](#20-代理总结)
+- [proxychains使用](#proxychains使用)
 
 
 
@@ -521,6 +522,7 @@ create database  hope CHARSET=UTF8;
 
 
 
+
 # 18. 阿里云
 * 阿里云 查看公网ip：curl httpbin.org/ip
 
@@ -565,6 +567,14 @@ create database  hope CHARSET=UTF8;
 
 总结：推荐使用常规代理服务（每日ip不限量,ip短期有效的套餐），自己维护ip代理池。
 	  转发代理服务限制并发数量，1-2个爬虫跑没有问题，但是爬虫多了每秒的并发量会很大，购买对应的套餐会很贵。
+```
+
+
+# proxychains使用
+```
+  1. 启动ss-qt5(https://github.com/shadowsocks/shadowsocks-qt5/releases)，直接运行下载的文件，设置端口
+  2. 编辑vim /etc/proxychains.conf，在最后一行添加socks5 127.0.0.1 1080，打开dynamic_chain 
+  3. 然后使用proxychains firefox启动需要代理的应用或命令
 ```
 
 

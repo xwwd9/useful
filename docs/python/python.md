@@ -38,6 +38,44 @@
     * fork：使用此方式启动的进程，基本等同于主进程（即主进程拥有的资源，该子进程全都有）。因此，该子进程会从创建位置起，和主进程一样执行程序中的代码。注意，此启动方式仅适用于 UNIX 平台，os.fork() 创建的进程就是采用此方式启动的。
     *  forserver：使用此方式，程序将会启动一个服务器进程。即当程序每次请求启动新进程时，父进程都会连接到该服务器进程，请求由服务器进程来创建新进程。通过这种方式启动的进程不需要从父进程继承资源。注意，此启动方式只在 UNIX 平台上有效。
     
+
+
+# pyenv使用
+## 安装
+```
+    1.安装环境
+    sudo apt-get update; sudo apt-get install --no-install-recommends make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+    2.输入命令:
+    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+
+
+    3.加入环境:
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+    echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+    source ~/.bashrc
+    exec "$SHELL"
+```
+## pyenv-virtualenv插件安装
+```
+    git clone git://github.com/yyuu/pyenv-virtualenv.git ./pyenv/plugins/pyenv-virtualenv
+    echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
+    source ~/.bash_profile
+```
+## pyenv-virtualenv 使用
+```
+    pyenv virtualenv 版本号 name   创建一个虚拟环境,命名为name 创建好后可通过pyenv versions来查看
+    pyenv activate name  切换到name虚拟环境中
+    pyenv deactivate   推出虚拟环境
+    pyenv virtualenv-delete name 删除name环境
+```
+## 常用命令
+```
+    1.安装特定版本 
+        * 使用代理需要先设置 export PYTHON_CONFIGURE_OPTS="--disable-ipv6"
+        * proxychains pyenv install 3.8.5
+```
     
     
 [返回上一级](../../README.md)
