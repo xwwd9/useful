@@ -81,6 +81,7 @@
   - [19.9.](#199)
 - [20. 代理总结：](#20-代理总结)
 - [proxychains使用](#proxychains使用)
+- [rsa公匙生成](#rsa公匙生成)
 
 
 
@@ -575,6 +576,13 @@ create database  hope CHARSET=UTF8;
   1. 启动ss-qt5(https://github.com/shadowsocks/shadowsocks-qt5/releases)，直接运行下载的文件，设置端口
   2. 编辑vim /etc/proxychains.conf，在最后一行添加socks5 127.0.0.1 1080，打开dynamic_chain 
   3. 然后使用proxychains firefox启动需要代理的应用或命令
+```
+
+
+# rsa公匙生成
+```
+  ssh-keygen -t rsa -C "xxxxx@xxxxx.com"
+  cd ~/.ssh
 ```
 
 

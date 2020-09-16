@@ -129,6 +129,10 @@
         mongoexport --authenticationDatabase nbd_cloud_st -h dds-2ze1ef8846dcb504118410.mongodb.rds.aliyuncs.com:3717 -u nbd_cloud_st -p '***'  -d nbd_cloud_st -c clue_social_qixinbao -o  ./clue_social_qixinbao.json
         
         mongoimport --authenticationDatabase data_rawdb -h dds-2ze1ef8846dcb504118410.mongodb.rds.aliyuncs.com:3717 -u data_rawdb -p '***'  -d data_rawdb -c statistics --file ./a.json
+
+
+        # windows 下恢复bson文件， -d为目标数据库， data为bson目录
+        ./mongorestore.exe -d haidaoconfirm .\data\
     
     ```
 

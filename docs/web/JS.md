@@ -9,12 +9,18 @@
 - [7. 数组去重](#7-数组去重)
 - [8. 读取本地文件](#8-读取本地文件)
 - [9. 方括号 和花括号[], {}](#9-方括号-和花括号-)
-- [10. async 和 await](#10-async-和-await)
+- [10. async await Promise](#10-async-await-promise)
+  - [参考资料](#参考资料)
   - [10.1. async 是一个修饰符，async 定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数](#101-async-是一个修饰符async-定义的函数会默认的返回一个promise对象resolve的值因此对async函数可以直接进行then操作返回的值即为then方法的传入函数)
   - [10.2. await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值, 等待异步函数的执行结果。](#102-await-关键字-只能放在-async-函数内部-await关键字的作用-就是获取-promise中返回的内容-获取的是promise函数中resolve或者reject的值-等待异步函数的执行结果)
+  - [10.3. Promise中的Promise,这时p1的状态决定p2的状态](#103-promise中的promise这时p1的状态决定p2的状态)
+  - [10.4. resolve后面的函数还会执行，resolve加上return，后面的不会再执行](#104-resolve后面的函数还会执行resolve加上return后面的不会再执行)
+  - [then方法返回的是一个新的Promise实例，因此可以采用链式方法。 第一个回调函数完成以后，会将返回结果作为参数，传入第二个回调函数。](#then方法返回的是一个新的promise实例因此可以采用链式方法-第一个回调函数完成以后会将返回结果作为参数传入第二个回调函数)
 - [11. yield 一个Generator函数与普通function的区别就是函数名前面多了一个星号 * 但是执行时有很大不同，与yield命令配合，可以实现暂停执行的功能](#11-yield-一个generator函数与普通function的区别就是函数名前面多了一个星号--但是执行时有很大不同与yield命令配合可以实现暂停执行的功能)
-- [flat(), map(), flatmap()](#flat-map-flatmap)
-- [arguments 类数组](#arguments-类数组)
+- [12. flat(), map(), flatmap()](#12-flat-map-flatmap)
+- [13. arguments 类数组](#13-arguments-类数组)
+- [14. 对象的一些操作](#14-对象的一些操作)
+  - [14.1. hasOwnProperty(判断自身属性与继承属性)](#141-hasownproperty判断自身属性与继承属性)
 
 
 # 1. js对象拷贝  
@@ -218,7 +224,12 @@
     
 ```
 
-# 10. async 和 await
+# 10. async await Promise
+## 参考资料
+```
+    https://juejin.im/post/6868138778306412552
+    https://juejin.im/post/6844904180096712711
+```
 ## 10.1. async 是一个修饰符，async 定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数
 ```
     async function fun0() {
@@ -226,6 +237,14 @@
         return 1
     }
     fun0().then( x => { console.log(x) })  //  输出结果 1， 1，
+
+
+    1.内置执行器
+    2.async函数返回的是 Promise 对象,Promise可以作为await命令的参数
+    3.比起星号和yield，更好的语义
+    4.await命令后面，可以是 Promise 对象和原始类型的值（数值、字符串和布尔值，但这时会自动转成立即 resolved 的 Promise 对象）
+    5.await必须写在async函数中
+    6.async函数内部return语句返回的值，会成为then方法回调函数的参数。
 ```
 ## 10.2. await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值, 等待异步函数的执行结果。
 ```
@@ -244,6 +263,31 @@
     
     funAsy() //  运行结果是 3秒钟之后 ，输出 1， time , string,
 ```
+## 10.3. Promise中的Promise,这时p1的状态决定p2的状态
+```
+    const p1 = new Promise(function (resolve, reject) {
+        setTimeout(() => reject(new Error('fail')), 3000)
+    })
+
+    const p2 = new Promise(function (resolve, reject) {
+        setTimeout(() => resolve(p1), 1000)
+    })
+
+    p2.then(result => console.log('success', result)).catch(error => console.log('error',error))
+```
+## 10.4. resolve后面的函数还会执行，resolve加上return，后面的不会再执行
+```
+    new Promise((resolve, reject) => {
+        resolve(1); //如果是return resolve(1) 下面的打印不会执行
+        console.log(2);
+    }).then(r => {
+        console.log(r);
+    });
+    // 2
+    // 1
+
+```
+## then方法返回的是一个新的Promise实例，因此可以采用链式方法。 第一个回调函数完成以后，会将返回结果作为参数，传入第二个回调函数。
 
 
 # 11. yield 一个Generator函数与普通function的区别就是函数名前面多了一个星号 * 但是执行时有很大不同，与yield命令配合，可以实现暂停执行的功能
@@ -284,7 +328,7 @@
 ```
 
 
-# flat(), map(), flatmap()
+# 12. flat(), map(), flatmap()
 ```
     // map() 对于每个元素返回新的处理
     const nestedArraysOhMy = [ "a", ["b", "c"], ["d", ["e", "f"]]];
@@ -304,7 +348,7 @@
 ```
 
 
-# arguments 类数组
+# 13. arguments 类数组
 ```
     函数 arguments 对象是所有（非箭头）函数中都可用的局部变量, 是一个类似数组的对象。你可以使用arguments对象在函数中引用函数的（实际）参数。
 
@@ -318,6 +362,50 @@
 }
 ```
 
+
+# 14. 对象的一些操作
+## 14.1. hasOwnProperty(判断自身属性与继承属性)
+```
+    判断自身属性与继承属性
+    function foo() {
+    this.name = 'foo'
+    this.sayHi = function () {
+        console.log('Say Hi')
+    }
+    }
+
+    foo.prototype.sayGoodBy = function () {
+    console.log('Say Good By')
+    }
+
+    let myPro = new foo()
+
+    console.log(myPro.name) // foo
+    console.log(myPro.hasOwnProperty('name')) // true
+    console.log(myPro.hasOwnProperty('toString')) // false
+    console.log(myPro.hasOwnProperty('hasOwnProperty')) // fasle
+    console.log(myPro.hasOwnProperty('sayHi')) // true
+    console.log(myPro.hasOwnProperty('sayGoodBy')) // false
+    console.log('sayGoodBy' in myPro) // true
+
+
+    JavaScript 并没有保护 hasOwnProperty 属性名，因此，可能存在于一个包含此属性名的对象，有必要使用一个可扩展的hasOwnProperty方法来获取正确的结果：
+    var foo = {
+        hasOwnProperty: function() {
+            return false;
+        },
+        bar: 'Here be dragons'
+    };
+
+    foo.hasOwnProperty('bar'); // 始终返回 false
+
+    // 如果担心这种情况，可以直接使用原型链上真正的 hasOwnProperty 方法
+    // 使用另一个对象的`hasOwnProperty` 并且call
+    ({}).hasOwnProperty.call(foo, 'bar'); // true
+
+    // 也可以使用 Object 原型上的 hasOwnProperty 属性
+    Object.prototype.hasOwnProperty.call(foo, 'bar'); // true
+```
 [返回主目录](../../README.md)
 
 
