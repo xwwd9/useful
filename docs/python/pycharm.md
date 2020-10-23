@@ -5,7 +5,7 @@
 #快捷键
 c+q:  快速查看包的doc
 c+shitf+j: 2行合并成一行
-
+c+k： 唤出git commit提交界面
 
 
 
@@ -20,6 +20,12 @@ alt+4：     打开run界面
 
 
 # 自定义格式化
-在需要格式化的地方按住ctrl+enter
+在需要格式化的地方按住alt+enter
+
+
+# 调整字体颜色
+ctrl+shift+a 然后输入jump
+
+
 
 

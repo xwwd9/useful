@@ -68,6 +68,7 @@
 - [17. 防火墙](#17-防火墙)
   - [17.1. iptables -I INPUT -p tcp --dport 3000 -j ACCEPT](#171-iptables--i-input--p-tcp---dport-3000--j-accept)
   - [17.2. firewall-cmd --zone=public --add-port=3001/tcp --permanent](#172-firewall-cmd---zonepublic---add-port3001tcp---permanent)
+- [git使用](#git使用)
 - [18. 阿里云](#18-阿里云)
 - [19. 搜索技巧（google）](#19-搜索技巧google)
   - [19.1. "空格-号"排除关键词](#191-空格-号排除关键词)
@@ -519,6 +520,18 @@ create database  hope CHARSET=UTF8;
 
 
 
+
+# git使用
+```
+  # 1.查看所有分支
+    git branch -a
+　　
+  # 2.查看当前使用分支(结果列表中前面标*号的表示当前使用分支)
+    git branch
+    
+  # 3.切换分支
+    git checkout 分支名
+```
 
 
 

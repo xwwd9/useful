@@ -16,11 +16,16 @@
   - [10.3. Promise中的Promise,这时p1的状态决定p2的状态](#103-promise中的promise这时p1的状态决定p2的状态)
   - [10.4. resolve后面的函数还会执行，resolve加上return，后面的不会再执行](#104-resolve后面的函数还会执行resolve加上return后面的不会再执行)
   - [then方法返回的是一个新的Promise实例，因此可以采用链式方法。 第一个回调函数完成以后，会将返回结果作为参数，传入第二个回调函数。](#then方法返回的是一个新的promise实例因此可以采用链式方法-第一个回调函数完成以后会将返回结果作为参数传入第二个回调函数)
+  - [async/await Promise 被抛出的异步异常无法捕获](#asyncawait-promise-被抛出的异步异常无法捕获)
 - [11. yield 一个Generator函数与普通function的区别就是函数名前面多了一个星号 * 但是执行时有很大不同，与yield命令配合，可以实现暂停执行的功能](#11-yield-一个generator函数与普通function的区别就是函数名前面多了一个星号--但是执行时有很大不同与yield命令配合可以实现暂停执行的功能)
 - [12. flat(), map(), flatmap()](#12-flat-map-flatmap)
 - [13. arguments 类数组](#13-arguments-类数组)
 - [14. 对象的一些操作](#14-对象的一些操作)
   - [14.1. hasOwnProperty(判断自身属性与继承属性)](#141-hasownproperty判断自身属性与继承属性)
+- [随机数 m-n的随机数，不包括n](#随机数-m-n的随机数不包括n)
+- [常用函数](#常用函数)
+  - [encodeURIComponent(***) 用于url的加密](#encodeuricomponent-用于url的加密)
+  - [](#)
 
 
 # 1. js对象拷贝  
@@ -289,6 +294,16 @@
 ```
 ## then方法返回的是一个新的Promise实例，因此可以采用链式方法。 第一个回调函数完成以后，会将返回结果作为参数，传入第二个回调函数。
 
+## async/await Promise 被抛出的异步异常无法捕获
+```
+    比如如下异常在一般的catch中无法捕获，可在全局中捕获
+    let asyncError = () => {
+        setTimeout(function () {
+            throw new Error('Async Error')
+    }, 100)
+}
+```
+
 
 # 11. yield 一个Generator函数与普通function的区别就是函数名前面多了一个星号 * 但是执行时有很大不同，与yield命令配合，可以实现暂停执行的功能
 ```
@@ -406,6 +421,28 @@
     // 也可以使用 Object 原型上的 hasOwnProperty 属性
     Object.prototype.hasOwnProperty.call(foo, 'bar'); // true
 ```
+
+
+
+# 随机数 m-n的随机数，不包括n
+```
+
+    // 取0-n的随机数
+    Math.floor(Math.random() * n)
+
+    function sum (m,n){
+    　　var num = Math.floor(Math.random()*(m - n) + n);
+    　　console.log(num)
+    }
+```
+
+
+
+# 常用函数
+## encodeURIComponent(***) 用于url的加密
+## 
+
+
 [返回主目录](../../README.md)
 
 
