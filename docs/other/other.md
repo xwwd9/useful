@@ -33,7 +33,10 @@
   - [7.8. 容器提交成镜像：docker commit test pgy/common (这种方式会把历史记录打包进去，容器可能会越来越大)](#78-容器提交成镜像docker-commit-test-pgycommon-这种方式会把历史记录打包进去容器可能会越来越大)
   - [7.9. 保存镜像：docker save ID > xxx.tar](#79-保存镜像docker-save-id--xxxtar)
   - [7.10. 保存容器：docker export ID >xxx.tar](#710-保存容器docker-export-id-xxxtar)
-  - [7.11. 安装错误](#711-安装错误)
+  - [7.11. docker 查看网络：docker network ls](#711-docker-查看网络docker-network-ls)
+  - [7.12. 删除所有容器： docker rm `docker ps -a -q`](#712-删除所有容器-docker-rm-docker-ps--a--q)
+  - [7.13. docker 中没有编辑软件用cat写入文件](#713-docker-中没有编辑软件用cat写入文件)
+  - [7.14. 安装错误](#714-安装错误)
 - [8. nginx 常用配置](#8-nginx-常用配置)
   - [8.1. 多个域名，通一个ip。在域名服务商处查看域名前缀，一般@表明主机名为空](#81-多个域名通一个ip在域名服务商处查看域名前缀一般表明主机名为空)
 - [9. 常用linux命令](#9-常用linux命令)
@@ -68,21 +71,23 @@
 - [17. 防火墙](#17-防火墙)
   - [17.1. iptables -I INPUT -p tcp --dport 3000 -j ACCEPT](#171-iptables--i-input--p-tcp---dport-3000--j-accept)
   - [17.2. firewall-cmd --zone=public --add-port=3001/tcp --permanent](#172-firewall-cmd---zonepublic---add-port3001tcp---permanent)
-- [git使用](#git使用)
-- [18. 阿里云](#18-阿里云)
-- [19. 搜索技巧（google）](#19-搜索技巧google)
-  - [19.1. "空格-号"排除关键词](#191-空格-号排除关键词)
-  - [19.2. 英文双引号精确搜索](#192-英文双引号精确搜索)
-  - [19.3. or 多个关键词搜索](#193-or-多个关键词搜索)
-  - [19.4. *号模糊匹配](#194-号模糊匹配)
-  - [19.5. filetype:pdf ppt doc 指定文件类型搜索](#195-filetypepdf-ppt-doc-指定文件类型搜索)
-  - [19.6. site:网站 对指定网站进行搜索](#196-site网站-对指定网站进行搜索)
-  - [19.7. inurl:（表示其中一个包含）或者allinurl（表示后续都要包含）:](#197-inurl表示其中一个包含或者allinurl表示后续都要包含)
-  - [19.8. intitle: allintitle:在标题中进行搜索](#198-intitle-allintitle在标题中进行搜索)
-  - [19.9.](#199)
-- [20. 代理总结：](#20-代理总结)
-- [proxychains使用](#proxychains使用)
-- [rsa公匙生成](#rsa公匙生成)
+  - [开启防火墙：systemctl stop firewalld.service](#开启防火墙systemctl-stop-firewalldservice)
+  - [关闭防火墙：systemctl stop firewalld.service](#关闭防火墙systemctl-stop-firewalldservice)
+- [18. git使用](#18-git使用)
+- [19. 阿里云](#19-阿里云)
+- [20. 搜索技巧（google）](#20-搜索技巧google)
+  - [20.1. "空格-号"排除关键词](#201-空格-号排除关键词)
+  - [20.2. 英文双引号精确搜索](#202-英文双引号精确搜索)
+  - [20.3. or 多个关键词搜索](#203-or-多个关键词搜索)
+  - [20.4. *号模糊匹配](#204-号模糊匹配)
+  - [20.5. filetype:pdf ppt doc 指定文件类型搜索](#205-filetypepdf-ppt-doc-指定文件类型搜索)
+  - [20.6. site:网站 对指定网站进行搜索](#206-site网站-对指定网站进行搜索)
+  - [20.7. inurl:（表示其中一个包含）或者allinurl（表示后续都要包含）:](#207-inurl表示其中一个包含或者allinurl表示后续都要包含)
+  - [20.8. intitle: allintitle:在标题中进行搜索](#208-intitle-allintitle在标题中进行搜索)
+  - [20.9.](#209)
+- [21. 代理总结：](#21-代理总结)
+- [22. proxychains使用](#22-proxychains使用)
+- [23. rsa公匙生成](#23-rsa公匙生成)
 
 
 
@@ -346,7 +351,19 @@
 ## 7.10. 保存容器：docker export ID >xxx.tar
            docker import xxx.tar containr:v1
 
-## 7.11. 安装错误
+## 7.11. docker 查看网络：docker network ls
+
+## 7.12. 删除所有容器： docker rm `docker ps -a -q`
+
+## 7.13. docker 中没有编辑软件用cat写入文件
+```
+  // 直接重写sources.list中的内容
+  cat >sources.list <<EOF
+
+  输入EOF后结束
+```
+
+## 7.14. 安装错误
 ```
 
   Problem: package docker-ce-3:19.03.12-3.el7.x86_64 requires containerd.io >= 1.2.2-3, but none of the providers can be installed
@@ -357,6 +374,7 @@
 
   yum -y install containerd.io-1.2.6-3.3.el7.x86_64.rpm
 ```
+
 
            
            
@@ -517,11 +535,13 @@ create database  hope CHARSET=UTF8;
    命令含义: –zone #作用域 –add-port=80/tcp #添加端口，格式为：端口/通讯协议 –permanent #永久生效，没有此参数重启后失效  
    **开启端口后记得重启**  
    **firewall-cmd --reload**
+## 开启防火墙：systemctl stop firewalld.service
+## 关闭防火墙：systemctl stop firewalld.service
 
 
 
 
-# git使用
+# 18. git使用
 ```
   # 1.查看所有分支
     git branch -a
@@ -537,7 +557,7 @@ create database  hope CHARSET=UTF8;
 
 
 
-# 18. 阿里云
+# 19. 阿里云
 * 阿里云 查看公网ip：curl httpbin.org/ip
 
 
@@ -545,27 +565,27 @@ create database  hope CHARSET=UTF8;
 
 
 
-# 19. 搜索技巧（google）
-## 19.1. "空格-号"排除关键词
+# 20. 搜索技巧（google）
+## 20.1. "空格-号"排除关键词
 ```
   apple -iphone -ipad
 ```
-## 19.2. 英文双引号精确搜索
-## 19.3. or 多个关键词搜索
-## 19.4. *号模糊匹配
-## 19.5. filetype:pdf ppt doc 指定文件类型搜索
-## 19.6. site:网站 对指定网站进行搜索
-## 19.7. inurl:（表示其中一个包含）或者allinurl（表示后续都要包含）: 
+## 20.2. 英文双引号精确搜索
+## 20.3. or 多个关键词搜索
+## 20.4. *号模糊匹配
+## 20.5. filetype:pdf ppt doc 指定文件类型搜索
+## 20.6. site:网站 对指定网站进行搜索
+## 20.7. inurl:（表示其中一个包含）或者allinurl（表示后续都要包含）: 
 ```
   电影 inurl:movie
 ```
-## 19.8. intitle: allintitle:在标题中进行搜索
-## 19.9. 
+## 20.8. intitle: allintitle:在标题中进行搜索
+## 20.9. 
 
 
 
 
-# 20. 代理总结：
+# 21. 代理总结：
 * 使用过的代理：http://www.moguproxy.com/http
 ```
 目前来说代理服务主要提供2种代理：
@@ -584,7 +604,7 @@ create database  hope CHARSET=UTF8;
 ```
 
 
-# proxychains使用
+# 22. proxychains使用
 ```
   1. 启动ss-qt5(https://github.com/shadowsocks/shadowsocks-qt5/releases)，直接运行下载的文件，设置端口
   2. 编辑vim /etc/proxychains.conf，在最后一行添加socks5 127.0.0.1 1080，打开dynamic_chain 
@@ -592,7 +612,7 @@ create database  hope CHARSET=UTF8;
 ```
 
 
-# rsa公匙生成
+# 23. rsa公匙生成
 ```
   ssh-keygen -t rsa -C "xxxxx@xxxxx.com"
   cd ~/.ssh
