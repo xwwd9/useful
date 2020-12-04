@@ -77,5 +77,15 @@
         * proxychains pyenv install 3.8.5
 ```
     
+
+
+# 简繁体转换 使用opencc 或者 opencc-python-reimplemented
+```
+    pip install opencc-python-reimplemented
+    https://pypi.org/project/opencc-python-reimplemented/
+```
+
+
+
     
 [返回上一级](../../README.md)
