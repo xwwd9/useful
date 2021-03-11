@@ -86,6 +86,13 @@
 ```
 
 
+# 常见错误
+## sys.stderr.write(f"ERROR: {exc}")
+```
+   python2升级pip后报错：
+   解决：sudo easy_install pip==20.3.4
+```
+
 
     
 [返回上一级](../../README.md)

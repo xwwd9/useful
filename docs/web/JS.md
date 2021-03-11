@@ -4,28 +4,30 @@
 - [2. 数组遍历：](#2-数组遍历)
 - [3. Array:](#3-array)
 - [4. 正则的使用](#4-正则的使用)
+  - [exec 正则提取字符串](#exec-正则提取字符串)
 - [5. Js中读取Json文件](#5-js中读取json文件)
 - [6. 对象转换为Json字符串，和Json字符串转换成js对象](#6-对象转换为json字符串和json字符串转换成js对象)
 - [7. 数组去重](#7-数组去重)
 - [8. 读取本地文件](#8-读取本地文件)
 - [9. 方括号 和花括号[], {}](#9-方括号-和花括号-)
 - [10. async await Promise](#10-async-await-promise)
-  - [参考资料](#参考资料)
-  - [10.1. async 是一个修饰符，async 定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数](#101-async-是一个修饰符async-定义的函数会默认的返回一个promise对象resolve的值因此对async函数可以直接进行then操作返回的值即为then方法的传入函数)
-  - [10.2. await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值, 等待异步函数的执行结果。](#102-await-关键字-只能放在-async-函数内部-await关键字的作用-就是获取-promise中返回的内容-获取的是promise函数中resolve或者reject的值-等待异步函数的执行结果)
-  - [10.3. Promise中的Promise,这时p1的状态决定p2的状态](#103-promise中的promise这时p1的状态决定p2的状态)
-  - [10.4. resolve后面的函数还会执行，resolve加上return，后面的不会再执行](#104-resolve后面的函数还会执行resolve加上return后面的不会再执行)
-  - [then方法返回的是一个新的Promise实例，因此可以采用链式方法。 第一个回调函数完成以后，会将返回结果作为参数，传入第二个回调函数。](#then方法返回的是一个新的promise实例因此可以采用链式方法-第一个回调函数完成以后会将返回结果作为参数传入第二个回调函数)
-  - [async/await Promise 被抛出的异步异常无法捕获](#asyncawait-promise-被抛出的异步异常无法捕获)
+  - [10.1. 参考资料](#101-参考资料)
+  - [10.2. async 是一个修饰符，async 定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数](#102-async-是一个修饰符async-定义的函数会默认的返回一个promise对象resolve的值因此对async函数可以直接进行then操作返回的值即为then方法的传入函数)
+  - [10.3. await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值, 等待异步函数的执行结果。](#103-await-关键字-只能放在-async-函数内部-await关键字的作用-就是获取-promise中返回的内容-获取的是promise函数中resolve或者reject的值-等待异步函数的执行结果)
+  - [10.4. Promise中的Promise,这时p1的状态决定p2的状态](#104-promise中的promise这时p1的状态决定p2的状态)
+  - [10.5. resolve后面的函数还会执行，resolve加上return，后面的不会再执行](#105-resolve后面的函数还会执行resolve加上return后面的不会再执行)
+  - [10.6. then方法返回的是一个新的Promise实例，因此可以采用链式方法。 第一个回调函数完成以后，会将返回结果作为参数，传入第二个回调函数。](#106-then方法返回的是一个新的promise实例因此可以采用链式方法-第一个回调函数完成以后会将返回结果作为参数传入第二个回调函数)
+  - [10.7. async/await Promise 被抛出的异步异常无法捕获](#107-asyncawait-promise-被抛出的异步异常无法捕获)
 - [11. yield 一个Generator函数与普通function的区别就是函数名前面多了一个星号 * 但是执行时有很大不同，与yield命令配合，可以实现暂停执行的功能](#11-yield-一个generator函数与普通function的区别就是函数名前面多了一个星号--但是执行时有很大不同与yield命令配合可以实现暂停执行的功能)
 - [12. flat(), map(), flatmap()](#12-flat-map-flatmap)
 - [13. arguments 类数组](#13-arguments-类数组)
 - [14. 对象的一些操作](#14-对象的一些操作)
   - [14.1. hasOwnProperty(判断自身属性与继承属性)](#141-hasownproperty判断自身属性与继承属性)
-- [随机数 m-n的随机数，不包括n](#随机数-m-n的随机数不包括n)
-- [常用函数](#常用函数)
-  - [encodeURIComponent(***) 用于url的加密](#encodeuricomponent-用于url的加密)
-  - [](#)
+- [15. 随机数 m-n的随机数，不包括n](#15-随机数-m-n的随机数不包括n)
+- [16. 常用函数](#16-常用函数)
+  - [16.1. encodeURIComponent(***) 用于url的加密](#161-encodeuricomponent-用于url的加密)
+  - [16.2.](#162)
+- [sleep 等待5s](#sleep-等待5s)
 
 
 # 1. js对象拷贝  
@@ -145,6 +147,7 @@
     ```
     
 # 4. 正则的使用  
+    * 主要函数有match、test、exec、search、split、replace
     * pattern组成为:\正则\匹配模式  
     * 匹配模式如下：    
         * i:执行对大小写不敏感的匹配  
@@ -161,6 +164,32 @@
       }
       
     ```
+## exec 正则提取字符串
+```
+    * 使用指定的正则表达式模式去字符串中查找匹配项，并以数组形式返回，如果未查找到则返回null
+    * 原型：regExp.exec(stringObj)
+    
+    exmaple:
+        let a = "http://127.0.0.1:8080"
+        // let a = "http:adsfadsdf"
+        let pattern = /\/\/(.*?):/
+        let ret = pattern.exec(a)
+        if(ret){
+            console.log(ret)
+        }
+
+    output:
+        [
+            '//127.0.0.1:',
+            '127.0.0.1',
+            index: 5,
+            input: 'http://127.0.0.1:8080',
+            groups: undefined
+        ]
+
+
+```
+
   
 # 5. Js中读取Json文件
     ```
@@ -230,12 +259,12 @@
 ```
 
 # 10. async await Promise
-## 参考资料
+## 10.1. 参考资料
 ```
     https://juejin.im/post/6868138778306412552
     https://juejin.im/post/6844904180096712711
 ```
-## 10.1. async 是一个修饰符，async 定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数
+## 10.2. async 是一个修饰符，async 定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数
 ```
     async function fun0() {
         console.log(1)
@@ -251,7 +280,7 @@
     5.await必须写在async函数中
     6.async函数内部return语句返回的值，会成为then方法回调函数的参数。
 ```
-## 10.2. await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值, 等待异步函数的执行结果。
+## 10.3. await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值, 等待异步函数的执行结果。
 ```
     const bbb = function(){ return 'string'}
 
@@ -268,7 +297,7 @@
     
     funAsy() //  运行结果是 3秒钟之后 ，输出 1， time , string,
 ```
-## 10.3. Promise中的Promise,这时p1的状态决定p2的状态
+## 10.4. Promise中的Promise,这时p1的状态决定p2的状态
 ```
     const p1 = new Promise(function (resolve, reject) {
         setTimeout(() => reject(new Error('fail')), 3000)
@@ -280,7 +309,7 @@
 
     p2.then(result => console.log('success', result)).catch(error => console.log('error',error))
 ```
-## 10.4. resolve后面的函数还会执行，resolve加上return，后面的不会再执行
+## 10.5. resolve后面的函数还会执行，resolve加上return，后面的不会再执行
 ```
     new Promise((resolve, reject) => {
         resolve(1); //如果是return resolve(1) 下面的打印不会执行
@@ -292,9 +321,9 @@
     // 1
 
 ```
-## then方法返回的是一个新的Promise实例，因此可以采用链式方法。 第一个回调函数完成以后，会将返回结果作为参数，传入第二个回调函数。
+## 10.6. then方法返回的是一个新的Promise实例，因此可以采用链式方法。 第一个回调函数完成以后，会将返回结果作为参数，传入第二个回调函数。
 
-## async/await Promise 被抛出的异步异常无法捕获
+## 10.7. async/await Promise 被抛出的异步异常无法捕获
 ```
     比如如下异常在一般的catch中无法捕获，可在全局中捕获
     let asyncError = () => {
@@ -424,7 +453,7 @@
 
 
 
-# 随机数 m-n的随机数，不包括n
+# 15. 随机数 m-n的随机数，不包括n
 ```
 
     // 取0-n的随机数
@@ -438,9 +467,17 @@
 
 
 
-# 常用函数
-## encodeURIComponent(***) 用于url的加密
-## 
+# 16. 常用函数
+## 16.1. encodeURIComponent(***) 用于url的加密
+## 16.2. 
+
+
+
+# sleep 等待5s
+```
+    const Promise = require('bluebird')
+    Promise.delay(5)
+```
 
 
 [返回主目录](../../README.md)

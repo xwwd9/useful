@@ -25,7 +25,7 @@
 - [7. docker命令](#7-docker命令)
   - [7.1. 查看docker磁盘使用情况：docker system df](#71-查看docker磁盘使用情况docker-system-df)
   - [7.2. 查看命令：docker ps --no-trunc](#72-查看命令docker-ps---no-trunc)
-  - [7.3. 以supervisor的方式启动docker ：docker run -itd -p 7000:7000 -p 7001:7001 -p 7002:7002 -p 7003:7003 -p 7004:7004 --restart unless-stopped --name scrapydweb scrapy  supervisord -nc /work/supervisor/supervisord.conf](#73-以supervisor的方式启动docker-docker-run--itd--p-70007000--p-70017001--p-70027002--p-70037003--p-70047004---restart-unless-stopped---name-scrapydweb-scrapy-supervisord--nc-worksupervisorsupervisordconf)
+  - [7.3. 以supervisor的方式启动docker ：docker run -itd -p 7000:7000 -p 7001:7001 -p 7002:7002 -p 7003:7003 -p 7004:7004 --restart unless-stopped --name scrapydweb scrapy  supervisord -nc /work/supervisor/supervisord.conf](#73-以supervisor的方式启动docker-docker-run--itd--p-70007000--p-70017001--p-70027002--p-70037003--p-70047004---restart-unless-stopped---name-scrapydweb-scrapy--supervisord--nc-worksupervisorsupervisordconf)
   - [7.4. 重启docker：systemctl restart docker](#74-重启dockersystemctl-restart-docker)
   - [7.5. 进入docker：docker exec -it scrapydweb /bin/bash](#75-进入dockerdocker-exec--it-scrapydweb-binbash)
   - [7.6. 开机自启动：systemctl enable docker](#76-开机自启动systemctl-enable-docker)
@@ -39,6 +39,11 @@
   - [7.14. 安装错误](#714-安装错误)
 - [8. nginx 常用配置](#8-nginx-常用配置)
   - [8.1. 多个域名，通一个ip。在域名服务商处查看域名前缀，一般@表明主机名为空](#81-多个域名通一个ip在域名服务商处查看域名前缀一般表明主机名为空)
+  - [@ nginx内部跳转](#-nginx内部跳转)
+  - [try_files](#try_files)
+  - [location](#location)
+  - [rewrite](#rewrite)
+  - [redict 和 rewrite](#redict-和-rewrite)
 - [9. 常用linux命令](#9-常用linux命令)
   - [9.1. 查看系统磁盘使用：df -h](#91-查看系统磁盘使用df--h)
   - [9.2. 查看文件目录大小：](#92-查看文件目录大小)
@@ -71,10 +76,12 @@
 - [17. 防火墙](#17-防火墙)
   - [17.1. iptables -I INPUT -p tcp --dport 3000 -j ACCEPT](#171-iptables--i-input--p-tcp---dport-3000--j-accept)
   - [17.2. firewall-cmd --zone=public --add-port=3001/tcp --permanent](#172-firewall-cmd---zonepublic---add-port3001tcp---permanent)
-  - [开启防火墙：systemctl stop firewalld.service](#开启防火墙systemctl-stop-firewalldservice)
-  - [关闭防火墙：systemctl stop firewalld.service](#关闭防火墙systemctl-stop-firewalldservice)
+  - [17.3. 开启防火墙：systemctl stop firewalld.service](#173-开启防火墙systemctl-stop-firewalldservice)
+  - [17.4. 关闭防火墙：systemctl stop firewalld.service](#174-关闭防火墙systemctl-stop-firewalldservice)
 - [18. git使用](#18-git使用)
 - [19. 阿里云](#19-阿里云)
+- [shell 基本操作](#shell-基本操作)
+  - [shell中"2>&1"含义](#shell中21含义)
 - [20. 搜索技巧（google）](#20-搜索技巧google)
   - [20.1. "空格-号"排除关键词](#201-空格-号排除关键词)
   - [20.2. 英文双引号精确搜索](#202-英文双引号精确搜索)
@@ -88,6 +95,12 @@
 - [21. 代理总结：](#21-代理总结)
 - [22. proxychains使用](#22-proxychains使用)
 - [23. rsa公匙生成](#23-rsa公匙生成)
+- [24. linux v2ray代理设置](#24-linux-v2ray代理设置)
+  - [24.1. 基本步骤](#241-基本步骤)
+  - [socks转http代理](#socks转http代理)
+  - [24.2. 参考质料](#242-参考质料)
+- [linux 查询网络状态](#linux-查询网络状态)
+- [application/json和application/x-www-form-urlencoded都是表单数据发送时的编码类型。](#applicationjson和applicationx-www-form-urlencoded都是表单数据发送时的编码类型)
 
 
 
@@ -381,10 +394,10 @@
 # 8. nginx 常用配置
 ## 8.1. 多个域名，通一个ip。在域名服务商处查看域名前缀，一般@表明主机名为空
 ```
-server {
-        listen 80 default_server;
-        server_name _;
-        return 404; # 过滤其他域名的请求，返回444状态码
+    server {
+            listen 80 default_server;
+            server_name _;
+            return 404; # 过滤其他域名的请求，返回444状态码
     }
     server {
         listen       80;
@@ -392,19 +405,100 @@ server {
 
 
         location / {
-        proxy_pass   http://0.0.0.0:9085;
+          proxy_pass   http://0.0.0.0:9085;
         }
     }
     server {
         listen       80;
         server_name  xxx.com;
         location / {
-        proxy_pass   http://0.0.0.0:9086;
-       }
-
+          proxy_pass   http://0.0.0.0:9086;
+        }
     }
 ```
+## @ nginx内部跳转
+```
+  location /index/ {
+    error_page 404 @index_error;
+  }
 
+  location @index_error {
+    .....
+  }
+  #以 /index/ 开头的请求，如果链接的状态为 404。则会匹配到 @index_error 这条规则上。 
+```
+
+## try_files
+```
+  https://www.cnblogs.com/boundless-sky/p/9459775.html
+  例子 1
+  location / {
+            try_files $uri $uri/ /index.php?$query_string;
+
+  }   
+  
+  当用户请求 http://localhost/example 时，这里的 $uri 就是 /example。 
+  try_files 会到硬盘里尝试找这个文件。如果存在名为 /$root/example（其中 $root 是项目代码安装目录）的文件，就直接把这个文件的内容发送给用户。 
+  显然，目录中没有叫 example 的文件。然后就看 $uri/，增加了一个 /，也就是看有没有名为 /$root/example/ 的目录。 
+  又找不到，就会 fall back 到 try_files 的最后一个选项 /index.php，发起一个内部 “子请求”，也就是相当于 nginx 发起一个 HTTP 请求到 http://localhost/index.php。 
+
+ 
+
+  例子 2
+  复制代码
+  loaction / {
+    try_files $uri @apache
+  }
+
+  loaction @apache{
+    proxy_pass http://127.0.0.1:88
+    include aproxy.conf
+  }
+  try_files方法让Ngxin尝试访问后面得$uri链接，并进根据@apache配置进行内部重定向。
+  当然try_files也可以以错误代码赋值，如try_files /index.php = 404 @apache，则表示当尝试访问得文件返回404时，根据@apache配置项进行重定向。
+```
+
+## location
+```
+  https://www.cnblogs.com/WiseAdministrator/articles/11121653.html
+  已=开头表示精确匹配
+  如 A 中只匹配根目录结尾的请求，后面不能带任何字符串。
+  ^~ 开头表示uri以某个常规字符串开头，不是正则匹配
+  ~ 开头表示区分大小写的正则匹配;
+  ~* 开头表示不区分大小写的正则匹配
+  / 通用匹配, 如果没有其它匹配,任何请求都会匹配到
+  顺序 no优先级：
+  (location =) > (location 完整路径) > (location ^~ 路径) > (location ~,~* 正则顺序) > (location 部分起始路径) > (/)
+```
+## rewrite
+```
+  https://www.cnblogs.com/brianzhu/p/8624703.html
+  
+  rewrite regex replacement [flag] ;
+
+  rewrite 最后一项flag参数：
+  last	本条规则匹配完成后继续向下匹配新的location URI规则
+  break	本条规则匹配完成后终止，不在匹配任何规则
+  redirect	返回302临时重定向
+  permanent	返回301永久重定向
+
+
+
+  比如如果项目是vue找不实际的路径那么需要rewrite到更目录上
+  location / {
+          try_files $uri $uri/ @router;
+  }
+  location @router {
+          rewrite ^.*$ / break;
+  }
+```
+
+## redict 和 rewrite
+```
+  redict 重定向，浏览器会重新发起跳转
+  rewrite 服务器内部自己处理请求，浏览器不会再次跳转, 会返回一个304
+  像用户去买手机，缺货时的两种处理：让用户自己去其他地方买(Redirect),公司从其他的地方调货(Rewrite).
+```
 
 # 9. 常用linux命令
 ## 9.1. 查看系统磁盘使用：df -h
@@ -535,8 +629,8 @@ create database  hope CHARSET=UTF8;
    命令含义: –zone #作用域 –add-port=80/tcp #添加端口，格式为：端口/通讯协议 –permanent #永久生效，没有此参数重启后失效  
    **开启端口后记得重启**  
    **firewall-cmd --reload**
-## 开启防火墙：systemctl stop firewalld.service
-## 关闭防火墙：systemctl stop firewalld.service
+## 17.3. 开启防火墙：systemctl stop firewalld.service
+## 17.4. 关闭防火墙：systemctl stop firewalld.service
 
 
 
@@ -551,6 +645,14 @@ create database  hope CHARSET=UTF8;
     
   # 3.切换分支
     git checkout 分支名
+
+　　1. 删除本地tag
+
+　　　　git tag -d tag-name
+
+　　2. 删除远程tag
+
+　　　　git push origin :refs/tags/tag-name
 ```
 
 
@@ -561,6 +663,19 @@ create database  hope CHARSET=UTF8;
 * 阿里云 查看公网ip：curl httpbin.org/ip
 
 
+
+# shell 基本操作
+## shell中"2>&1"含义
+```
+  对于&1 更准确的说应该是文件描述符 1,而1标识标准输出，stdout。
+  对于2 ，表示标准错误，stderr。
+  2>&1 的意思就是将标准错误重定向到标准输出。这里标准输出已经重定向到了 /dev/null。那么标准错误也会输出到/dev/null
+
+  ls 2>1测试一下，不会报没有2文件的错误，但会输出一个空的文件1；
+  ls xxx 2>1测试，没有xxx这个文件的错误输出到了1中；
+  ls xxx 2>&1测试，不会生成1这个文件了，不过错误跑到标准输出了；
+  ls xxx >out.txt 2>&1, 实际上可换成 ls xxx 1>out.txt 2>&1；重定向符号>默认是1,错误和输出都传到out.txt了。
+```
 
 
 
@@ -616,6 +731,116 @@ create database  hope CHARSET=UTF8;
 ```
   ssh-keygen -t rsa -C "xxxxx@xxxxx.com"
   cd ~/.ssh
+```
+
+
+# 24. linux v2ray代理设置
+## 24.1. 基本步骤
+```
+  1. 安装和更新v2ray
+    bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+  2. 安裝最新發行的 geoip.dat 和 geosite.dat
+    bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
+  可选：移除v2ray
+    bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --remove
+  
+  3. 修改中的配置如下（在 Linux 中，配置文件通常位于 /etc/v2ray/ 或 /usr/local/etc/v2ray/ 目录下。运行 v2ray --config=/etc/v2ray/config.json） 添加如下配置本地127.0.0.1:1081就是一个http代理了
+      {
+      "inbounds": [
+        {
+          "port": 1081,
+          "listen": "127.0.0.1",
+          "protocol": "http",
+          "sniffing": {
+            "enabled": true,
+            "destOverride": [
+              "http",
+              "tls"
+            ]
+          },
+          "settings": {
+            "auth": "noauth",
+            "udp": true,
+            "ip": null,
+            "address": null,
+            "clients": null
+          },
+          "streamSettings": null
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "vmess",
+          "settings": {
+            "vnext": [
+              {
+                "address": "hdss03.5uskin.com",
+                "port": 18123,
+                "users": [
+                  {
+                    "id": "****",
+                    "alterId": 64,
+                    "email": "**",
+                    "security": "**"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "routing": {
+        "domainStrategy": "IPOnDemand",
+        "rules": [
+          {
+            "type": "field",
+            "ip": [
+              "geoip:private"
+            ],
+            "outboundTag": "direct"
+          }
+        ]
+      }
+    }
+```
+## socks转http代理
+```
+使用privoxy进行设置
+yum install privoxy
+vim /etc/privoxy/config
+添加如下代码
+forward-socks5 / **.**.**.**:**** .    注意后边有个点
+listen-address 127.0.0.1:1081
+启动服务
+systemctl restart privoxy
+```
+
+## 24.2. 参考质料
+https://www.v2fly.org/#project-v-%E7%94%B1%E8%B0%81%E4%B8%BB%E5%AF%BC%E5%BC%80%E5%8F%91
+https://blog.csdn.net/king_cpp_py/article/details/81192624
+
+
+
+# linux 查询网络状态
+```
+
+  查看链接数：
+  netstat -naopt | wc -l
+
+  netstat -na | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+  结果：
+  LISTEN 8
+  CLOSE_WAIT 11452
+  ESTABLISHED 313
+  TIME_WAIT 11
+  SYN_SENT 1
+```
+
+
+# application/json和application/x-www-form-urlencoded都是表单数据发送时的编码类型。
+```
+  第一种是直接将字符串json化
+  第二种是转换成类似：bar=123&a=10
 ```
 
 

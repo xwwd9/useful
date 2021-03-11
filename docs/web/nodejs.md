@@ -43,3 +43,25 @@ npm update --save				->  yarn upgrade
     ALL_PROXY=SOCKS5://127.0.0.1:6153
     NO_PROXY=localhost,127.0.0.1
 ```
+
+
+# uncaughtException 原因
+```
+const Promise = require('bluebird')
+
+async function a(){
+	try{
+		new Promise(() => {
+			throw new Error('Catch me');
+		})
+
+		// throw new Error('Catch me');
+
+	}
+	catch (e){
+		console.log('***', e)
+	}
+}
+a()
+
+```

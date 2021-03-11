@@ -29,3 +29,19 @@ ctrl+shift+a 然后输入jump
 
 
 
+
+
+# [自动添加函数注释](https://blog.csdn.net/qq_39108466/article/details/79712547)
+```
+    在setting中搜索 Live Template 然后添加js的快捷方式，添加完成后记得右键修改该配置的触发context。
+```
+
+
+
+
+
+# 插件
+Key Promoter X  用于提示快捷键
+
+
+

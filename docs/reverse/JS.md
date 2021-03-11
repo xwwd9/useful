@@ -13,7 +13,7 @@
   - [3.3. 将constructor函数设置为空](#33-将constructor函数设置为空)
 - [4. nodejs](#4-nodejs)
   - [4.1. nodejs 和 浏览器环境区别](#41-nodejs-和-浏览器环境区别)
-  - [python 中调用nodejs文件](#python-中调用nodejs文件)
+  - [4.2. python 中调用nodejs文件](#42-python-中调用nodejs文件)
 - [5. 变量生成的hook](#5-变量生成的hook)
   - [5.1. 简单的直接通过油候脚本hook](#51-简单的直接通过油候脚本hook)
   - [5.2. 需要通过fiddler修改js文件,将如下代码加入js中](#52-需要通过fiddler修改js文件将如下代码加入js中)
@@ -21,6 +21,8 @@
   - [6.1. F12，右键反调试](#61-f12右键反调试)
 - [7. chrome 中技巧](#7-chrome-中技巧)
   - [7.1. 在控制台输入copy(变量)，可以直接复制变量。](#71-在控制台输入copy变量可以直接复制变量)
+- [模拟登陆相关知识](#模拟登陆相关知识)
+  - [模拟登陆检测网站(https://bot.sannysoft.com/)](#模拟登陆检测网站httpsbotsannysoftcom)
 
 # 1. 搜索关键字
 ## 1.1. 通过以jquery为关键字搜索
@@ -75,10 +77,10 @@ $(".输入框的classname")
     浏览器环境中提供了操作节点的 DOM 相关 API 和操作浏览器的 BOM 相关 API
     NodeJS 环境中没有 HTML 节点也没有浏览器, 所以 NodeJS 环境中没有 DOM / BOM
 ```
-## python 中调用nodejs文件
+## 4.2. python 中调用nodejs文件
 ```
   1. 直接使用管道的方式，其中decode.js中有console.log，然后python读取打印出来的值即可。
-      nodejs = os.popen('node decode.js ' + params)
+      nodejs = os.popen('node decode.js ' + ts + '000')
       m = nodejs.read().replace('\n', '') + '丨' + ts
       nodejs.close()
 ```
@@ -106,3 +108,7 @@ $(".输入框的classname")
 
 # 7. chrome 中技巧
 ## 7.1. 在控制台输入copy(变量)，可以直接复制变量。
+
+
+# 模拟登陆相关知识
+## 模拟登陆检测网站(https://bot.sannysoft.com/)
