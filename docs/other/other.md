@@ -39,11 +39,11 @@
   - [7.14. 安装错误](#714-安装错误)
 - [8. nginx 常用配置](#8-nginx-常用配置)
   - [8.1. 多个域名，通一个ip。在域名服务商处查看域名前缀，一般@表明主机名为空](#81-多个域名通一个ip在域名服务商处查看域名前缀一般表明主机名为空)
-  - [@ nginx内部跳转](#-nginx内部跳转)
-  - [try_files](#try_files)
-  - [location](#location)
-  - [rewrite](#rewrite)
-  - [redict 和 rewrite](#redict-和-rewrite)
+  - [8.2. @ nginx内部跳转](#82--nginx内部跳转)
+  - [8.3. try_files](#83-try_files)
+  - [8.4. location](#84-location)
+  - [8.5. rewrite](#85-rewrite)
+  - [8.6. redict 和 rewrite](#86-redict-和-rewrite)
 - [9. 常用linux命令](#9-常用linux命令)
   - [9.1. 查看系统磁盘使用：df -h](#91-查看系统磁盘使用df--h)
   - [9.2. 查看文件目录大小：](#92-查看文件目录大小)
@@ -80,27 +80,31 @@
   - [17.4. 关闭防火墙：systemctl stop firewalld.service](#174-关闭防火墙systemctl-stop-firewalldservice)
 - [18. git使用](#18-git使用)
 - [19. 阿里云](#19-阿里云)
-- [shell 基本操作](#shell-基本操作)
-  - [shell中"2>&1"含义](#shell中21含义)
-- [20. 搜索技巧（google）](#20-搜索技巧google)
-  - [20.1. "空格-号"排除关键词](#201-空格-号排除关键词)
-  - [20.2. 英文双引号精确搜索](#202-英文双引号精确搜索)
-  - [20.3. or 多个关键词搜索](#203-or-多个关键词搜索)
-  - [20.4. *号模糊匹配](#204-号模糊匹配)
-  - [20.5. filetype:pdf ppt doc 指定文件类型搜索](#205-filetypepdf-ppt-doc-指定文件类型搜索)
-  - [20.6. site:网站 对指定网站进行搜索](#206-site网站-对指定网站进行搜索)
-  - [20.7. inurl:（表示其中一个包含）或者allinurl（表示后续都要包含）:](#207-inurl表示其中一个包含或者allinurl表示后续都要包含)
-  - [20.8. intitle: allintitle:在标题中进行搜索](#208-intitle-allintitle在标题中进行搜索)
-  - [20.9.](#209)
-- [21. 代理总结：](#21-代理总结)
-- [22. proxychains使用](#22-proxychains使用)
-- [23. rsa公匙生成](#23-rsa公匙生成)
-- [24. linux v2ray代理设置](#24-linux-v2ray代理设置)
-  - [24.1. 基本步骤](#241-基本步骤)
-  - [socks转http代理](#socks转http代理)
-  - [24.2. 参考质料](#242-参考质料)
-- [linux 查询网络状态](#linux-查询网络状态)
-- [application/json和application/x-www-form-urlencoded都是表单数据发送时的编码类型。](#applicationjson和applicationx-www-form-urlencoded都是表单数据发送时的编码类型)
+- [20. shell 基本操作](#20-shell-基本操作)
+  - [20.1. shell中"2>&1"含义](#201-shell中21含义)
+- [21. 搜索技巧（google）](#21-搜索技巧google)
+  - [21.1. "空格-号"排除关键词](#211-空格-号排除关键词)
+  - [21.2. 英文双引号精确搜索](#212-英文双引号精确搜索)
+  - [21.3. or 多个关键词搜索](#213-or-多个关键词搜索)
+  - [21.4. *号模糊匹配](#214-号模糊匹配)
+  - [21.5. filetype:pdf ppt doc 指定文件类型搜索](#215-filetypepdf-ppt-doc-指定文件类型搜索)
+  - [21.6. site:网站 对指定网站进行搜索](#216-site网站-对指定网站进行搜索)
+  - [21.7. inurl:（表示其中一个包含）或者allinurl（表示后续都要包含）:](#217-inurl表示其中一个包含或者allinurl表示后续都要包含)
+  - [21.8. intitle: allintitle:在标题中进行搜索](#218-intitle-allintitle在标题中进行搜索)
+  - [21.9.](#219)
+- [22. 代理总结：](#22-代理总结)
+- [23. proxychains使用](#23-proxychains使用)
+- [24. rsa公匙生成](#24-rsa公匙生成)
+- [25. linux v2ray代理设置](#25-linux-v2ray代理设置)
+  - [25.1. 基本步骤](#251-基本步骤)
+  - [25.2. socks转http代理](#252-socks转http代理)
+  - [25.3. 参考质料](#253-参考质料)
+- [26. linux 查询网络状态](#26-linux-查询网络状态)
+- [27. application/json和application/x-www-form-urlencoded都是表单数据发送时的编码类型。](#27-applicationjson和applicationx-www-form-urlencoded都是表单数据发送时的编码类型)
+- [28. curl的使用](#28-curl的使用)
+  - [28.1. 发送特定header curl -H Host:whoami.docker.localhost http://127.0.0.1](#281-发送特定header-curl--h-hostwhoamidockerlocalhost-http127001)
+  - [28.2.](#282)
+- [创建一个简单的端口监听服务](#创建一个简单的端口监听服务)
 
 
 
@@ -416,7 +420,7 @@
         }
     }
 ```
-## @ nginx内部跳转
+## 8.2. @ nginx内部跳转
 ```
   location /index/ {
     error_page 404 @index_error;
@@ -428,7 +432,7 @@
   #以 /index/ 开头的请求，如果链接的状态为 404。则会匹配到 @index_error 这条规则上。 
 ```
 
-## try_files
+## 8.3. try_files
 ```
   https://www.cnblogs.com/boundless-sky/p/9459775.html
   例子 1
@@ -458,7 +462,7 @@
   当然try_files也可以以错误代码赋值，如try_files /index.php = 404 @apache，则表示当尝试访问得文件返回404时，根据@apache配置项进行重定向。
 ```
 
-## location
+## 8.4. location
 ```
   https://www.cnblogs.com/WiseAdministrator/articles/11121653.html
   已=开头表示精确匹配
@@ -470,7 +474,7 @@
   顺序 no优先级：
   (location =) > (location 完整路径) > (location ^~ 路径) > (location ~,~* 正则顺序) > (location 部分起始路径) > (/)
 ```
-## rewrite
+## 8.5. rewrite
 ```
   https://www.cnblogs.com/brianzhu/p/8624703.html
   
@@ -493,7 +497,7 @@
   }
 ```
 
-## redict 和 rewrite
+## 8.6. redict 和 rewrite
 ```
   redict 重定向，浏览器会重新发起跳转
   rewrite 服务器内部自己处理请求，浏览器不会再次跳转, 会返回一个304
@@ -664,8 +668,8 @@ create database  hope CHARSET=UTF8;
 
 
 
-# shell 基本操作
-## shell中"2>&1"含义
+# 20. shell 基本操作
+## 20.1. shell中"2>&1"含义
 ```
   对于&1 更准确的说应该是文件描述符 1,而1标识标准输出，stdout。
   对于2 ，表示标准错误，stderr。
@@ -680,27 +684,27 @@ create database  hope CHARSET=UTF8;
 
 
 
-# 20. 搜索技巧（google）
-## 20.1. "空格-号"排除关键词
+# 21. 搜索技巧（google）
+## 21.1. "空格-号"排除关键词
 ```
   apple -iphone -ipad
 ```
-## 20.2. 英文双引号精确搜索
-## 20.3. or 多个关键词搜索
-## 20.4. *号模糊匹配
-## 20.5. filetype:pdf ppt doc 指定文件类型搜索
-## 20.6. site:网站 对指定网站进行搜索
-## 20.7. inurl:（表示其中一个包含）或者allinurl（表示后续都要包含）: 
+## 21.2. 英文双引号精确搜索
+## 21.3. or 多个关键词搜索
+## 21.4. *号模糊匹配
+## 21.5. filetype:pdf ppt doc 指定文件类型搜索
+## 21.6. site:网站 对指定网站进行搜索
+## 21.7. inurl:（表示其中一个包含）或者allinurl（表示后续都要包含）: 
 ```
   电影 inurl:movie
 ```
-## 20.8. intitle: allintitle:在标题中进行搜索
-## 20.9. 
+## 21.8. intitle: allintitle:在标题中进行搜索
+## 21.9. 
 
 
 
 
-# 21. 代理总结：
+# 22. 代理总结：
 * 使用过的代理：http://www.moguproxy.com/http
 ```
 目前来说代理服务主要提供2种代理：
@@ -719,7 +723,7 @@ create database  hope CHARSET=UTF8;
 ```
 
 
-# 22. proxychains使用
+# 23. proxychains使用
 ```
   1. 启动ss-qt5(https://github.com/shadowsocks/shadowsocks-qt5/releases)，直接运行下载的文件，设置端口
   2. 编辑vim /etc/proxychains.conf，在最后一行添加socks5 127.0.0.1 1080，打开dynamic_chain 
@@ -727,15 +731,15 @@ create database  hope CHARSET=UTF8;
 ```
 
 
-# 23. rsa公匙生成
+# 24. rsa公匙生成
 ```
   ssh-keygen -t rsa -C "xxxxx@xxxxx.com"
   cd ~/.ssh
 ```
 
 
-# 24. linux v2ray代理设置
-## 24.1. 基本步骤
+# 25. linux v2ray代理设置
+## 25.1. 基本步骤
 ```
   1. 安装和更新v2ray
     bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
@@ -803,7 +807,7 @@ create database  hope CHARSET=UTF8;
       }
     }
 ```
-## socks转http代理
+## 25.2. socks转http代理
 ```
 使用privoxy进行设置
 yum install privoxy
@@ -815,13 +819,13 @@ listen-address 127.0.0.1:1081
 systemctl restart privoxy
 ```
 
-## 24.2. 参考质料
+## 25.3. 参考质料
 https://www.v2fly.org/#project-v-%E7%94%B1%E8%B0%81%E4%B8%BB%E5%AF%BC%E5%BC%80%E5%8F%91
 https://blog.csdn.net/king_cpp_py/article/details/81192624
 
 
 
-# linux 查询网络状态
+# 26. linux 查询网络状态
 ```
 
   查看链接数：
@@ -837,10 +841,25 @@ https://blog.csdn.net/king_cpp_py/article/details/81192624
 ```
 
 
-# application/json和application/x-www-form-urlencoded都是表单数据发送时的编码类型。
+# 27. application/json和application/x-www-form-urlencoded都是表单数据发送时的编码类型。
 ```
   第一种是直接将字符串json化
   第二种是转换成类似：bar=123&a=10
+```
+
+# 28. curl的使用
+## 28.1. 发送特定header curl -H Host:whoami.docker.localhost http://127.0.0.1
+
+## 28.2. 
+
+
+# 创建一个简单的端口监听服务
+```
+  监听8181端口：
+  socat -v tcp-l:8181,fork exec:"/bin/cat"
+  连接8181端口：
+  nc 127.0.0.1 8181
+  输入hello
 ```
 
 

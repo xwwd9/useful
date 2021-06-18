@@ -65,3 +65,44 @@ async function a(){
 a()
 
 ```
+
+
+# async包的用法
+## series 串行
+```
+    var async = require('async');
+
+    async.series([
+        function(callback) {
+            // do some stuff ...
+            callback(null, 'one');
+        },
+        function(callback) {
+            // do some more stuff ...
+            callback(null, 'two');
+        }
+    ],
+    // optional callback
+    function(err, results) {
+        // results is now equal to ['one', 'two']
+    });
+
+    async.series({
+        one: function(callback) {
+            setTimeout(function() {
+                console.log("ok1")
+                callback(null, 1);
+            }, 2000);
+        },
+        two: function(callback){
+            setTimeout(function() {
+                console.log("ok2")
+                callback(null, 2);
+            }, 3000);
+        }
+    }, function(err, results) {
+        // results is now equal to: {one: 1, two: 2}
+        console.log(results)
+        console.log("ok")
+    });
+```
