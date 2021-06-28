@@ -79,6 +79,15 @@
     transform: translate(0,100px);
 ```
 
+## 文本多余用省略号，隐藏多余文本
+```css
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+```
+
 
 
 # 3. html
