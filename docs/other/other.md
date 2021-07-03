@@ -79,6 +79,7 @@
   - [17.3. 开启防火墙：systemctl stop firewalld.service](#173-开启防火墙systemctl-stop-firewalldservice)
   - [17.4. 关闭防火墙：systemctl stop firewalld.service](#174-关闭防火墙systemctl-stop-firewalldservice)
 - [18. git使用](#18-git使用)
+  - [443 访问不了代理](#443-访问不了代理)
 - [19. 阿里云](#19-阿里云)
 - [20. shell 基本操作](#20-shell-基本操作)
   - [20.1. shell中"2>&1"含义](#201-shell中21含义)
@@ -297,6 +298,14 @@
         EOF
         sudo systemctl daemon-reload
         sudo systemctl restart docker
+
+        或者：
+        "registry-mirrors" : [
+          "https://registry.docker-cn.com",
+          "https://docker.mirrors.ustc.edu.cn",
+          "http://hub-mirror.c.163.com",
+          "https://cr.console.aliyun.com/"
+        ]
     ```
 ## 6.8. 开机启动：systemctl enable docker
 ## 6.9. 常用docker启动
@@ -658,6 +667,10 @@ create database  hope CHARSET=UTF8;
 
 　　　　git push origin :refs/tags/tag-name
 ```
+## 443 访问不了代理
+```
+  git config --global http.proxy "127.0.0.1:4780"
+```
 
 
 
@@ -861,6 +874,17 @@ https://blog.csdn.net/king_cpp_py/article/details/81192624
   nc 127.0.0.1 8181
   输入hello
 ```
+
+
+
+# 24. apt yum 使用
+```
+sudo apt-cache search 查找
+yum search 名字
+```
+
+
+# 25. wsl windows  win10 上linux安装和使用[连接](https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package)
 
 
 [返回上一级](../../README.md)

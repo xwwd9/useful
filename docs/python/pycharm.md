@@ -37,6 +37,8 @@ ctrl+shift+a 然后输入jump
 ```
 
 
+# 好用的插件
+Pydantic
 
 
 

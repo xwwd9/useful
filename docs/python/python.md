@@ -1,6 +1,21 @@
 [返回主目录](../../README.md)
 
 
+# 知识点总结
+* type 类型提示
+```python
+from typing import List, Dict
+Vector = List[str]  # 类型提示的别名
+
+def scale(scalar: float, vector: Vector, dic: Dict[str, int]) -> Vector:
+    for item in vector:
+        print(item.replace("", ""))  # 在有类型提示的情况下直接使用.符号ide可以知道该类型。
+    print(scalar, vector, dic)
+    return ["10", "20", "30"]
+
+
+new_vector = scale(2.0, ["10", "20", "30"], {"a": 10})
+```
 
 
 # 常用库总结和技巧总结(如需实列，请跳转到具体页面查看)
@@ -44,7 +59,12 @@
 ## 安装
 ```
     1.安装环境
+    ubuntu:
     sudo apt-get update; sudo apt-get install --no-install-recommends make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+    centos:
+    yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel -y
+    yum install libffi-devel -y
 
     2.输入命令:
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
@@ -59,7 +79,8 @@
 ```
 ## pyenv-virtualenv插件安装
 ```
-    git clone git://github.com/yyuu/pyenv-virtualenv.git ./pyenv/plugins/pyenv-virtualenv
+    git clone git://github.com/yyuu/pyenv-virtualenv.git ~/pyenv/plugins/pyenv-virtualenv
+    或者：git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
     echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
     source ~/.bash_profile
 ```
