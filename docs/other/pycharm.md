@@ -12,9 +12,8 @@ c+k： 唤出git commit提交界面
 * ctrl+e : 打开最近文件
 * ctrl+w : 选取一整块区域
 * ctrl+shift+a: 可用于快速查找指令
-* ctrl+shift+alt+n: 查找符号定义
 * ctrl+shift+n : 查找文件 可用 / 来表示前边是目录, 比如o/pyc 就可以定位到当前目录
-* ctrl+shift+l : 格式化文件
+* ctrl+shift+alt+n: 查找符号定义
 * ctrl+space+space : 智能补全当前变量名称
 * ctrl+q : 查看帮助文档
 * ctrl+p : 当在函数的括号中使用该快捷键,会显示函数的参数信息
@@ -31,6 +30,7 @@ c+k： 唤出git commit提交界面
 * alt+shift+f10 : 弹出run的对话框
 
 * ctrl+alt+o : 删除不用的引入
+* ctrl+alt+l : 格式化文件
 * ctrl+alt+shift+t : 弹出重命名窗口
 
 
