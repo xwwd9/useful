@@ -19,7 +19,7 @@ new_vector = scale(2.0, ["10", "20", "30"], {"a": 10})
 
 
 # 常用库总结和技巧总结(如需实列，请跳转到具体页面查看)
-* [re正则模块总结](../../useful_python/examples_jupyter/re.ipynb)
+* [re正则模块总结](../../examples/useful_python/examples_jupyter/re.ipynb)
     * match     ：从开头匹配
     * search    ：在字符串中返回匹配的第一个结果
     * findall   ：匹配字符串的所用内容
@@ -28,13 +28,13 @@ new_vector = scale(2.0, ["10", "20", "30"], {"a": 10})
 
 
 
-* [mongo模块](../../useful_python/examples_jupyter/mongo.ipynb)
+* [mongo模块](../../examples/useful_python/examples_jupyter/mongo.ipynb)
 
-* [selenium模块](../../useful_python/examples_jupyter/selenium.ipynb)
+* [selenium模块](../../examples/useful_python/examples_jupyter/selenium.ipynb)
 
-* [excel模块](../../useful_python/examples_jupyter/excel.ipynb)
+* [excel模块](../../examples/useful_python/examples_jupyter/excel.ipynb)
 
-* [一些技巧总结](../../useful_python/examples_jupyter/tips.ipynb)
+* [一些技巧总结](../../examples/useful_python/examples_jupyter/tips.ipynb)
     * 下载文件，获取文件名，并保存。以下载百度文库举例
     
     * 显示base64图片
