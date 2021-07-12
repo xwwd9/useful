@@ -33,7 +33,7 @@ c+k： 唤出git commit提交界面
 * ctrl+alt+l : 格式化文件
 * ctrl+alt+shift+t : 弹出重命名窗口
 
-
+* ctrl+shift+alt+insert : 弹出临时文件筐,创建临时文件
 
 # ideavim 设置
 * ctrl+e 变成ide设置
